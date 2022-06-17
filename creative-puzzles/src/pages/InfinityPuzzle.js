@@ -1,7 +1,5 @@
-import React, { useRef, useEffect, useState } from "react";
-import { styled } from "@mui/material/styles";
+import React, { useEffect, useState } from "react";
 import Box from "@mui/material/Box";
-import Paper from "@mui/material/Paper";
 import Grid from "@mui/material/Grid";
 import { Container } from "@mui/system";
 import CustomBox from "../common/components/CustomBox";
@@ -9,12 +7,12 @@ import CustomBox from "../common/components/CustomBox";
 export default function InfinityPuzzle() {
   //let arr = Array(50);
   //let arr = Array.from({ length: 500 }, () => Math.floor(Math.random() * 40));
-  const [progress, setProgress] = React.useState(0);
+  const [progress, setProgress] = useState(0);
   const [arr, setArr] = useState(
     Array.from({ length: 500 }, () => Math.floor(Math.random() * 40))
   );
 
-  React.useEffect(() => {
+  useEffect(() => {
     let computeProgress = () => {
       // The scrollTop gives length of window that has been scrolled
       const scrolled = document.documentElement.scrollTop;
@@ -25,13 +23,13 @@ export default function InfinityPuzzle() {
         document.documentElement.clientHeight;
       const progress = `${(100 * scrolled) / scrollLength}`;
 
-      if (progress > 90) {
+      if (progress > 60) {
         // add more values to the list
-        let nextValues = Array.from({ length: 10 }, () =>
+        let nextValues = Array.from({ length: 16 }, () =>
           Math.floor(Math.random() * 40)
         );
-        setArr(arr.push(nextValues));
-        console.log(arr.length);
+        let newArr = arr.concat(nextValues);
+        setArr(newArr);
       }
 
       setProgress(progress);
@@ -57,7 +55,7 @@ export default function InfinityPuzzle() {
         alignItems: "center",
       }}
     >
-      {arr != undefined ? (
+      {arr !== undefined ? (
         <Box xs={{}}>
           <Grid container spacing={0} columns={8}>
             {arr.map((el) => (
@@ -68,7 +66,7 @@ export default function InfinityPuzzle() {
           </Grid>
         </Box>
       ) : (
-        ""
+        "Loading"
       )}
     </Container>
   );
