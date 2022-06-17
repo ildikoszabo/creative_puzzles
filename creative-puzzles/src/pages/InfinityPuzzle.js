@@ -3,14 +3,11 @@ import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import { Container } from "@mui/system";
 import CustomBox from "../common/components/CustomBox";
+import { getRandomShapes } from "../common/PuzzleGenerator";
 
 export default function InfinityPuzzle() {
-  //let arr = Array(50);
-  //let arr = Array.from({ length: 500 }, () => Math.floor(Math.random() * 40));
   const [progress, setProgress] = useState(0);
-  const [arr, setArr] = useState(
-    Array.from({ length: 500 }, () => Math.floor(Math.random() * 40))
-  );
+  const [arr, setArr] = useState(getRandomShapes(8, 40));
 
   useEffect(() => {
     let computeProgress = () => {
@@ -25,9 +22,7 @@ export default function InfinityPuzzle() {
 
       if (progress > 60) {
         // add more values to the list
-        let nextValues = Array.from({ length: 16 }, () =>
-          Math.floor(Math.random() * 40)
-        );
+        let nextValues = getRandomShapes(8, 40);
         let newArr = arr.concat(nextValues);
         setArr(newArr);
       }
@@ -58,9 +53,9 @@ export default function InfinityPuzzle() {
       {arr !== undefined ? (
         <Box xs={{}}>
           <Grid container spacing={0} columns={8}>
-            {arr.map((el) => (
+            {arr.map((el, index) => (
               <Grid item xs={1}>
-                <CustomBox />
+                <CustomBox value={arr[index]} />
               </Grid>
             ))}
           </Grid>
