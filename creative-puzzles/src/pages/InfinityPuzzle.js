@@ -4,6 +4,7 @@ import Grid from "@mui/material/Grid";
 import { Container } from "@mui/system";
 import CustomBox from "../common/components/CustomBox";
 import { getRandomShapes } from "../common/PuzzleGenerator";
+import PieceSelection from "../common/components/PieceSelection";
 
 export default function InfinityPuzzle() {
   const [progress, setProgress] = useState(0);
@@ -37,6 +38,16 @@ export default function InfinityPuzzle() {
     return () => window.removeEventListener("scroll", computeProgress);
   });
 
+  const [anchorEl, setAnchorEl] = React.useState(null);
+
+  const handlePopoverOpen = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handlePopoverClose = () => {
+    setAnchorEl(null);
+  };
+
   return (
     <Container
       fluid={false}
@@ -54,8 +65,21 @@ export default function InfinityPuzzle() {
         <Box xs={{}}>
           <Grid container spacing={0} columns={8}>
             {arr.map((el, index) => (
-              <Grid item xs={1}>
-                <CustomBox value={arr[index]} />
+              <Grid
+                item
+                xs={1}
+                onMouseEnter={handlePopoverOpen}
+                onMouseLeave={handlePopoverClose}
+              >
+                <PieceSelection
+                  anchorEl={anchorEl}
+                  handlePopoverClose={handlePopoverClose}
+                />
+                <CustomBox
+                  value={arr[index]}
+                  opacity={0}
+                  applyPieceMask={false}
+                />
               </Grid>
             ))}
           </Grid>
