@@ -38,55 +38,80 @@ export default function InfinityPuzzle() {
     return () => window.removeEventListener("scroll", computeProgress);
   });
 
-  const [anchorEl, setAnchorEl] = React.useState(null);
+  const [isPieceSelectionVisible, setIsPieceSelectionVisible] =
+    React.useState(false);
+
+  const [currentMousePos, setCurrentMousePos] = React.useState({ x: 0, y: 0 });
 
   const handlePopoverOpen = (event) => {
-    setAnchorEl(event.currentTarget);
+    setIsPieceSelectionVisible(!isPieceSelectionVisible);
+    let PosX, PosY;
+
+    if (event.pageX || event.pageY) {
+      PosX = event.pageX;
+      PosY = event.pageY;
+    } /*else if (event.clientX || event.clientY) {
+      PosX =
+        event.clientX +
+        document.body.scrollLeft +
+        document.documentElement.scrollLeft;
+      PosY =
+        event.clientY +
+        document.body.scrollTop +
+        document.documentElement.scrollTop;
+    }*/
+    console.log(PosX);
+    setCurrentMousePos({ x: PosX, y: PosY });
   };
 
   const handlePopoverClose = () => {
-    setAnchorEl(null);
+    setIsPieceSelectionVisible(!isPieceSelectionVisible);
   };
 
   return (
-    <Container
-      fluid={false}
-      disableGutters={true}
-      maxWidth="xs"
-      style={{
-        height: "100%",
-        margin: 0,
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-      }}
-    >
-      {arr !== undefined ? (
-        <Box xs={{}}>
-          <Grid container spacing={0} columns={8}>
-            {arr.map((el, index) => (
-              <Grid
-                item
-                xs={1}
-                onMouseEnter={handlePopoverOpen}
-                onMouseLeave={handlePopoverClose}
-              >
-                <PieceSelection
-                  anchorEl={anchorEl}
-                  handlePopoverClose={handlePopoverClose}
-                />
-                <CustomBox
-                  value={arr[index]}
-                  opacity={0}
-                  applyPieceMask={false}
-                />
-              </Grid>
-            ))}
-          </Grid>
-        </Box>
-      ) : (
-        "Loading"
-      )}
-    </Container>
+    <div>
+      {isPieceSelectionVisible ? (
+        <PieceSelection
+          handlePopoverClose={handlePopoverClose}
+          currentMousePos={currentMousePos}
+        />
+      ) : null}
+
+      <Container
+        fluid={false}
+        disableGutters={true}
+        maxWidth="xs"
+        style={{
+          height: "100%",
+          margin: 0,
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        {arr !== undefined ? (
+          <Box xs={{}}>
+            <Grid container spacing={0} columns={8}>
+              {arr.map((el, index) => (
+                <Grid
+                  item
+                  xs={1}
+                  onMouseEnter={handlePopoverOpen}
+                  onMouseLeave={handlePopoverClose}
+                >
+                  <CustomBox
+                    value={arr[index]}
+                    opacity={0}
+                    applyPieceMask={false}
+                  />
+                </Grid>
+              ))}
+            </Grid>
+          </Box>
+        ) : (
+          "Loading"
+        )}
+      </Container>
+    </div>
   );
 }
