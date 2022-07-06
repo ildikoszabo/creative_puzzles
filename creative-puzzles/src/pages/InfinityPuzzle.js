@@ -44,7 +44,7 @@ export default function InfinityPuzzle() {
   const [currentMousePos, setCurrentMousePos] = React.useState({ x: 0, y: 0 });
 
   const handlePopoverOpen = (event) => {
-    setIsPieceSelectionVisible(!isPieceSelectionVisible);
+    setIsPieceSelectionVisible(true);
     let PosX, PosY;
 
     if (event.pageX || event.pageY) {
@@ -65,7 +65,11 @@ export default function InfinityPuzzle() {
   };
 
   const handlePopoverClose = () => {
-    setIsPieceSelectionVisible(!isPieceSelectionVisible);
+    setIsPieceSelectionVisible(false);
+  };
+
+  const onPieceSelection = (pieceDetails) => {
+    alert("selectedPice " + pieceDetails.rightTab);
   };
 
   return (
@@ -74,6 +78,7 @@ export default function InfinityPuzzle() {
         <PieceSelection
           handlePopoverClose={handlePopoverClose}
           currentMousePos={currentMousePos}
+          onPieceSelection={onPieceSelection}
         />
       ) : null}
 
@@ -97,7 +102,7 @@ export default function InfinityPuzzle() {
                   item
                   xs={1}
                   onMouseEnter={handlePopoverOpen}
-                  onMouseLeave={handlePopoverClose}
+                  //onMouseLeave={handlePopoverClose}
                 >
                   <CustomBox
                     value={arr[index]}

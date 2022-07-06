@@ -48,7 +48,7 @@ export default function CustomBox(props) {
             },
           }}
         >
-          {props.value.topTab}
+          {props.value.name}
         </Box>
       )}
     </ThemeProvider>

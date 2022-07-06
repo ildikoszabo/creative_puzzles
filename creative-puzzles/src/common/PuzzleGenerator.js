@@ -1,4 +1,6 @@
 //source https://www.codeproject.com/Articles/395453/Html5-Jigsaw-Puzzle
+import { PIECES } from "./pieces";
+
 export function getRandomShapes(width, height) {
   var shapeArray = new Array();
 
@@ -22,6 +24,7 @@ export function getRandomShapes(width, height) {
         rightTab: rightTab,
         bottomTab: bottomTab,
         leftTab: leftTab,
+        name: "",
       });
     }
   }
@@ -43,6 +46,7 @@ export function getRandomShapes(width, height) {
       shape.bottomTab = y < height - 1 ? getRandomTabValue() : shape.bottomTab;
 
       if (shapeBottom) shapeBottom.topTab = -shape.bottomTab;
+      shape.name = getPieceName(shape);
     }
   }
   return shapeArray;
@@ -50,4 +54,20 @@ export function getRandomShapes(width, height) {
 
 function getRandomTabValue() {
   return Math.pow(-1, Math.floor(Math.random() * 2));
+}
+
+function getPieceName(shape) {
+  var piece = PIECES.allPossiblePieces.find(
+    (el) =>
+      el.topTab == shape.topTab &&
+      el.rightTab == shape.rightTab &&
+      el.bottomTab == shape.bottomTab &&
+      el.leftTab == shape.leftTab
+  );
+
+  var pieceName =
+    piece == undefined
+      ? `${shape.topTab}${shape.rightTab}${shape.bottomTab}${shape.leftTab}`
+      : piece.name;
+  return pieceName;
 }
