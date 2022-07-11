@@ -32,6 +32,7 @@ export default function CustomBox(props) {
                 ? `url(${Corner1})`
                 : `url(${Top1})`,
           }}
+          onClick={props.onClick}
         >
           {props.value.topTab}
         </Box>
@@ -47,6 +48,7 @@ export default function CustomBox(props) {
               opacity: [0.9, 0.8, 0.7],
             },
           }}
+          onClick={props.onClick}
         >
           {props.value.name}
         </Box>
