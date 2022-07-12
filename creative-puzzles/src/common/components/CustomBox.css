@@ -1,0 +1,78 @@
+.pieceBase {
+  width: 6em;
+  height: 6em;
+  position: relative;
+  cursor: pointer;
+}
+
+.tab {
+  background-color: aqua;
+  -webkit-border-radius: 4em;
+  -moz-border-radius: 4em;
+  border-radius: 4em;
+  width: 2em;
+  height: 2em;
+  position: absolute;
+  border-style: solid;
+  border-top: 3;
+}
+
+.pieceBase .t1 {
+  top: -1.5em;
+  left: 2em;
+}
+
+.pieceBase .t0 {
+  display: none;
+}
+
+.pieceBase .t-1 {
+  top: -0.7em;
+  left: 2em;
+  background-color: #fff;
+}
+
+.pieceBase .r0 {
+  display: none;
+}
+
+.pieceBase .r1 {
+  top: 2em;
+  left: 5.5em;
+}
+
+.pieceBase .r-1 {
+  top: 2em;
+  left: 4.7em;
+  background-color: #fff;
+}
+
+.pieceBase .b0 {
+  display: none;
+}
+
+.pieceBase .b1 {
+  top: 5.5em;
+  left: 2em;
+}
+
+.pieceBase .b-1 {
+  top: 4.5em;
+  left: 2em;
+  background-color: #fff;
+}
+
+.pieceBase .l0 {
+  display: none;
+}
+
+.pieceBase .l1 {
+  top: 2em;
+  left: -1.5em;
+}
+
+.pieceBase .l-1 {
+  top: 2em;
+  left: -0.4em;
+  background-color: #fff;
+}

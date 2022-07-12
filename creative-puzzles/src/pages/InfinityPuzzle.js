@@ -10,6 +10,7 @@ import InfinityScroll from "../common/components/InfinityScroll";
 export default function InfinityPuzzle() {
   const [arr, setArr] = useState(getRandomShapes(8, 40));
   const [anchorEl, setAnchorEl] = useState(null);
+  const [selectedGeneratedPiece, setSelectedGeneratedPiece] = useState(null);
 
   const onPieceSelection = (pieceDetails) => {
     alert("selectedPice " + pieceDetails.rightTab);
@@ -17,8 +18,9 @@ export default function InfinityPuzzle() {
     setAnchorEl(null);
   };
 
-  const handleClick = (event) => {
+  const handleClick = (event, el) => {
     setAnchorEl(event.currentTarget);
+    setSelectedGeneratedPiece(el);
   };
   const handleClose = () => {
     setAnchorEl(null);
@@ -32,13 +34,14 @@ export default function InfinityPuzzle() {
 
   return (
     <div>
-      <InfinityScroll treshold={60} loadNewValues={loadNewValues}>
+      <InfinityScroll threshold={60} loadNewValues={loadNewValues}>
         {anchorEl ? (
           <PieceSelection
             onPieceSelection={onPieceSelection}
             handleClick={handleClick}
             handleClose={handleClose}
             anchorEl={anchorEl}
+            selectedGeneratedPiece={selectedGeneratedPiece}
           />
         ) : null}
 
@@ -64,7 +67,7 @@ export default function InfinityPuzzle() {
                     aria-controls={anchorEl ? "basic-menu" : undefined}
                     aria-haspopup="true"
                     aria-expanded={anchorEl ? "true" : undefined}
-                    onClick={handleClick}
+                    onClick={(event) => handleClick(event, el)}
                     id="basic-button"
                   >
                     <CustomBox

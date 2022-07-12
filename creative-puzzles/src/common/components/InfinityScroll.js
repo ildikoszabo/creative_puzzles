@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 
 export default function InfinityScroll(props) {
-  const [progress, setProgress] = useState(0);
+  const [scrollPercentage, setScrollPercentage] = useState(0);
 
   useEffect(() => {
-    let computeProgress = () => {
+    let getScrollPercentage = () => {
       // The scrollTop gives length of window that has been scrolled
       const scrolled = document.documentElement.scrollTop;
       // scrollHeight gives total length of the window and
@@ -12,20 +12,19 @@ export default function InfinityScroll(props) {
       const scrollLength =
         document.documentElement.scrollHeight -
         document.documentElement.clientHeight;
-      const progress = `${(100 * scrolled) / scrollLength}`;
+      const scrollPercentage = (100 * scrolled) / scrollLength;
 
-      if (progress > props.treshold) {
-        // add more values to the list
+      if (scrollPercentage > props.threshold) {
         props.loadNewValues();
       }
-      setProgress(progress);
+      setScrollPercentage(scrollPercentage);
     };
 
     // Adding event listener on mounting
-    window.addEventListener("scroll", computeProgress);
+    window.addEventListener("scroll", getScrollPercentage);
 
     // Removing event listener upon unmounting
-    return () => window.removeEventListener("scroll", computeProgress);
+    return () => window.removeEventListener("scroll", getScrollPercentage);
   });
 
   return <div>{props.children}</div>;

@@ -17,6 +17,15 @@ export default function PieceSelection(props) {
         "aria-labelledby": "basic-button",
       }}
     >
+      <MenuItem
+        onClick={() => props.onPieceSelection(props.selectedGeneratedPiece)}
+      >
+        <CustomBox
+          value={props.selectedGeneratedPiece}
+          opacity={1}
+          applyPieceMask={true}
+        />
+      </MenuItem>
       {arr.map((el, index) => (
         <MenuItem onClick={() => props.onPieceSelection(el)}>
           <CustomBox value={el} opacity={1} applyPieceMask={true} />
