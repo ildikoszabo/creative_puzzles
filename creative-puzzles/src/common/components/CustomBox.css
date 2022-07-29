@@ -13,8 +13,6 @@
   width: 2em;
   height: 2em;
   position: absolute;
-  border-style: solid;
-  border-top: 3;
 }
 
 .pieceBase .t1 {
@@ -57,7 +55,7 @@
 }
 
 .pieceBase .b-1 {
-  top: 4.5em;
+  top: 4.7em;
   left: 2em;
   background-color: #fff;
 }
@@ -73,6 +71,6 @@
 
 .pieceBase .l-1 {
   top: 2em;
-  left: -0.4em;
+  left: -0.7em;
   background-color: #fff;
 }

@@ -1,48 +1,61 @@
 import * as React from "react";
-import { Box, ThemeProvider } from "@mui/system";
+import { Box, ThemeProvider, createTheme } from "@mui/system";
 import Corner1 from "../../assests/corner1.png";
 import Top1 from "../../assests/top1.png";
 import "./CustomBox.css";
 
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: "#007FFF",
+      dark: "#0059B2",
+    },
+  },
+});
+
+const outStyle = {
+  backgroundColor: `${theme.palette.primary.main}`,
+  "&:hover": {
+    backgroundColor: `${theme.palette.primary.dark}`,
+  },
+};
+
+const inStyle = {
+  backgroundColor: "white",
+  "&:hover": {
+    backgroundColor: `${theme.palette.primary.dark}`,
+  },
+};
+
 export default function CustomBox(props) {
   return (
-    <ThemeProvider
-      theme={{
-        palette: {
-          primary: {
-            main: "#007FFF",
-            dark: "#0059B2",
-          },
-        },
-      }}
-    >
+    <ThemeProvider theme={theme}>
       {props.applyPieceMask ? (
         <Box
           sx={{
-            fontSize: "9px",
-            border: 1,
+            fontSize: "9px", //controls the size and ration of the inner elements which have sizes in "em"
             backgroundColor: "primary.main",
-            //opacity: [props.opacity, props.opacity, props.opacity],
             "&:hover": {
               backgroundColor: "primary.dark",
             },
+            mixBlendMode: "darken",
           }}
         >
           <div class="pieceBase">
             <span
-              style={{ backgroundColor: "primary.main" }}
+              style={props.value.rightTab != -1 ? outStyle : inStyle}
               class={`tab t${props.value.topTab}`}
             ></span>
             <span
-              style={{ backgroundColor: "primary.main" }}
+              style={props.value.rightTab != -1 ? outStyle : inStyle}
               class={`tab r${props.value.rightTab}`}
             ></span>
             <span
-              style={{ backgroundColor: "primary.main" }}
+              style={props.value.rightTab != -1 ? outStyle : inStyle}
               class={`tab b${props.value.bottomTab}`}
             ></span>
             <span
-              style={{ backgroundColor: "primary.main" }}
+              style={props.value.rightTab != -1 ? outStyle : inStyle}
               class={`tab l${props.value.leftTab}`}
             ></span>
           </div>
@@ -50,22 +63,17 @@ export default function CustomBox(props) {
       ) : (
         <Box
           sx={{
-            fontSize: "9px",
+            width: 54,
+            height: 54,
             border: 1,
-            backgroundColor: "primary.main",
-            //opacity: [props.opacity, props.opacity, props.opacity],
+            borderColor: "primary.main",
             "&:hover": {
               backgroundColor: "primary.dark",
+              opacity: [0.9, 0.8, 0.7],
             },
           }}
-        >
-          <div class="pieceBase">
-            <span class={`tab t${props.value.topTab}`}></span>
-            <span class={`tab r${props.value.rightTab}`}></span>
-            <span class={`tab b${props.value.bottomTab}`}></span>
-            <span class={`tab l${props.value.leftTab}`}></span>
-          </div>
-        </Box>
+          onClick={props.onClick}
+        ></Box>
       )}
     </ThemeProvider>
   );

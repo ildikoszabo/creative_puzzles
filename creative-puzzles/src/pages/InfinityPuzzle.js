@@ -13,7 +13,10 @@ export default function InfinityPuzzle() {
   const [selectedGeneratedPiece, setSelectedGeneratedPiece] = useState(null);
 
   const onPieceSelection = (pieceDetails) => {
-    alert("selectedPice " + pieceDetails.rightTab);
+    if (selectedGeneratedPiece.name === pieceDetails.name) {
+      selectedGeneratedPiece.match = true;
+    }
+    //else not a match snack bar
 
     setAnchorEl(null);
   };
@@ -73,7 +76,7 @@ export default function InfinityPuzzle() {
                     <CustomBox
                       value={arr[index]}
                       opacity={0}
-                      applyPieceMask={false}
+                      applyPieceMask={el.match}
                     />
                   </Grid>
                 ))}
