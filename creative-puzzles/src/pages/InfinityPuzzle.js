@@ -49,7 +49,7 @@ export default function InfinityPuzzle() {
         ) : null}
 
         <Container
-          fluid={false}
+          fluid="false"
           disableGutters={true}
           maxWidth="xs"
           style={{

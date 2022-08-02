@@ -1,4 +1,4 @@
-import * as React from "react";
+import { useEffect, useState } from "react";
 import { Box, ThemeProvider, createTheme } from "@mui/system";
 import Corner1 from "../../assests/corner1.png";
 import Top1 from "../../assests/top1.png";
@@ -15,23 +15,61 @@ const theme = createTheme({
 
 const outStyle = {
   backgroundColor: `${theme.palette.primary.main}`,
-  "&:hover": {
-    backgroundColor: `${theme.palette.primary.dark}`,
-  },
 };
 
 const inStyle = {
   backgroundColor: "white",
-  "&:hover": {
-    backgroundColor: `${theme.palette.primary.dark}`,
-  },
+};
+
+const hoverStyle = {
+  backgroundColor: `${theme.palette.primary.dark}`,
+};
+
+const nonHoverStyle = {
+  backgroundColor: `${theme.palette.primary.main}`,
 };
 
 export default function CustomBox(props) {
+  const [isBoxHovered, setIsBoxHovered] = useState(false);
+
+  const getEdgeStyle = (edge) => {
+    if (edge == -1) {
+      return inStyle;
+    } else if (isBoxHovered) {
+      return hoverStyle;
+    } else {
+      return nonHoverStyle;
+    }
+  };
+
+  let tabStyle = {
+    topTab: getEdgeStyle(props.value.topTab),
+    leftTab: getEdgeStyle(props.value.leftTab),
+    bottomTab: getEdgeStyle(props.value.bottomTab),
+    rightTab: getEdgeStyle(props.value.rightTab),
+  };
+
+  const [boxEdgeStyle, setBoxEdgeStyle] = useState(tabStyle);
+
+  useEffect(() => {
+    tabStyle.topTab = getEdgeStyle(props.value.topTab);
+    tabStyle.rightTab = getEdgeStyle(props.value.rightTab);
+    tabStyle.bottomTab = getEdgeStyle(props.value.bottomTab);
+    tabStyle.leftTab = getEdgeStyle(props.value.leftTab);
+
+    setBoxEdgeStyle(tabStyle);
+  }, [isBoxHovered]);
+
+  const setBoxHoverState = () => {
+    setIsBoxHovered(!isBoxHovered);
+  };
+
   return (
     <ThemeProvider theme={theme}>
       {props.applyPieceMask ? (
         <Box
+          onMouseEnter={() => setBoxHoverState()}
+          onMouseLeave={() => setBoxHoverState()}
           sx={{
             fontSize: "9px", //controls the size and ration of the inner elements which have sizes in "em"
             backgroundColor: "primary.main",
@@ -41,22 +79,22 @@ export default function CustomBox(props) {
             mixBlendMode: "darken",
           }}
         >
-          <div class="pieceBase">
+          <div className="pieceBase">
             <span
-              style={props.value.rightTab != -1 ? outStyle : inStyle}
-              class={`tab t${props.value.topTab}`}
+              style={boxEdgeStyle.topTab}
+              className={`tab t${props.value.topTab}`}
             ></span>
             <span
-              style={props.value.rightTab != -1 ? outStyle : inStyle}
-              class={`tab r${props.value.rightTab}`}
+              style={boxEdgeStyle.rightTab}
+              className={`tab r${props.value.rightTab}`}
             ></span>
             <span
-              style={props.value.rightTab != -1 ? outStyle : inStyle}
-              class={`tab b${props.value.bottomTab}`}
+              style={boxEdgeStyle.bottomTab}
+              className={`tab b${props.value.bottomTab}`}
             ></span>
             <span
-              style={props.value.rightTab != -1 ? outStyle : inStyle}
-              class={`tab l${props.value.leftTab}`}
+              style={boxEdgeStyle.leftTab}
+              className={`tab l${props.value.leftTab}`}
             ></span>
           </div>
         </Box>
