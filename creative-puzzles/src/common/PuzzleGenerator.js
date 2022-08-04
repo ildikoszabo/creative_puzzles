@@ -1,10 +1,11 @@
 //source https://www.codeproject.com/Articles/395453/Html5-Jigsaw-Puzzle
 import { PIECES } from "./pieces";
 
-export function getRandomShapes(width, height) {
-  var shapeArray = new Array();
+export function getRandomShapes(width, height, starterArray = null) {
+  var shapeArray = starterArray == null ? new Array() : starterArray.slice(0);
+  var startRow = starterArray == null ? 0 : 1;
 
-  for (var y = 0; y < height; y++) {
+  for (var y = startRow; y < height; y++) {
     for (var x = 0; x < width; x++) {
       var topTab = undefined;
       var rightTab = undefined;
@@ -34,17 +35,20 @@ export function getRandomShapes(width, height) {
     for (var x = 0; x < width; x++) {
       var shape = shapeArray[y * width + x];
 
+      if (starterArray == null || (starterArray != null && y != 0)) {
+        //don't overwrite the prv generated valued coming from startArray
+        shape.rightTab = x < width - 1 ? getRandomTabValue() : shape.rightTab;
+        shape.bottomTab =
+          y < height - 1 ? getRandomTabValue() : shape.bottomTab;
+      }
+
       var shapeRight =
         x < width - 1 ? shapeArray[y * width + (x + 1)] : undefined;
 
       var shapeBottom =
         y < height - 1 ? shapeArray[(y + 1) * width + x] : undefined;
 
-      shape.rightTab = x < width - 1 ? getRandomTabValue() : shape.rightTab;
-
       if (shapeRight) shapeRight.leftTab = -shape.rightTab;
-
-      shape.bottomTab = y < height - 1 ? getRandomTabValue() : shape.bottomTab;
 
       if (shapeBottom) shapeBottom.topTab = -shape.bottomTab;
       shape.name = getPieceName(shape);

@@ -8,7 +8,7 @@ import PieceSelection from "../common/components/PieceSelection";
 import InfinityScroll from "../common/components/InfinityScroll";
 
 export default function InfinityPuzzle() {
-  const [arr, setArr] = useState(getRandomShapes(8, 40));
+  const [arr, setArr] = useState(getRandomShapes(8, 40).slice(0, -8));
   const [anchorEl, setAnchorEl] = useState(null);
   const [selectedGeneratedPiece, setSelectedGeneratedPiece] = useState(null);
 
@@ -30,7 +30,10 @@ export default function InfinityPuzzle() {
   };
 
   const loadNewValues = () => {
-    const nextValues = getRandomShapes(8, 40);
+    var width = 8;
+    var lastRow = arr.slice(-width);
+
+    const nextValues = getRandomShapes(8, 40, lastRow).slice(0, -8);
     let newArr = arr.concat(nextValues);
     setArr(newArr);
   };

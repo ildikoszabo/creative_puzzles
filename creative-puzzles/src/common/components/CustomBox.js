@@ -111,34 +111,10 @@ export default function CustomBox(props) {
             },
           }}
           onClick={props.onClick}
-        ></Box>
+        >
+          {props.value.name}
+        </Box>
       )}
     </ThemeProvider>
   );
 }
-
-/*        <Box
-          sx={{
-            fontSize: "9px",
-            border: 1,
-            backgroundColor: "primary.main",
-            //opacity: [props.opacity, props.opacity, props.opacity],
-            "&:hover": {
-              backgroundColor: "primary.dark",
-            },
-          }}
-        >
-          <div class="pieceBase">
-            <span class="tabShape t"></span>
-            <span class="tabShape r"></span>
-            <span class="tabShape b"></span>
-            <span class="tabShape l"></span>
-          </div>
-        </Box> */
-
-/*        <div class="pieceBase">
-          <span class="tab t1"}></span>
-          <span class="tab r-1"></span>
-          <span class="tab b1"></span>
-          <span class="tab l1"></span>
-        </div> */
