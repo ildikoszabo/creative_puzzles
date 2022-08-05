@@ -57,11 +57,11 @@ export function getRandomShapes(width, height, starterArray = null) {
   return shapeArray;
 }
 
-function getRandomTabValue() {
+export function getRandomTabValue() {
   return Math.pow(-1, Math.floor(Math.random() * 2));
 }
 
-function getPieceName(shape) {
+export function getPieceName(shape) {
   var piece = PIECES.allPossiblePieces.find(
     (el) =>
       el.topTab == shape.topTab &&

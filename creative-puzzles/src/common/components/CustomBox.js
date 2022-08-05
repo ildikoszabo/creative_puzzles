@@ -111,9 +111,7 @@ export default function CustomBox(props) {
             },
           }}
           onClick={props.onClick}
-        >
-          {props.value.name}
-        </Box>
+        ></Box>
       )}
     </ThemeProvider>
   );
