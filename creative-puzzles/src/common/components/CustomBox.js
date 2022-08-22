@@ -64,6 +64,21 @@ export default function CustomBox(props) {
     setIsBoxHovered(!isBoxHovered);
   };
 
+  const setMainStyle = (props) => {
+    var style = {
+      width: 54,
+      height: 54,
+      border: 1,
+      borderColor: "primary.main",
+      backgroundColor: props.clicked ? "primary.dark" : "white",
+      "&:hover": {
+        backgroundColor: "primary.dark",
+      },
+    };
+
+    return style;
+  };
+
   return (
     <ThemeProvider theme={theme}>
       {props.applyPieceMask ? (
@@ -76,6 +91,7 @@ export default function CustomBox(props) {
             "&:hover": {
               backgroundColor: "primary.dark",
             },
+
             mixBlendMode: "darken",
           }}
         >
@@ -99,19 +115,7 @@ export default function CustomBox(props) {
           </div>
         </Box>
       ) : (
-        <Box
-          sx={{
-            width: 54,
-            height: 54,
-            border: 1,
-            borderColor: "primary.main",
-            "&:hover": {
-              backgroundColor: "primary.dark",
-              opacity: [0.9, 0.8, 0.7],
-            },
-          }}
-          onClick={props.onClick}
-        ></Box>
+        <Box sx={setMainStyle(props)} onClick={props.onClick}></Box>
       )}
     </ThemeProvider>
   );

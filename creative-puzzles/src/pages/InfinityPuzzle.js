@@ -10,6 +10,7 @@ import InfinityScroll from "../common/components/InfinityScroll";
 export default function InfinityPuzzle() {
   const [arr, setArr] = useState(getRandomShapes(8, 40).slice(0, -8));
   const [anchorEl, setAnchorEl] = useState(null);
+  const [ancholElIndex, setAnchorElIndex] = useState(null);
   const [selectedGeneratedPiece, setSelectedGeneratedPiece] = useState(null);
 
   const onPieceSelection = (pieceDetails) => {
@@ -21,12 +22,14 @@ export default function InfinityPuzzle() {
     setAnchorEl(null);
   };
 
-  const handleClick = (event, el) => {
+  const handleClick = (event, el, elIndex) => {
     setAnchorEl(event.currentTarget);
+    setAnchorElIndex(elIndex);
     setSelectedGeneratedPiece(el);
   };
   const handleClose = () => {
     setAnchorEl(null);
+    setAnchorElIndex(null);
   };
 
   const loadNewValues = () => {
@@ -70,16 +73,18 @@ export default function InfinityPuzzle() {
                   <Grid
                     item
                     xs={1}
+                    key={index}
                     aria-controls={anchorEl ? "basic-menu" : undefined}
                     aria-haspopup="true"
                     aria-expanded={anchorEl ? "true" : undefined}
-                    onClick={(event) => handleClick(event, el)}
+                    onClick={(event) => handleClick(event, el, index)}
                     id="basic-button"
                   >
                     <CustomBox
                       value={arr[index]}
                       opacity={0}
                       applyPieceMask={el.match}
+                      clicked={anchorEl != null && ancholElIndex == index}
                     />
                   </Grid>
                 ))}
