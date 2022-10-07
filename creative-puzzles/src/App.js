@@ -1,15 +1,13 @@
-import React, { useRef, useEffect } from "react";
-import logo from "./logo.svg";
+import React from "react";
 import "./App.css";
 import InfinityPuzzle from "./pages/InfinityPuzzle";
-import CustomBox from "./common/components/CustomBox";
-//<CustomBox opacity={0} applyPieceMask={false} />
+import LandingPage from "./pages/LandingPage";
 
 function App() {
   return (
     <React.Fragment>
       <div className="App">
-        <InfinityPuzzle />
+        <LandingPage />
       </div>
     </React.Fragment>
   );

@@ -1,0 +1,222 @@
+body {
+  font-family: "Poppins", sans-serif;
+  margin: 0;
+}
+
+section {
+  background-color: white;
+}
+
+headingtitle {
+  font-weight: bold;
+  font-size: x-large;
+}
+
+.main {
+  height: 100vh;
+  color: black;
+}
+
+footer {
+  background-color: black;
+  color: white;
+  text-align: center;
+  padding: 80px;
+}
+
+nav {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid black; /*should be from theme*/
+  height: 6%;
+}
+
+.nav-right {
+  display: flex;
+  justify-content: flex-start;
+}
+
+ul {
+  display: flex;
+  list-style-type: none;
+  width: 800px;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+li {
+  text-decoration: none;
+  padding: 3rem;
+}
+
+a {
+  text-decoration: none;
+  color: black;
+}
+
+.rotate {
+  transform: rotate(90deg);
+}
+
+.puzzle-piece {
+  padding-top: 50px;
+}
+
+.logo {
+}
+
+h1 {
+  font-size: 90px;
+  margin: 0;
+}
+
+h2 {
+  font-size: 50px;
+}
+
+p {
+  margin: 0;
+  font-size: 30px;
+  font-weight: 300;
+}
+
+.subtext {
+  font-size: 15px;
+  font-weight: 300;
+}
+
+.main-area {
+  display: flex;
+  height: 70%; /*put back to 100% if main area should be text only*/
+  justify-content: space-between;
+  align-items: center;
+}
+
+.main-text {
+  margin-left: 80px;
+  margin-bottom: 50px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  flex-direction: column;
+  padding-right: 50rem;
+  text-align: left;
+}
+
+.main-right {
+  padding-bottom: 50px;
+  margin: 20px;
+}
+
+.socials {
+  display: flex;
+  justify-content: space-around;
+  padding: 80px;
+  background-color: #c9e6e2; /*take it from styles*/
+}
+
+.socials-item {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  flex-direction: column;
+}
+
+.socials-icon-size {
+  width: 30px;
+  height: 30px;
+}
+
+.sub-section-alternative {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  padding: 80px;
+}
+
+.project-card {
+  width: 300px;
+  height: 500px;
+  box-shadow: 5px 5px 20px rgb(197, 195, 195);
+  margin: 10px;
+}
+
+.project-container {
+  display: flex;
+  justify-content: space-around;
+}
+
+@media only screen and (max-width: 1000px) {
+  .project-container {
+    display: flex;
+    flex-wrap: wrap;
+  }
+}
+
+.project-image {
+  margin-top: 25px;
+  width: 250px;
+  border-radius: 125px;
+}
+
+hr {
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+.project-link {
+  text-decoration: none;
+  color: #ef744b;
+}
+
+.hamburger {
+  display: none;
+}
+
+.hamburger:focus {
+  outline: 0;
+}
+
+@media only screen and (max-width: 1000px) {
+  .hamburger {
+    display: block;
+    border: 0;
+    background-color: transparent;
+    color: white;
+    font-size: 30px;
+    margin: 20px;
+    align-self: flex-end;
+  }
+
+  ul {
+    display: none;
+    background-color: #2b2c38;
+    margin: 0ppx;
+  }
+
+  ul.show {
+    display: block;
+  }
+
+  nav {
+    display: flex;
+    flex-direction: column-reverse;
+    background-color: #2b2c38;
+  }
+
+  .logo {
+    display: none;
+  }
+}
+
+.c-pb-zero {
+  padding-bottom: 0 !important;
+}
+
+.c-pb-half {
+  padding-bottom: 0.5rem !important;
+}
+
+.c-pb-full {
+  padding-bottom: 1rem !important;
+}
