@@ -54,8 +54,12 @@ a {
   color: black;
 }
 
-.rotate {
+.rotate90 {
   transform: rotate(90deg);
+}
+
+.rotateminus90 {
+  transform: rotate(-90deg);
 }
 
 .puzzle-piece {
@@ -127,23 +131,27 @@ p {
   height: 30px;
 }
 
-.sub-section-alternative {
+.games-section {
   display: flex;
   flex-direction: column;
   text-align: center;
   padding: 80px;
+  background-color: #6a9d9b; /*complementary 1 from theme*/
+  color: white;
 }
 
 .project-card {
-  width: 300px;
+  width: 500px;
   height: 500px;
   box-shadow: 5px 5px 20px rgb(197, 195, 195);
   margin: 10px;
+  background-color: black;
 }
 
 .project-container {
   display: flex;
   justify-content: space-around;
+  text-align: center;
 }
 
 @media only screen and (max-width: 1000px) {
@@ -166,7 +174,30 @@ hr {
 
 .project-link {
   text-decoration: none;
-  color: #ef744b;
+  color: white;
+}
+
+.community-section {
+  display: flex;
+  flex-direction: column;
+
+  background-color: white;
+}
+
+.community-main {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.community-main-text {
+  padding: 100px;
+  text-align: center;
+}
+
+.community-main-button {
+  padding: 80px;
+  text-align: center;
 }
 
 .hamburger {

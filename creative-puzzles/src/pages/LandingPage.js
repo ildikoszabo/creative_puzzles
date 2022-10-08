@@ -3,6 +3,7 @@ import { Button, IconButton } from "@mui/material";
 import "./LandingPage.css";
 import puzzle_pieces from "../assests/puzzle_pieces.png";
 import patreon from "../assests/Digital-Patreon-Logo_Black.png";
+import game_picture from "../assests/game_picture.PNG";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import YouTubeIcon from "@mui/icons-material/YouTube";
 import GitHubIcon from "@mui/icons-material/GitHub";
@@ -27,7 +28,7 @@ export default function LandingPage() {
             </li>
           </ul>
           <div class="puzzle-piece">
-            <img class="rotate logo" src={puzzle_pieces} alt="puzzle games" />
+            <img class="rotate90 logo" src={puzzle_pieces} alt="puzzle games" />
           </div>
 
           <div class="nav-right">
@@ -89,69 +90,55 @@ export default function LandingPage() {
           </div>
         </section>
       </section>
-      <section class="sub-section-alternative" id="projects">
-        <h2>Projects</h2>
+      <section class="games-section" id="games">
+        <div>
+          <h2>Try one of these games now</h2>
+        </div>
         <div class="project-container">
           <div class="project-card">
             <img
               class="project-image"
-              src="src/images/project1.jpg"
-              alt="Project One Image"
+              src={game_picture}
+              alt="Infinity puzzle"
             />
-            <h3>Project One</h3>
-            <p class="subtext">This is my project and some text about it.</p>
+            <h3>Infinity puzzle</h3>
+            <p class="subtext">Infinit scrolling puzzle game</p>
             <hr />
-            <p class="subtext">
+            <h3>
               <a class="project-link" href="">
-                View here
+                Play now
               </a>
-            </p>
+            </h3>
           </div>
           <div class="project-card">
-            <img
-              class="project-image"
-              src="src/images/project2.jpg"
-              alt="Project One Image"
-            />
-            <h3>Project Two</h3>
-            <p class="subtext">This is my project and some text about it.</p>
+            <img class="project-image" src={game_picture} alt="Puzzle tetris" />
+            <h3>Puzzle tetris</h3>
+            <p class="subtext">Classic tetris with a puzzle twist</p>
             <hr />
-            <p class="subtext">
+            <h3>
               <a class="project-link" href="">
-                View here
+                Play now
               </a>
+            </h3>
+          </div>
+        </div>
+      </section>
+      <section id="community" class="community-section">
+        <div class="community-main">
+          <div>
+            <img class="rotateminus90" src={puzzle_pieces} alt="puzzle games" />
+          </div>
+          <div className="community-main-text">
+            <p>
+              Join the Patreon community to read free articles about how these
+              games were built and unlock access to livestreams.
             </p>
           </div>
-          <div class="project-card">
-            <img
-              class="project-image"
-              src="src/images/project3.png"
-              alt="Project One Image"
-            />
-            <h3>Project Three</h3>
-            <p class="subtext">This is my project and some text about it.</p>
-            <hr />
-            <p class="subtext">
-              <a class="project-link" href="">
-                View here
-              </a>
-            </p>
-          </div>
-          <div class="project-card">
-            <img
-              class="project-image"
-              src="src/images/Project4.jpg"
-              alt="Project One Image"
-            />
-            <h3>Project Four</h3>
-            <p class="subtext">This is my project and some text about it.</p>
-            <hr />
-            <p class="subtext">
-              <a class="project-link" href="">
-                View here
-              </a>
-            </p>
-          </div>
+        </div>
+        <div className="community-main-button">
+          <Button variant="outlined" href="#games">
+            Join Patreon
+          </Button>
         </div>
       </section>
       <footer id="contact-me">
