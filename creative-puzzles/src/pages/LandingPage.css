@@ -18,29 +18,29 @@ headingtitle {
 }
 
 footer {
-  background-color: black;
-  color: white;
-  text-align: center;
   padding: 80px;
+  background-color: #dcdced;
+  color: black;
+  text-align: left;
+}
+
+.footer-item {
+  border-top: 1px solid black;
+}
+
+.footer-item-bold {
+  border-top: 1px solid black;
+  font-weight: bold;
 }
 
 nav {
-  display: flex;
-  justify-content: space-between;
   border-bottom: 1px solid black; /*should be from theme*/
   height: 6%;
 }
 
-.nav-right {
-  display: flex;
-  justify-content: flex-start;
-}
-
 ul {
-  display: flex;
   list-style-type: none;
   width: 800px;
-  justify-content: flex-start;
   align-items: center;
 }
 
@@ -90,19 +90,13 @@ p {
 }
 
 .main-area {
-  display: flex;
   height: 70%; /*put back to 100% if main area should be text only*/
-  justify-content: space-between;
   align-items: center;
 }
 
 .main-text {
   margin-left: 80px;
   margin-bottom: 50px;
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  flex-direction: column;
   padding-right: 50rem;
   text-align: left;
 }
@@ -113,17 +107,8 @@ p {
 }
 
 .socials {
-  display: flex;
-  justify-content: space-around;
   padding: 80px;
   background-color: #c9e6e2; /*take it from styles*/
-}
-
-.socials-item {
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  flex-direction: column;
 }
 
 .socials-icon-size {
@@ -132,8 +117,6 @@ p {
 }
 
 .games-section {
-  display: flex;
-  flex-direction: column;
   text-align: center;
   padding: 80px;
   background-color: #6a9d9b; /*complementary 1 from theme*/
@@ -149,8 +132,6 @@ p {
 }
 
 .project-container {
-  display: flex;
-  justify-content: space-around;
   text-align: center;
 }
 
@@ -178,16 +159,7 @@ hr {
 }
 
 .community-section {
-  display: flex;
-  flex-direction: column;
-
   background-color: white;
-}
-
-.community-main {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
 }
 
 .community-main-text {
@@ -198,6 +170,40 @@ hr {
 .community-main-button {
   padding: 80px;
   text-align: center;
+}
+
+.about-me-text {
+  margin-left: 80px;
+  margin-bottom: 50px;
+  padding-left: 10rem;
+  padding-right: 10rem;
+  text-align: left;
+}
+
+.games-again-section {
+  background-color: #dcdced;
+}
+
+.about-me-icon {
+  padding-left: 58rem;
+}
+
+.contact-me {
+  background-color: #6a9d9b;
+  color: white;
+}
+
+.contact-me-text {
+  text-align: left;
+  padding-right: 40rem;
+  padding-left: 6rem;
+}
+
+.contact-me-email {
+  text-align: right;
+  font-family: serif;
+  padding-right: 6rem;
+  padding-top: 5rem;
 }
 
 .hamburger {
@@ -250,4 +256,54 @@ hr {
 
 .c-pb-full {
   padding-bottom: 1rem !important;
+}
+
+.c-fx-row {
+  display: flex;
+  flex-direction: row;
+}
+
+.c-fx-row-start {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+}
+
+.c-fx-row-space-between {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.c-fx-column {
+  display: flex;
+  flex-direction: column;
+}
+
+.c-fx-column-center {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.c-fx-column-start {
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+}
+
+.c-fx-space-between {
+  justify-content: space-between;
+}
+
+.c-fx-space-around {
+  justify-content: space-around;
+}
+
+.c-fx-space-center {
+  justify-content: center;
+}
+
+.c-padding-full {
+  padding: 80px;
 }
