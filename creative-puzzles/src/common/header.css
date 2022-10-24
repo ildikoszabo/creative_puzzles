@@ -1,0 +1,9 @@
+headingtitle {
+  font-weight: bold;
+  font-size: x-large;
+}
+
+nav {
+  border-bottom: 1px solid black; /*should be from theme*/
+  height: 60px;
+}

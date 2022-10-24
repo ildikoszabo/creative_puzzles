@@ -6,6 +6,14 @@ import CustomBox from "../common/components/CustomBox";
 import { getRandomShapes } from "../common/PuzzleGenerator";
 import PieceSelection from "../common/components/PieceSelection";
 import InfinityScroll from "../common/components/InfinityScroll";
+import Header from "../common/header";
+import "../index.css";
+
+const headerNavLinks = [
+  { name: "Games", path: "/#games" },
+  { name: "Community", path: "/#community" },
+  { name: "About me", path: "/#about-me" },
+];
 
 export default function InfinityPuzzle() {
   const [arr, setArr] = useState(getRandomShapes(8, 40).slice(0, -8));
@@ -43,58 +51,60 @@ export default function InfinityPuzzle() {
 
   return (
     <div>
-      <InfinityScroll threshold={60} loadNewValues={loadNewValues}>
-        {anchorEl ? (
-          <PieceSelection
-            onPieceSelection={onPieceSelection}
-            handleClick={handleClick}
-            handleClose={handleClose}
-            anchorEl={anchorEl}
-            selectedGeneratedPiece={selectedGeneratedPiece}
-          />
-        ) : null}
+      <Header headerTitle="infinity puzzle" headerNavLinks={headerNavLinks} />
 
-        <Container
-          fluid="false"
-          disableGutters={true}
-          maxWidth="xs"
-          style={{
-            height: "100%",
-            margin: 0,
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
-          {arr !== undefined ? (
-            <Box xs={{}}>
-              <Grid container spacing={0} columns={8}>
-                {arr.map((el, index) => (
-                  <Grid
-                    item
-                    xs={1}
-                    key={index}
-                    aria-controls={anchorEl ? "basic-menu" : undefined}
-                    aria-haspopup="true"
-                    aria-expanded={anchorEl ? "true" : undefined}
-                    onClick={(event) => handleClick(event, el, index)}
-                    id="basic-button"
-                  >
-                    <CustomBox
-                      value={arr[index]}
-                      opacity={0}
-                      applyPieceMask={el.match}
-                      clicked={anchorEl != null && ancholElIndex == index}
-                    />
-                  </Grid>
-                ))}
-              </Grid>
-            </Box>
-          ) : (
-            "Loading"
-          )}
-        </Container>
-      </InfinityScroll>
+      <div className="c-fx-column-center">
+        <InfinityScroll threshold={60} loadNewValues={loadNewValues}>
+          {anchorEl ? (
+            <PieceSelection
+              onPieceSelection={onPieceSelection}
+              handleClick={handleClick}
+              handleClose={handleClose}
+              anchorEl={anchorEl}
+              selectedGeneratedPiece={selectedGeneratedPiece}
+            />
+          ) : null}
+
+          <Container
+            className="c-fx-row-center"
+            fluid="false"
+            disableGutters={true}
+            maxWidth="xs"
+            style={{
+              height: "100%",
+              margin: 0,
+            }}
+          >
+            {arr !== undefined ? (
+              <Box>
+                <Grid container spacing={0} columns={8}>
+                  {arr.map((el, index) => (
+                    <Grid
+                      item
+                      xs={1}
+                      key={index}
+                      aria-controls={anchorEl ? "basic-menu" : undefined}
+                      aria-haspopup="true"
+                      aria-expanded={anchorEl ? "true" : undefined}
+                      onClick={(event) => handleClick(event, el, index)}
+                      id="basic-button"
+                    >
+                      <CustomBox
+                        value={arr[index]}
+                        opacity={0}
+                        applyPieceMask={el.match}
+                        clicked={anchorEl != null && ancholElIndex == index}
+                      />
+                    </Grid>
+                  ))}
+                </Grid>
+              </Box>
+            ) : (
+              "Loading"
+            )}
+          </Container>
+        </InfinityScroll>
+      </div>
     </div>
   );
 }

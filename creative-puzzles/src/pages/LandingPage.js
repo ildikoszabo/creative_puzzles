@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Button, IconButton } from "@mui/material";
 import "./LandingPage.css";
+import "../index.css";
 import puzzle_pieces from "../assests/puzzle_pieces.png";
 import patreon from "../assests/Digital-Patreon-Logo_Black.png";
 import game_picture from "../assests/game_picture.PNG";
@@ -8,26 +9,20 @@ import gallery from "../assests/Gallery.png";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import YouTubeIcon from "@mui/icons-material/YouTube";
 import GitHubIcon from "@mui/icons-material/GitHub";
+import { Link } from "react-router-dom";
+import Header from "../common/header";
+
+const headerNavLinks = [
+  { name: "Games", path: "#games" },
+  { name: "Community", path: "#community" },
+  { name: "About me", path: "#about-me" },
+];
 
 export default function LandingPage() {
   return (
     <div>
       <section class="main">
-        <nav class="c-fx-row-space-between">
-          <ul class="c-fx-row-start" id="nav-list">
-            <li>
-              <headingtitle>puzzle games</headingtitle>
-            </li>
-            <li>
-              <a href="#games">Games</a>
-            </li>
-            <li>
-              <a href="#community">Community</a>
-            </li>
-            <li>
-              <a href="#about-me">About me</a>
-            </li>
-          </ul>
+        <Header headerTitle="puzzle games" headerNavLinks={headerNavLinks}>
           <div class="puzzle-piece">
             <img class="rotate90 logo" src={puzzle_pieces} alt="puzzle games" />
           </div>
@@ -40,7 +35,7 @@ export default function LandingPage() {
               Play
             </Button>
           </div>
-        </nav>
+        </Header>
         <div class="c-fx-row-space-between main-area">
           <div class="c-fx-column-start c-fx-space-between main-text">
             <h1>Puzzling simplified</h1>
@@ -106,9 +101,9 @@ export default function LandingPage() {
             <p class="subtext">Infinit scrolling puzzle game</p>
             <hr />
             <h3>
-              <a class="project-link" href="">
+              <Link class="project-link" to={`games/infinityPuzzle`}>
                 Play now
-              </a>
+              </Link>
             </h3>
           </div>
           <div class="project-card">
