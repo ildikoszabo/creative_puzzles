@@ -14,7 +14,6 @@ section {
 
 footer {
   padding: 80px;
-  background-color: #dcdced;
   color: black;
   text-align: left;
 }
@@ -98,7 +97,6 @@ p {
 
 .socials {
   padding: 80px;
-  background-color: #c9e6e2; /*take it from styles*/
 }
 
 .socials-icon-size {
@@ -179,7 +177,6 @@ hr {
 }
 
 .contact-me {
-  background-color: #6a9d9b;
   color: white;
 }
 

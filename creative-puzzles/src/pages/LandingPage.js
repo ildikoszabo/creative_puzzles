@@ -11,6 +11,11 @@ import YouTubeIcon from "@mui/icons-material/YouTube";
 import GitHubIcon from "@mui/icons-material/GitHub";
 import { Link } from "react-router-dom";
 import Header from "../common/header";
+import {
+  complementaryLightBg,
+  complementaryMainBg,
+  footerStyle,
+} from "../common/appTheme";
 
 const headerNavLinks = [
   { name: "Games", path: "#games" },
@@ -55,7 +60,10 @@ export default function LandingPage() {
           </div>
         </div>
 
-        <section class="c-fx-row-space-between socials">
+        <section
+          class="c-fx-row-space-between socials"
+          style={complementaryLightBg}
+        >
           <div class="c-fx-column-center c-fx-space-between">
             <IconButton component="label">
               <YouTubeIcon fontSize="large" />
@@ -86,7 +94,11 @@ export default function LandingPage() {
           </div>
         </section>
       </section>
-      <section class="c-fx-column games-section" id="games">
+      <section
+        class="c-fx-column games-section"
+        style={complementaryMainBg}
+        id="games"
+      >
         <div>
           <h2>Try one of these games now</h2>
         </div>
@@ -172,7 +184,11 @@ export default function LandingPage() {
           </div>
         </div>
       </section>
-      <section id="contact-me" className="c-fx-row contact-me">
+      <section
+        id="contact-me"
+        style={complementaryMainBg}
+        className="c-fx-row contact-me"
+      >
         <div className="c-fx-column-start c-fx-space-between contact-me-text">
           <h2>Do you have some feedback? Let’s talk!</h2>
           <div class="c-pb-full">
@@ -186,7 +202,7 @@ export default function LandingPage() {
         </div>
       </section>
 
-      <footer className="c-fx-row-space-between">
+      <footer className="c-fx-row-space-between" style={footerStyle}>
         <div className="c-fx-column">
           <p>Enjoy free to play puzzle games online.</p>
           <h2>Puzzle games</h2>

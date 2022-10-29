@@ -4,6 +4,7 @@ headingtitle {
 }
 
 nav {
-  border-bottom: 1px solid black; /*should be from theme*/
+  border-bottom-width: 1px;
+  border-bottom-style: solid;
   height: 60px;
 }
