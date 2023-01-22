@@ -8,6 +8,7 @@ import PieceSelection from "../common/components/PieceSelection";
 import InfinityScroll from "../common/components/InfinityScroll";
 import Header from "../common/header";
 import "../index.css";
+import { useTheme } from "@mui/material/styles";
 
 const headerNavLinks = [
   { name: "Games", path: "/#games" },
@@ -20,6 +21,12 @@ export default function InfinityPuzzle() {
   const [anchorEl, setAnchorEl] = useState(null);
   const [ancholElIndex, setAnchorElIndex] = useState(null);
   const [selectedGeneratedPiece, setSelectedGeneratedPiece] = useState(null);
+  const [currentlyHoveredPiece, setCurrentlyHoveredPiece] = useState(9);
+  const theme = useTheme();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   const onPieceSelection = (pieceDetails) => {
     if (selectedGeneratedPiece.name === pieceDetails.name) {
@@ -49,6 +56,32 @@ export default function InfinityPuzzle() {
     setArr(newArr);
   };
 
+  const needHighlight = (gridIndex) => {
+    if (currentlyHoveredPiece != null) {
+      let columnLength = 8;
+      let surroundArray = [currentlyHoveredPiece + columnLength];
+
+      if ((currentlyHoveredPiece + 1) % columnLength !== 0) {
+        surroundArray.push(currentlyHoveredPiece + 1);
+        surroundArray.push(currentlyHoveredPiece + columnLength + 1);
+        surroundArray.push(currentlyHoveredPiece - columnLength + 1);
+      }
+
+      if (currentlyHoveredPiece % columnLength !== 0) {
+        surroundArray.push(currentlyHoveredPiece - 1);
+        surroundArray.push(currentlyHoveredPiece + columnLength - 1);
+        surroundArray.push(currentlyHoveredPiece - columnLength - 1);
+      }
+
+      if (currentlyHoveredPiece > columnLength - 1) {
+        surroundArray.push(currentlyHoveredPiece - columnLength);
+      }
+
+      return surroundArray.includes(gridIndex);
+    }
+    return false;
+  };
+
   return (
     <div>
       <Header headerTitle="infinity puzzle" headerNavLinks={headerNavLinks} />
@@ -66,14 +99,11 @@ export default function InfinityPuzzle() {
           ) : null}
 
           <Container
-            className="c-fx-row-center"
+            className="c-fx-row-center middle-box"
             fluid="false"
             disableGutters={true}
             maxWidth="xs"
-            style={{
-              height: "100%",
-              margin: 0,
-            }}
+            style={{ color: theme.palette.primary.main }}
           >
             {arr !== undefined ? (
               <Box>
@@ -91,9 +121,14 @@ export default function InfinityPuzzle() {
                     >
                       <CustomBox
                         value={arr[index]}
+                        id={index}
                         opacity={0}
                         applyPieceMask={el.match}
-                        clicked={anchorEl != null && ancholElIndex == index}
+                        clicked={anchorEl != null && ancholElIndex === index}
+                        currentlyHoveredPiece={currentlyHoveredPiece}
+                        setCurrentlyHoveredPiece={setCurrentlyHoveredPiece}
+                        needsHighlight={needHighlight(index)}
+                        fromPiceSelection={false}
                       />
                     </Grid>
                   ))}

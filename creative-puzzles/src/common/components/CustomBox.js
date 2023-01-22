@@ -2,43 +2,51 @@ import { useEffect, useState } from "react";
 import { Box, ThemeProvider, createTheme } from "@mui/system";
 import Corner1 from "../../assests/corner1.png";
 import Top1 from "../../assests/top1.png";
+import { useTheme } from "@mui/material/styles";
 import "./CustomBox.css";
 
-const theme = createTheme({
+/*const theme = createTheme({
   palette: {
     primary: {
-      main: "#007FFF",
-      dark: "#0059B2",
+      main: '#007FFF',
+      dark: '#0059B2',
     },
   },
+});*/
+
+const inStyle = (theme) => ({
+  backgroundColor: `${theme.neutrals.neutral_6}`,
 });
 
-const outStyle = {
-  backgroundColor: `${theme.palette.primary.main}`,
-};
-
-const inStyle = {
-  backgroundColor: "white",
-};
-
-const hoverStyle = {
+const hoverStyle = (theme) => ({
   backgroundColor: `${theme.palette.primary.dark}`,
-};
+});
 
-const nonHoverStyle = {
+const nonHoverStyle = (theme) => ({
   backgroundColor: `${theme.palette.primary.main}`,
-};
+});
 
 export default function CustomBox(props) {
+  const theme = useTheme();
   const [isBoxHovered, setIsBoxHovered] = useState(false);
 
+  useEffect(() => {
+    if (!props.fromPiceSelection) {
+      if (props.id === props.currentlyHoveredPiece) {
+        setIsBoxHovered(true);
+      } else {
+        setIsBoxHovered(false);
+      }
+    }
+  }, []);
+
   const getEdgeStyle = (edge) => {
-    if (edge == -1) {
-      return inStyle;
+    if (edge === -1) {
+      return inStyle(theme);
     } else if (isBoxHovered) {
-      return hoverStyle;
+      return hoverStyle(theme);
     } else {
-      return nonHoverStyle;
+      return nonHoverStyle(theme);
     }
   };
 
@@ -61,20 +69,30 @@ export default function CustomBox(props) {
   }, [isBoxHovered]);
 
   const setBoxHoverState = () => {
-    setIsBoxHovered(!isBoxHovered);
+    let newState = !isBoxHovered;
+    setIsBoxHovered(newState);
+    if (newState === true && props.fromPiceSelection === false) {
+      props.setCurrentlyHoveredPiece(props.id);
+    }
   };
 
   const setMainStyle = (props) => {
     var style = {
       width: 54,
       height: 54,
-      border: 1,
+      border: props.needsHighlight ? 1 : 0,
       borderColor: "primary.main",
-      backgroundColor: props.clicked ? "primary.dark" : "white",
-      "&:hover": {
-        backgroundColor: "primary.dark",
-      },
+      backgroundColor:
+        props.clicked || props.id === props.currentlyHoveredPiece
+          ? "primary.dark"
+          : "white",
+      margin: 0,
+      boxSizing: "border-box",
     };
+
+    /*  "&:hover": {
+        backgroundColor: "primary.dark",
+      },*/
 
     return style;
   };
@@ -91,8 +109,8 @@ export default function CustomBox(props) {
             "&:hover": {
               backgroundColor: "primary.dark",
             },
-
             mixBlendMode: "darken",
+            margin: 0,
           }}
         >
           <div className="pieceBase">
@@ -115,7 +133,12 @@ export default function CustomBox(props) {
           </div>
         </Box>
       ) : (
-        <Box sx={setMainStyle(props)} onClick={props.onClick}></Box>
+        <Box
+          onMouseEnter={() => setBoxHoverState()}
+          onMouseLeave={() => setBoxHoverState()}
+          sx={setMainStyle(props)}
+          onClick={props.onClick}
+        ></Box>
       )}
     </ThemeProvider>
   );
