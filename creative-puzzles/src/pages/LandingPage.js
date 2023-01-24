@@ -26,13 +26,17 @@ const headerNavLinks = [
 export default function LandingPage() {
   return (
     <div>
-      <section class="main">
+      <section className="main">
         <Header headerTitle="puzzle games" headerNavLinks={headerNavLinks}>
-          <div class="puzzle-piece">
-            <img class="rotate90 logo" src={puzzle_pieces} alt="puzzle games" />
+          <div className="puzzle-piece">
+            <img
+              className="rotate90 logo"
+              src={puzzle_pieces}
+              alt="puzzle games"
+            />
           </div>
 
-          <div class="c-fx-row-start">
+          <div className="c-fx-row-start">
             <Button href="#login" disableElevation>
               Log in
             </Button>
@@ -41,42 +45,42 @@ export default function LandingPage() {
             </Button>
           </div>
         </Header>
-        <div class="c-fx-row-space-between main-area">
-          <div class="c-fx-column-start c-fx-space-between main-text">
+        <div className="c-fx-row-space-between main-area">
+          <div className="c-fx-column-start c-fx-space-between main-text">
             <h1>Puzzling simplified</h1>
-            <p class="c-pb-full ">
+            <p className="c-pb-full ">
               An online platform designed to play and to engage with the
               community — all in one place
             </p>
 
-            <div class="c-pb-full">
+            <div className="c-pb-full">
               <Button variant="contained" href="#games">
                 Try a game
               </Button>
             </div>
           </div>
-          <div class="main-right">
+          <div className="main-right">
             <img src={puzzle_pieces} alt="puzzle games" />
           </div>
         </div>
 
         <section
-          class="c-fx-row-space-between socials"
+          className="c-fx-row-space-between socials"
           style={complementaryLightBg}
         >
-          <div class="c-fx-column-center c-fx-space-between">
+          <div className="c-fx-column-center c-fx-space-between">
             <IconButton component="label">
               <YouTubeIcon fontSize="large" />
             </IconButton>
             <span>Watch more puzzle related content</span>
           </div>
-          <div class="c-fx-column-center c-fx-space-between">
+          <div className="c-fx-column-center c-fx-space-between">
             <IconButton component="label">
-              <img src={patreon} alt="patreon" class="socials-icon-size" />
+              <img src={patreon} alt="patreon" className="socials-icon-size" />
             </IconButton>
             <span>Join the Patreon community</span>
           </div>
-          <div class="c-fx-column-center c-fx-space-between">
+          <div className="c-fx-column-center c-fx-space-between">
             <IconButton component="label">
               <InstagramIcon fontSize="large" />
             </IconButton>
@@ -84,7 +88,7 @@ export default function LandingPage() {
               For daily and behind the scene content follow on Instagram
             </span>
           </div>
-          <div class="c-fx-column-center c-fx-space-between">
+          <div className="c-fx-column-center c-fx-space-between">
             <IconButton component="label">
               <GitHubIcon fontSize="large" />
             </IconButton>
@@ -95,46 +99,54 @@ export default function LandingPage() {
         </section>
       </section>
       <section
-        class="c-fx-column games-section"
+        className="c-fx-column games-section"
         style={complementaryMainBg}
         id="games"
       >
         <div>
           <h2>Try one of these games now</h2>
         </div>
-        <div class="c-fx-space-around c-fx-row project-container">
-          <div class="project-card">
+        <div className="c-fx-space-around c-fx-row project-container">
+          <div className="project-card">
             <img
-              class="project-image"
+              className="project-image"
               src={game_picture}
               alt="Infinity puzzle"
             />
             <h3>Infinity puzzle</h3>
-            <p class="subtext">Infinit scrolling puzzle game</p>
+            <p className="subtext">Infinit scrolling puzzle game</p>
             <hr />
             <h3>
-              <Link class="project-link" to={`games/infinityPuzzle`}>
+              <Link className="project-link" to={`games/infinityPuzzle`}>
                 Play now
               </Link>
             </h3>
           </div>
-          <div class="project-card">
-            <img class="project-image" src={game_picture} alt="Puzzle tetris" />
+          <div className="project-card">
+            <img
+              className="project-image"
+              src={game_picture}
+              alt="Puzzle tetris"
+            />
             <h3>Puzzle tetris</h3>
-            <p class="subtext">Classic tetris with a puzzle twist</p>
+            <p className="subtext">classNameic tetris with a puzzle twist</p>
             <hr />
             <h3>
-              <a class="project-link" href="">
+              <a className="project-link" href="">
                 Play now
               </a>
             </h3>
           </div>
         </div>
       </section>
-      <section id="community" class="c-fx-column community-section">
-        <div class="c-fx-row-space-between">
+      <section id="community" className="c-fx-column community-section">
+        <div className="c-fx-row-space-between">
           <div>
-            <img class="rotateminus90" src={puzzle_pieces} alt="puzzle games" />
+            <img
+              className="rotateminus90"
+              src={puzzle_pieces}
+              alt="puzzle games"
+            />
           </div>
           <div className="community-main-text">
             <p>
@@ -169,13 +181,13 @@ export default function LandingPage() {
           <div className="c-fx-row about-me-icon">
             <img src={puzzle_pieces} alt="puzzle games" />
           </div>
-          <div class="c-fx-column-start c-fx-space-between about-me-text ">
+          <div className="c-fx-column-start c-fx-space-between about-me-text ">
             <h2>About</h2>
             <p>
               All the design and implementation done by one passionate
               individual.
             </p>
-            <p class="c-pb-full">Meet me.</p>
+            <p className="c-pb-full">Meet me.</p>
             <div>
               <Button variant="outlined" href="#games">
                 Visit personal webpage
@@ -191,7 +203,7 @@ export default function LandingPage() {
       >
         <div className="c-fx-column-start c-fx-space-between contact-me-text">
           <h2>Do you have some feedback? Let’s talk!</h2>
-          <div class="c-pb-full">
+          <div className="c-pb-full">
             <Button variant="contained" href="#games">
               Join a livestream
             </Button>

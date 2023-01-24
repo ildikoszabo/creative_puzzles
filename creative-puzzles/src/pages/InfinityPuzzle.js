@@ -21,11 +21,12 @@ export default function InfinityPuzzle() {
   const [anchorEl, setAnchorEl] = useState(null);
   const [ancholElIndex, setAnchorElIndex] = useState(null);
   const [selectedGeneratedPiece, setSelectedGeneratedPiece] = useState(null);
-  const [currentlyHoveredPiece, setCurrentlyHoveredPiece] = useState(9);
+  const [currentlyHoveredPiece, setCurrentlyHoveredPiece] = useState(null);
   const theme = useTheme();
 
   useEffect(() => {
     window.scrollTo(0, 0);
+    setCurrentlyHoveredPiece(9);
   }, []);
 
   const onPieceSelection = (pieceDetails) => {
@@ -128,7 +129,7 @@ export default function InfinityPuzzle() {
                         currentlyHoveredPiece={currentlyHoveredPiece}
                         setCurrentlyHoveredPiece={setCurrentlyHoveredPiece}
                         needsHighlight={needHighlight(index)}
-                        fromPiceSelection={false}
+                        fromPieceSelection={false}
                       />
                     </Grid>
                   ))}

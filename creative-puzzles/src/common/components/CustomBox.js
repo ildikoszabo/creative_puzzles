@@ -1,18 +1,7 @@
 import { useEffect, useState } from "react";
-import { Box, ThemeProvider, createTheme } from "@mui/system";
-import Corner1 from "../../assests/corner1.png";
-import Top1 from "../../assests/top1.png";
+import { Box, ThemeProvider } from "@mui/system";
 import { useTheme } from "@mui/material/styles";
 import "./CustomBox.css";
-
-/*const theme = createTheme({
-  palette: {
-    primary: {
-      main: '#007FFF',
-      dark: '#0059B2',
-    },
-  },
-});*/
 
 const inStyle = (theme) => ({
   backgroundColor: `${theme.neutrals.neutral_6}`,
@@ -31,13 +20,17 @@ export default function CustomBox(props) {
   const [isBoxHovered, setIsBoxHovered] = useState(false);
 
   useEffect(() => {
-    if (!props.fromPiceSelection) {
-      if (props.id === props.currentlyHoveredPiece) {
+    if (props.fromPieceSelection != undefined) {
+      if (
+        props.currentlyHoveredPiece != undefined &&
+        props.id == props.currentlyHoveredPiece
+      ) {
         setIsBoxHovered(true);
       } else {
         setIsBoxHovered(false);
       }
     }
+    console.log("custombox useffect 1");
   }, []);
 
   const getEdgeStyle = (edge) => {
@@ -64,14 +57,15 @@ export default function CustomBox(props) {
     tabStyle.rightTab = getEdgeStyle(props.value.rightTab);
     tabStyle.bottomTab = getEdgeStyle(props.value.bottomTab);
     tabStyle.leftTab = getEdgeStyle(props.value.leftTab);
-
     setBoxEdgeStyle(tabStyle);
+
+    console.log("tabstyle");
   }, [isBoxHovered]);
 
   const setBoxHoverState = () => {
     let newState = !isBoxHovered;
     setIsBoxHovered(newState);
-    if (newState === true && props.fromPiceSelection === false) {
+    if (newState === true && props.fromPieceSelection === false) {
       props.setCurrentlyHoveredPiece(props.id);
     }
   };
@@ -89,10 +83,6 @@ export default function CustomBox(props) {
       margin: 0,
       boxSizing: "border-box",
     };
-
-    /*  "&:hover": {
-        backgroundColor: "primary.dark",
-      },*/
 
     return style;
   };

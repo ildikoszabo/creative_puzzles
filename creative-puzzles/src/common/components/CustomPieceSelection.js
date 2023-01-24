@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
-import { Paper, Grid } from '@mui/material';
-import { getRandomShapes } from '../PuzzleGenerator';
-import CustomBox from './CustomBox';
+import React, { useEffect, useState } from "react";
+import { Paper, Grid } from "@mui/material";
+import { getRandomShapes } from "../PuzzleGenerator";
+import CustomBox from "./CustomBox";
 
 export default function CustomPieceSelection(props) {
   const open = Boolean(props.anchorEl);
@@ -10,14 +10,18 @@ export default function CustomPieceSelection(props) {
   return (
     <div
       style={{
-        backgroundColor: '#6638f0',
-        position: 'absolute',
+        backgroundColor: "#6638f0",
+        position: "absolute",
         top: `${props.currentMousePos.y + 15}px`,
         left: `${props.currentMousePos.x}px`,
         zIndex: 1,
       }}
     >
-      <Paper variant="outlined" elevation="12" sx={{ padding: '10px', border: 'solid' }}>
+      <Paper
+        variant="outlined"
+        elevation="12"
+        sx={{ padding: "10px", border: "solid" }}
+      >
         <Grid container spacing={0} columns={3}>
           {arr.map((el, index) => (
             <Grid item xs={1} onClick={() => props.onPieceSelection(el)}>
@@ -26,7 +30,7 @@ export default function CustomPieceSelection(props) {
                 opacity={1}
                 applyPieceMask={true}
                 needsHighlight={false}
-                fromPiceSelection={true}
+                fromPieceSelection={true}
               />
             </Grid>
           ))}
