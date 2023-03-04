@@ -16,8 +16,9 @@
 }
 
 .pieceBase .t1 {
-  top: -1.5em;
-  left: 2em;
+  top: -1.6em;
+  left: 1.8em;
+  position: absolute;
 }
 
 .pieceBase .t0 {
@@ -25,7 +26,9 @@
 }
 
 .pieceBase .t-1 {
-  top: -0.7em;
+  width: 1.6em;
+  height: 1.6em;
+  top: -0.6em;
   left: 2em;
   background-color: #fff;
 }
@@ -35,13 +38,15 @@
 }
 
 .pieceBase .r1 {
-  top: 2em;
+  top: 1.9em;
   left: 5.5em;
 }
 
 .pieceBase .r-1 {
+  width: 1.6em;
+  height: 1.6em;
   top: 2em;
-  left: 4.7em;
+  left: 4.8em /*4.7em*/;
   background-color: #fff;
 }
 
@@ -51,11 +56,13 @@
 
 .pieceBase .b1 {
   top: 5.5em;
-  left: 2em;
+  left: 1.9em;
 }
 
 .pieceBase .b-1 {
-  top: 4.7em;
+  width: 1.7em;
+  height: 1.7em;
+  top: 4.5em;
   left: 2em;
   background-color: #fff;
 }
@@ -65,11 +72,13 @@
 }
 
 .pieceBase .l1 {
-  top: 2em;
-  left: -1.5em;
+  top: 1.9em;
+  left: -1.5em /*-1.5em*/;
 }
 
 .pieceBase .l-1 {
+  width: 1.6em;
+  height: 1.6em;
   top: 2em;
   left: -0.7em;
   background-color: #fff;
