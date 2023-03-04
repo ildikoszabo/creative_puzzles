@@ -1,6 +1,10 @@
-body {
+* {
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
+}
+
+body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu',
     'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -75,12 +79,21 @@ code {
   justify-content: space-between;
 }
 
+.c-fx-end {
+  justify-content: flex-end;
+}
+
 .c-fx-space-around {
   justify-content: space-around;
 }
 
 .c-fx-space-center {
   justify-content: center;
+}
+
+.c-fx-align-self-center {
+  display: flex;
+  align-self: center;
 }
 
 .c-padding-full {

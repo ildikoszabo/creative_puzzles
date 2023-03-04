@@ -1,5 +1,5 @@
 body {
-  font-family: "Poppins", sans-serif;
+  font-family: 'Poppins', sans-serif;
   margin: 0;
 }
 
@@ -8,7 +8,7 @@ section {
 }
 
 .main {
-  height: 100vh;
+  height: 75vh;
   color: black;
 }
 
@@ -79,7 +79,7 @@ p {
 }
 
 .main-area {
-  height: 70%; /*put back to 100% if main area should be text only*/
+  /*height: 100%; put back to 100% if main area should be text only*/
   align-items: center;
 }
 
@@ -96,7 +96,17 @@ p {
 }
 
 .socials {
-  padding: 80px;
+  gap: 5;
+  height: 20vh;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+}
+
+.socials > * {
+  flex-basis: 100%;
+  margin-left: 3%;
+  margin-right: 3%;
 }
 
 .socials-icon-size {
@@ -193,42 +203,74 @@ hr {
   padding-top: 5rem;
 }
 
-.hamburger {
+.drawerMenu {
   display: none;
 }
 
-.hamburger:focus {
-  outline: 0;
+@media only screen and (max-width: 1200px) {
+  .drawerMenu {
+    display: flex;
+  }
+
+  .listMenu {
+    display: none;
+  }
+
+  .socials {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin: 0;
+  }
+
+  .socials-text {
+    display: none;
+  }
+
+  h1 {
+    font-size: 50px;
+  }
+
+  h2 {
+    font-size: 30px;
+  }
+
+  .main-text {
+    margin-left: 80px;
+    margin-bottom: 50px;
+    padding-right: 40rem;
+    text-align: left;
+  }
+
+  .puzzle-piece {
+    transform: scale(80%);
+    padding-top: 43px;
+  }
 }
 
-@media only screen and (max-width: 1000px) {
-  .hamburger {
-    display: block;
-    border: 0;
-    background-color: transparent;
-    color: white;
-    font-size: 30px;
-    margin: 20px;
-    align-self: flex-end;
+@media only screen and (max-width: 1030px) {
+  .main-text {
+    margin-left: 80px;
+    margin-bottom: 50px;
+    padding-right: 30rem;
+    text-align: left;
   }
+}
 
-  ul {
-    display: none;
-    background-color: #2b2c38;
-    margin: 0ppx;
+@media only screen and (max-width: 900px) {
+  .main-text {
+    margin-left: 80px;
+    margin-bottom: 50px;
+    padding-right: 20rem;
+    text-align: left;
   }
+}
 
-  ul.show {
-    display: block;
-  }
-
-  nav {
-    display: flex;
-    flex-direction: column-reverse;
-    background-color: #2b2c38;
-  }
-
-  .logo {
-    display: none;
+@media only screen and (max-width: 700px) {
+  .main-text {
+    margin-left: 80px;
+    margin-bottom: 50px;
+    padding-right: 5rem;
+    text-align: left;
   }
 }
