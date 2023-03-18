@@ -48,10 +48,11 @@ export default function PieceSelection(props) {
       MenuListProps={{
         "aria-labelledby": "basic-button",
       }}
+      sx={{ width: "150px" }}
     >
       {arr.map((el, index) => (
         <MenuItem
-          style={index == 0 ? { marginBottom: "20px" } : { marginTop: "20px" }}
+          style={index === 0 ? { marginBottom: "20px" } : { marginTop: "20px" }}
           onClick={() => props.onPieceSelection(el)}
         >
           <CustomBox value={el} opacity={1} applyPieceMask={true} />

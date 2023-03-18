@@ -1,19 +1,19 @@
-import React, { useEffect, useState } from "react";
-import Box from "@mui/material/Box";
-import Grid from "@mui/material/Grid";
-import { Container } from "@mui/system";
-import CustomBox from "../common/components/CustomBox";
-import { getRandomShapes } from "../common/PuzzleGenerator";
-import PieceSelection from "../common/components/PieceSelection";
-import InfinityScroll from "../common/components/InfinityScroll";
-import Header from "../common/header";
-import "../index.css";
-import { useTheme } from "@mui/material/styles";
+import React, { useEffect, useState } from 'react';
+import Box from '@mui/material/Box';
+import Grid from '@mui/material/Grid';
+import { Container } from '@mui/system';
+import CustomBox from '../common/components/CustomBox';
+import { getRandomShapes } from '../common/PuzzleGenerator';
+import PieceSelection from '../common/components/PieceSelection';
+import InfinityScroll from '../common/components/InfinityScroll';
+import Header from '../common/header';
+import '../index.css';
+import { useTheme } from '@mui/material/styles';
 
 const headerNavLinks = [
-  { name: "Games", path: "/#games" },
-  { name: "Community", path: "/#community" },
-  { name: "About me", path: "/#about-me" },
+  { name: 'Games', path: '/#games' },
+  { name: 'Community', path: '/#community' },
+  { name: 'Sorting helper', path: '/#sorting-helper' },
 ];
 
 export default function InfinityPuzzle() {
@@ -114,9 +114,9 @@ export default function InfinityPuzzle() {
                       item
                       xs={1}
                       key={index}
-                      aria-controls={anchorEl ? "basic-menu" : undefined}
+                      aria-controls={anchorEl ? 'basic-menu' : undefined}
                       aria-haspopup="true"
-                      aria-expanded={anchorEl ? "true" : undefined}
+                      aria-expanded={anchorEl ? 'true' : undefined}
                       onClick={(event) => handleClick(event, el, index)}
                       id="basic-button"
                     >
@@ -136,7 +136,7 @@ export default function InfinityPuzzle() {
                 </Grid>
               </Box>
             ) : (
-              "Loading"
+              'Loading'
             )}
           </Container>
         </InfinityScroll>

@@ -16,7 +16,7 @@ import { complementaryLightBg, complementaryMainBg, footerStyle } from '../commo
 const headerNavLinks = [
   { name: 'Games', path: '#games' },
   { name: 'Community', path: '#community' },
-  { name: 'About me', path: '#about-me' },
+  { name: 'Sorting helper', path: '#sorting-helper' },
 ];
 
 export default function LandingPage() {
@@ -24,7 +24,7 @@ export default function LandingPage() {
     <div>
       <div>
         <section>
-          <Header headerTitle="puzzle games" headerNavLinks={headerNavLinks}>
+          <Header headerTitle="jp space" headerNavLinks={headerNavLinks}>
             <div class="puzzle-piece">
               <img class="rotate90 logo" src={puzzle_pieces} alt="puzzle games" />
             </div>
@@ -40,10 +40,10 @@ export default function LandingPage() {
           </Header>
           <div class="c-fx-row-space-between main-area main">
             <div class="c-fx-column-start c-fx-space-between main-text">
-              <h1>Puzzling simplified</h1>
+              <h1>Dear puzzler!</h1>
               <p class="c-pb-full ">
-                An online platform designed to play and to engage with the community — all in one
-                place
+                Welcome to an online platform designed to play and to engage with the community —
+                all in one place
               </p>
 
               <div class="c-pb-full">
@@ -51,6 +51,9 @@ export default function LandingPage() {
                   Try a game
                 </Button>
               </div>
+            </div>
+            <div class="c-fx-row-align-center puzzle-piece">
+              <img class="logo" src={puzzle_pieces} alt="puzzle games" />
             </div>
           </div>
         </section>
@@ -117,12 +120,16 @@ export default function LandingPage() {
       <section id="community" class="c-fx-column community-section">
         <div class="c-fx-row-space-between">
           <div>
-            <img class="rotateminus90" src={puzzle_pieces} alt="puzzle games" />
+            <img
+              class="rotateminus90 community-puzzle-piece"
+              src={puzzle_pieces}
+              alt="puzzle games"
+            />
           </div>
           <div className="community-main-text">
             <p>
-              Join the Patreon community to read free articles about how these games were built and
-              unlock access to livestreams.
+              Join the Patreon community to unlock access to more advanced features, like saving
+              progress, changing color on individual pieces and many more!
             </p>
           </div>
         </div>
@@ -143,22 +150,15 @@ export default function LandingPage() {
         </div>
       </section>
 
-      <section id="about-me" className="c-fx-row-space-between">
-        <div className="c-fx-row">
-          <img src={gallery} alt="personal projects" />
-        </div>
-
+      <section id="sorting-helper" className="c-fx-row-space-between">
         <div className="c-fx-column">
-          <div className="c-fx-row about-me-icon">
-            <img src={puzzle_pieces} alt="puzzle games" />
-          </div>
-          <div class="c-fx-column-start c-fx-space-between about-me-text ">
-            <h2>About</h2>
-            <p>All the design and implementation done by one passionate individual.</p>
-            <p class="c-pb-full">Meet me.</p>
+          <div class="c-fx-column-start c-fx-space-between sorting-helper-text ">
+            <h2>Sorting helper</h2>
+            <p>Upload an image of the puzzle you need help with.</p>
+            <p class="c-pb-full">Try it.</p>
             <div>
               <Button variant="outlined" href="#games">
-                Visit personal webpage
+                Sort it
               </Button>
             </div>
           </div>
@@ -174,18 +174,18 @@ export default function LandingPage() {
           </div>
         </div>
         <div className="c-fx-column-center contact-me-email">
-          <h2>hello@puzzlegame.com</h2>
+          <h2>hello@jpspace.com</h2>
         </div>
       </section>
 
-      <footer className="c-fx-row-space-between" style={footerStyle}>
+      <footer style={footerStyle}>
         <div className="c-fx-column">
           <p>Enjoy free to play puzzle games online.</p>
-          <h2>Puzzle games</h2>
+          <h2>jp space</h2>
         </div>
         <div className="c-fx-column footer-item">
           <span>Puzzle games is an online website which offers free to play games</span>
-          <span style={{ fontWeight: 'bold' }}>© Puzzle games 2022</span>
+          <span style={{ fontWeight: 'bold' }}>© jp space 2023</span>
         </div>
         <div className="c-fx-column footer-item-bold">
           <span>
@@ -200,7 +200,7 @@ export default function LandingPage() {
         </div>
         <div className="c-fx-column footer-item-bold">
           <span>1 000 123 4566</span>
-          <span>hello@puzzlegame.com</span>
+          <span>hello@jpspace.com</span>
         </div>
         <div className="c-fx-column footer-item">
           <span>

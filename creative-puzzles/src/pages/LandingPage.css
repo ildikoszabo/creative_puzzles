@@ -16,6 +16,9 @@ footer {
   padding: 80px;
   color: black;
   text-align: left;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }
 
 .footer-item {
@@ -86,7 +89,7 @@ p {
 .main-text {
   margin-left: 80px;
   margin-bottom: 50px;
-  padding-right: 50rem;
+  padding-right: 25rem;
   text-align: left;
 }
 
@@ -133,13 +136,6 @@ p {
   text-align: center;
 }
 
-@media only screen and (max-width: 1000px) {
-  .project-container {
-    display: flex;
-    flex-wrap: wrap;
-  }
-}
-
 .project-image {
   margin-top: 25px;
   width: 250px;
@@ -170,11 +166,9 @@ hr {
   text-align: center;
 }
 
-.about-me-text {
-  margin-left: 80px;
+.sorting-helper-text {
   margin-bottom: 50px;
-  padding-left: 10rem;
-  padding-right: 10rem;
+  padding-left: 80px;
   text-align: left;
 }
 
@@ -182,7 +176,7 @@ hr {
   background-color: #dcdced;
 }
 
-.about-me-icon {
+.sorting-helper-icon {
   padding-left: 58rem;
 }
 
@@ -192,8 +186,8 @@ hr {
 
 .contact-me-text {
   text-align: left;
-  padding-right: 40rem;
-  padding-left: 6rem;
+  padding-right: 30rem;
+  padding-left: 80px;
 }
 
 .contact-me-email {
@@ -207,12 +201,31 @@ hr {
   display: none;
 }
 
+@media only screen and (max-width: 1400px) {
+  .puzzle-piece {
+    transform: scale(80%);
+    padding-top: 43px;
+  }
+
+  .gallery {
+    transform: scale(50%);
+  }
+
+  .community-puzzle-piece {
+    display: none;
+  }
+}
+
 @media only screen and (max-width: 1200px) {
   .drawerMenu {
     display: flex;
   }
 
   .listMenu {
+    display: none;
+  }
+
+  .community-puzzle-piece {
     display: none;
   }
 
@@ -227,6 +240,10 @@ hr {
     display: none;
   }
 
+  .contact-me-text {
+    padding-right: 10rem;
+  }
+
   h1 {
     font-size: 50px;
   }
@@ -238,13 +255,8 @@ hr {
   .main-text {
     margin-left: 80px;
     margin-bottom: 50px;
-    padding-right: 40rem;
+    padding-right: 10rem;
     text-align: left;
-  }
-
-  .puzzle-piece {
-    transform: scale(80%);
-    padding-top: 43px;
   }
 }
 
@@ -252,21 +264,63 @@ hr {
   .main-text {
     margin-left: 80px;
     margin-bottom: 50px;
-    padding-right: 30rem;
+    padding-right: 10rem;
     text-align: left;
+  }
+
+  footer {
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+@media only screen and (max-width: 1000px) {
+  .project-container {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .contact-me {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .contact-me-email {
+    padding-top: 0;
+    padding-left: 80px;
+  }
+
+  .contact-me-text {
+    padding-right: 0rem;
   }
 }
 
 @media only screen and (max-width: 900px) {
+  .puzzle-piece {
+    display: none;
+  }
+
+  .community-puzzle-piece {
+    display: none;
+  }
+
+  .gallery {
+    display: none;
+  }
+
   .main-text {
     margin-left: 80px;
     margin-bottom: 50px;
-    padding-right: 20rem;
+    padding-right: 25rem;
     text-align: left;
   }
 }
 
 @media only screen and (max-width: 700px) {
+  .puzzle-piece {
+    display: none;
+  }
+
   .main-text {
     margin-left: 80px;
     margin-bottom: 50px;
