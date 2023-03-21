@@ -4,6 +4,7 @@ import "./index.css";
 import InfinityPuzzle from "./pages/InfinityPuzzle";
 import LandingPage from "./pages/LandingPage";
 import ErrorPage from "./pages/ErrorPage";
+import PieceSearch from "./pages/PieceSearch";
 import reportWebVitals from "./reportWebVitals";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { theme } from "./common/appTheme";
@@ -18,6 +19,11 @@ const router = createBrowserRouter([
   {
     path: "games/infinityPuzzle",
     element: <InfinityPuzzle />,
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: "utils/pieceSearch",
+    element: <PieceSearch />,
     errorElement: <ErrorPage />,
   },
 ]);

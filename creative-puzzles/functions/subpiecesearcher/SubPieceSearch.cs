@@ -20,18 +20,29 @@ namespace JPSpace.Function
     {
         [FunctionName("SubPieceSearch")]
         public static async Task<IActionResult> Run(
-            [HttpTrigger(AuthorizationLevel.Anonymous, "get", "post", Route = null)] HttpRequest req,
+            [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = null)] HttpRequest req,
             ILogger log)
         {
             log.LogInformation("C# HTTP trigger function processed a request.");
 
             string name = req.Query["name"];
-
-            LoadImage(); 
+            var image = req.Query["img"];
+           
 
             string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
             dynamic data = JsonConvert.DeserializeObject(requestBody);
-            name = name ?? data?.name;
+
+            //name = name ?? data?.name;
+            //image = image ?? data?.img;
+
+            string imagePath = System.IO.Path.GetPathRoot(String.Empty) + "\\full.jpg";  //add guid from query to file name   
+
+           
+            //Image imageToSave = System.Drawing.Image.FromStream(data);
+            //imageToSave.Save(imagePath);
+
+
+            LoadImage(imagePath); 
 
             string responseMessage = string.IsNullOrEmpty(name)
                 ? "This HTTP triggered function executed successfully. Pass a name in the query string or in the request body for a personalized response."
@@ -40,12 +51,12 @@ namespace JPSpace.Function
             return new OkObjectResult(responseMessage);
         }
 
-        private static void LoadImage()
+        private static void LoadImage(string bigImagefilePath)
         {           
-            string bigImagefilePath = "";
+		    //string bigImagefilePath = "D:\\Projects\\Git\\creative_puzzles\\creative-puzzles\\functions\\subpiecesearcher\\full.jpg";
             Mat bigImageinputImage = new Mat(bigImagefilePath, ImreadModes.AnyDepth | ImreadModes.Grayscale);
 
-            string smallImagefilePath = "";
+            string smallImagefilePath = "D:\\Projects\\Git\\creative_puzzles\\creative-puzzles\\functions\\subpiecesearcher\\piece.jpg";
             Mat smallImageinputImage = new Mat(smallImagefilePath, ImreadModes.AnyDepth | ImreadModes.Grayscale);
 
             Mat primary = CvInvoke.Imread(bigImagefilePath, ImreadModes.Color);
@@ -64,12 +75,12 @@ namespace JPSpace.Function
             Point pointMax = new Point();
 
             CvInvoke.MinMaxLoc(result, ref min, ref max, ref pointMin, ref pointMax);
-            Trace.WriteLine("pointMin:" + pointMin);
+            Trace.WriteLine("max:" + max);
             Trace.WriteLine("pointMax:" + pointMax);
 
             Rectangle r = new Rectangle(pointMax, subimage_edges.Size);
-            CvInvoke.Rectangle(primary_edges,r, new MCvScalar(255,0,0),3);
-            Image<Bgr, byte> img = primary_edges.ToImage<Bgr, byte>();
+            CvInvoke.Rectangle(primary,r, new MCvScalar(255,0,0),3);
+            Image<Bgr, byte> img = primary.ToImage<Bgr, byte>();
             img.Save("myfile.jpg");
         
         }
