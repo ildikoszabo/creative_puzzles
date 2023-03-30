@@ -12,6 +12,7 @@ using Emgu.CV.CvEnum;
 using Emgu.CV.Structure;
 using System.Diagnostics;
 using System.Drawing;
+using System.Text;
 
 
 namespace JPSpace.Function
@@ -26,21 +27,26 @@ namespace JPSpace.Function
             log.LogInformation("C# HTTP trigger function processed a request.");
 
             string name = req.Query["name"];
-            var image = req.Query["img"];
+            //var image = req.Query["img"];
            
 
             string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
-            dynamic data = JsonConvert.DeserializeObject(requestBody);
+          
+            //dynamic data = JsonConvert.DeserializeObject(requestBody);
 
             //name = name ?? data?.name;
-            //image = image ?? data?.img;
+            //var image = data?.img;
 
-            string imagePath = System.IO.Path.GetPathRoot(String.Empty) + "\\full.jpg";  //add guid from query to file name   
-
+            string imagePath = Path.Combine(Directory.GetCurrentDirectory(), "fromMessage.jpg");   //add guid from query to file name  
+                     
            
-            //Image imageToSave = System.Drawing.Image.FromStream(data);
-            //imageToSave.Save(imagePath);
-
+            byte[] bytes = Convert.FromBase64String(FixBase64ForImage(requestBody));  
+           
+            using (MemoryStream ms = new MemoryStream(bytes))  
+            {  
+               Image imageToSave = System.Drawing.Image.FromStream(ms);  
+               imageToSave.Save(imagePath);
+            }          
 
             LoadImage(imagePath); 
 
@@ -83,6 +89,19 @@ namespace JPSpace.Function
             Image<Bgr, byte> img = primary.ToImage<Bgr, byte>();
             img.Save("myfile.jpg");
         
+        }
+
+        private static string FixBase64ForImage(string imageEncoded) { 
+
+            imageEncoded = imageEncoded.Substring(imageEncoded.LastIndexOf(',') + 1);
+
+            StringBuilder sbText = new StringBuilder(imageEncoded, imageEncoded.Length);
+            sbText.Replace("\r\n", String.Empty); 
+            sbText.Replace(" ", String.Empty); 
+            sbText.Replace('-', '+');
+            sbText.Replace('_', '/');  
+
+            return sbText.ToString(); 
         }
     }
 

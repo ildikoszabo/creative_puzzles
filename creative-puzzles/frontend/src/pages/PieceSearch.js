@@ -36,7 +36,9 @@ export default function PieceSearch() {
 
   const postImage = () => {
     let url = "http://localhost:7071/api/SubPieceSearch";
-    let body = JSON.stringify(queryImage);
+    //let body = { name: "name", img: JSON.stringify(queryImage) };
+    let body = queryImage;
+
     Requests.post(url, {}, body)
       .then((res) => res.json())
       .then((data) => {
