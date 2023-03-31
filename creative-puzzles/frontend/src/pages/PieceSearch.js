@@ -13,6 +13,7 @@ const headerNavLinks = [
 export default function PieceSearch() {
   const [file, setFile] = useState();
   const [queryImage, setQueryImage] = useState();
+  const [resultImage, setResultImage] = useState();
   const inputRef = useRef(null);
 
   const handleUploadClick = () => {
@@ -36,14 +37,14 @@ export default function PieceSearch() {
 
   const postImage = () => {
     let url = "http://localhost:7071/api/SubPieceSearch";
-    //let body = { name: "name", img: JSON.stringify(queryImage) };
-    let body = queryImage;
+    let body = JSON.stringify({ name: "name", img: queryImage });
+    //let body = JSON.stringify(queryImage); works also
 
-    Requests.post(url, {}, body)
-      .then((res) => res.json())
-      .then((data) => {
-        console.log(data);
-      });
+    Requests.post(url, {}, body).then((res) => {
+      if (res.body != undefined) {
+        setResultImage(res.body);
+      }
+    });
   };
 
   return (
@@ -67,6 +68,8 @@ export default function PieceSearch() {
         <Button variant="contained" href="#games" onClick={() => postImage()}>
           Send
         </Button>
+
+        <img src={`data:image/jpeg;base64,${resultImage}`} />
       </div>
     </div>
   );

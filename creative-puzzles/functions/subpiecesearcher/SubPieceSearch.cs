@@ -14,7 +14,6 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Text;
 
-
 namespace JPSpace.Function
 {
     public static class SubPieceSearch
@@ -32,15 +31,15 @@ namespace JPSpace.Function
 
             string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
           
-            //dynamic data = JsonConvert.DeserializeObject(requestBody);
+            dynamic data = JsonConvert.DeserializeObject(requestBody);
 
             //name = name ?? data?.name;
-            //var image = data?.img;
+            string imageFromMessage = data.img;
 
             string imagePath = Path.Combine(Directory.GetCurrentDirectory(), "fromMessage.jpg");   //add guid from query to file name  
                      
            
-            byte[] bytes = Convert.FromBase64String(FixBase64ForImage(requestBody));  
+            byte[] bytes = Convert.FromBase64String(FixBase64ForImage(imageFromMessage));  
            
             using (MemoryStream ms = new MemoryStream(bytes))  
             {  
@@ -48,16 +47,32 @@ namespace JPSpace.Function
                imageToSave.Save(imagePath);
             }          
 
-            LoadImage(imagePath); 
+            string resultFile = LoadImage(imagePath); 
+            string encodedBase64 = String.Empty;
+
+            using (Image imageToSend = Image.FromFile(resultFile))
+            {
+                using (MemoryStream m = new MemoryStream())
+                {
+                    imageToSend.Save(m, imageToSend.RawFormat);
+                    byte[] imageBytes = m.ToArray();
+
+                    // Convert byte[] to Base64 String
+                    encodedBase64 = Convert.ToBase64String(imageBytes);
+                    
+                }
+            }
+
+       
 
             string responseMessage = string.IsNullOrEmpty(name)
                 ? "This HTTP triggered function executed successfully. Pass a name in the query string or in the request body for a personalized response."
                 : $"Hello, {name}. This HTTP triggered function executed successfully.";
 
-            return new OkObjectResult(responseMessage);
+            return new OkObjectResult(encodedBase64);
         }
 
-        private static void LoadImage(string bigImagefilePath)
+        private static string LoadImage(string bigImagefilePath)
         {           
 		    //string bigImagefilePath = "D:\\Projects\\Git\\creative_puzzles\\creative-puzzles\\functions\\subpiecesearcher\\full.jpg";
             Mat bigImageinputImage = new Mat(bigImagefilePath, ImreadModes.AnyDepth | ImreadModes.Grayscale);
@@ -87,13 +102,15 @@ namespace JPSpace.Function
             Rectangle r = new Rectangle(pointMax, subimage_edges.Size);
             CvInvoke.Rectangle(primary,r, new MCvScalar(255,0,0),3);
             Image<Bgr, byte> img = primary.ToImage<Bgr, byte>();
-            img.Save("myfile.jpg");
-        
+            string resultFile = "myfile.jpg";
+            img.Save(resultFile);
+
+            return resultFile;
         }
 
         private static string FixBase64ForImage(string imageEncoded) { 
 
-            imageEncoded = imageEncoded.Substring(imageEncoded.LastIndexOf(',') + 1);
+            imageEncoded = imageEncoded.Substring(imageEncoded.LastIndexOf(',') + 1);        
 
             StringBuilder sbText = new StringBuilder(imageEncoded, imageEncoded.Length);
             sbText.Replace("\r\n", String.Empty); 
