@@ -25,29 +25,16 @@ namespace JPSpace.Function
         {
             log.LogInformation("C# HTTP trigger function processed a request.");
 
-            string name = req.Query["name"];
-            //var image = req.Query["img"];
-           
+                
 
             string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
           
             dynamic data = JsonConvert.DeserializeObject(requestBody);
-
-            //name = name ?? data?.name;
-            string imageFromMessage = data.img;
-
-            string imagePath = Path.Combine(Directory.GetCurrentDirectory(), "fromMessage.jpg");   //add guid from query to file name  
-                     
-           
-            byte[] bytes = Convert.FromBase64String(FixBase64ForImage(imageFromMessage));  
-           
-            using (MemoryStream ms = new MemoryStream(bytes))  
-            {  
-               Image imageToSave = System.Drawing.Image.FromStream(ms);  
-               imageToSave.Save(imagePath);
-            }          
-
-            string resultFile = LoadImage(imagePath); 
+            string name = data.name;     
+            string puzzleImagePath = SaveImageFromRequest(name, data, "puzzleImage");
+            string pieceImagePath = SaveImageFromRequest(name, data, "pieceImage");
+          
+            string resultFile = SearchImage(puzzleImagePath, pieceImagePath); 
             string encodedBase64 = String.Empty;
 
             using (Image imageToSend = Image.FromFile(resultFile))
@@ -61,9 +48,7 @@ namespace JPSpace.Function
                     encodedBase64 = Convert.ToBase64String(imageBytes);
                     
                 }
-            }
-
-       
+            }      
 
             string responseMessage = string.IsNullOrEmpty(name)
                 ? "This HTTP triggered function executed successfully. Pass a name in the query string or in the request body for a personalized response."
@@ -72,12 +57,30 @@ namespace JPSpace.Function
             return new OkObjectResult(encodedBase64);
         }
 
-        private static string LoadImage(string bigImagefilePath)
-        {           
-		    //string bigImagefilePath = "D:\\Projects\\Git\\creative_puzzles\\creative-puzzles\\functions\\subpiecesearcher\\full.jpg";
-            Mat bigImageinputImage = new Mat(bigImagefilePath, ImreadModes.AnyDepth | ImreadModes.Grayscale);
+        private static string SaveImageFromRequest(string fileName, dynamic data, string imageType){
+            string imageFromMessage = String.Empty;
+            if (imageType == "puzzleImage"){
+                imageFromMessage = data.puzzleImage;
+            } else if (imageType == "pieceImage"){
+                imageFromMessage = data.pieceImage;
+            }
+         
+            string imagePath = Path.Combine(Directory.GetCurrentDirectory(),fileName+Guid.NewGuid()+".jpg");          
+            byte[] bytes = Convert.FromBase64String(FixBase64ForImage(imageFromMessage));
+           
+            using (MemoryStream ms = new MemoryStream(bytes))  
+            {  
+               Image imageToSave = System.Drawing.Image.FromStream(ms);  
+               imageToSave.Save(imagePath);
+            } 
 
-            string smallImagefilePath = "D:\\Projects\\Git\\creative_puzzles\\creative-puzzles\\functions\\subpiecesearcher\\piece.jpg";
+            return imagePath;          
+        }
+
+        private static string SearchImage(string bigImagefilePath, string smallImagefilePath)
+        {         
+		    
+            Mat bigImageinputImage = new Mat(bigImagefilePath, ImreadModes.AnyDepth | ImreadModes.Grayscale);    
             Mat smallImageinputImage = new Mat(smallImagefilePath, ImreadModes.AnyDepth | ImreadModes.Grayscale);
 
             Mat primary = CvInvoke.Imread(bigImagefilePath, ImreadModes.Color);
@@ -100,9 +103,9 @@ namespace JPSpace.Function
             Trace.WriteLine("pointMax:" + pointMax);
 
             Rectangle r = new Rectangle(pointMax, subimage_edges.Size);
-            CvInvoke.Rectangle(primary,r, new MCvScalar(255,0,0),3);
+            CvInvoke.Rectangle(primary,r, new MCvScalar(242,5,29),10);
             Image<Bgr, byte> img = primary.ToImage<Bgr, byte>();
-            string resultFile = "myfile.jpg";
+            string resultFile = "result"+Guid.NewGuid()+".jpg";
             img.Save(resultFile);
 
             return resultFile;

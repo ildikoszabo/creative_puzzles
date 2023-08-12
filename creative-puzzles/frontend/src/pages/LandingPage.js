@@ -157,25 +157,28 @@ export default function LandingPage() {
         </div>
       </section>
       <section className="games-again-section">
-        <div className="c-fx-column c-fx-space-center c-padding-full">
-          <p>Something with a puzzle image and related to the games</p>
-          <div>
-            <Button variant="contained" href="#games">
-              Play now
-            </Button>
-          </div>
-        </div>
-      </section>
-
-      <section id="sorting-helper" className="c-fx-row-space-between">
-        <div className="c-fx-column">
-          <div class="c-fx-column-start c-fx-space-between sorting-helper-text ">
-            <h2>Piece search</h2>
-            <p>Upload an image of the puzzle you need help with.</p>
-            <p class="c-pb-full">Try it.</p>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "space-between",
+            alignItems: "start",
+          }}
+        >
+          <div className="c-fx-column c-fx-space-center c-padding-full">
+            <p>Upload an image of the puzzle you need help with</p>
             <div>
-              <Link to={`utils/pieceSearch`}>Search</Link>
+              <Button variant="contained" href="utils/pieceSearch">
+                Search
+              </Button>
             </div>
+          </div>
+          <div>
+            <img
+              class="rotate90 community-puzzle-piece"
+              src={puzzle_pieces}
+              alt="puzzle games"
+            />
           </div>
         </div>
       </section>
@@ -197,7 +200,7 @@ export default function LandingPage() {
         </div>
       </section>
 
-      <footer style={footerStyle}>
+      <footer style={complementaryLightBg}>
         <div className="c-fx-column">
           <p>Enjoy free to play puzzle games online.</p>
           <h2>jp space</h2>
