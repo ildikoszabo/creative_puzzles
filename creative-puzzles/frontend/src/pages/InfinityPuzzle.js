@@ -1,19 +1,22 @@
-import React, { useEffect, useState } from 'react';
-import Box from '@mui/material/Box';
-import Grid from '@mui/material/Grid';
-import { Container } from '@mui/system';
-import CustomBox from '../common/components/CustomBox';
-import { getRandomShapes } from '../common/PuzzleGenerator';
-import PieceSelection from '../common/components/PieceSelection';
-import InfinityScroll from '../common/components/InfinityScroll';
-import Header from '../common/header';
-import '../index.css';
-import { useTheme } from '@mui/material/styles';
+import React, { useEffect, useState } from "react";
+import Box from "@mui/material/Box";
+import Grid from "@mui/material/Grid";
+import { Container } from "@mui/system";
+import CustomBox from "../common/components/CustomBox";
+import { getRandomShapes } from "../common/PuzzleGenerator";
+import PieceSelection from "../common/components/PieceSelection";
+import InfinityScroll from "../common/components/InfinityScroll";
+import Header from "../common/header";
+import "../index.css";
+import { useTheme } from "@mui/material/styles";
+import Alert from "@mui/material/Alert";
+import AlertTitle from "@mui/material/AlertTitle";
+import Snackbar from "@mui/material/Snackbar";
 
 const headerNavLinks = [
-  { name: 'Games', path: '/#games' },
-  { name: 'Community', path: '/#community' },
-  { name: 'Sorting helper', path: '/#sorting-helper' },
+  { name: "Games", path: "/#games" },
+  { name: "Community", path: "/#community" },
+  { name: "Sorting helper", path: "/#sorting-helper" },
 ];
 
 export default function InfinityPuzzle() {
@@ -22,6 +25,8 @@ export default function InfinityPuzzle() {
   const [ancholElIndex, setAnchorElIndex] = useState(null);
   const [selectedGeneratedPiece, setSelectedGeneratedPiece] = useState(null);
   const [currentlyHoveredPiece, setCurrentlyHoveredPiece] = useState(null);
+  const [showAlert, setShowAlert] = useState(false);
+  const [mousePosition, setMousePosition] = useState(null);
   const theme = useTheme();
 
   useEffect(() => {
@@ -29,13 +34,25 @@ export default function InfinityPuzzle() {
     setCurrentlyHoveredPiece(9);
   }, []);
 
-  const onPieceSelection = (pieceDetails) => {
+  const onPieceSelection = (pieceDetails, event) => {
     if (selectedGeneratedPiece.name === pieceDetails.name) {
       selectedGeneratedPiece.match = true;
+    } else {
+      setShowAlert(true);
     }
-    //else not a match snack bar
 
     setAnchorEl(null);
+    const { previousSibling, value } = event.target;
+
+    //console.log(event);
+    event.preventDefault();
+    //value.focus();
+    //const position = value.length;
+    if (mousePosition != null) {
+      console.log("setting to " + mousePosition);
+      event.clientX = mousePosition.x;
+      event.clientY = mousePosition.y;
+    }
   };
 
   const handleClick = (event, el, elIndex) => {
@@ -83,6 +100,10 @@ export default function InfinityPuzzle() {
     return false;
   };
 
+  const setCurrentMousePosition = (event) => {
+    setMousePosition({ x: event.clientX, y: event.clientY });
+    console.log(mousePosition);
+  };
   return (
     <div>
       <Header headerTitle="infinity puzzle" headerNavLinks={headerNavLinks} />
@@ -114,11 +135,12 @@ export default function InfinityPuzzle() {
                       item
                       xs={1}
                       key={index}
-                      aria-controls={anchorEl ? 'basic-menu' : undefined}
+                      aria-controls={anchorEl ? "basic-menu" : undefined}
                       aria-haspopup="true"
-                      aria-expanded={anchorEl ? 'true' : undefined}
+                      aria-expanded={anchorEl ? "true" : undefined}
                       onClick={(event) => handleClick(event, el, index)}
                       id="basic-button"
+                      onMouseEnter={setCurrentMousePosition}
                     >
                       <CustomBox
                         value={arr[index]}
@@ -136,11 +158,30 @@ export default function InfinityPuzzle() {
                 </Grid>
               </Box>
             ) : (
-              'Loading'
+              "Loading"
             )}
           </Container>
         </InfinityScroll>
       </div>
+      <Snackbar
+        open={showAlert}
+        autoHideDuration={6000}
+        onClose={() => {
+          setShowAlert(false);
+        }}
+        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+      >
+        <Alert
+          onClose={() => {
+            setShowAlert(false);
+          }}
+          variant="outlined"
+          severity="warning"
+          sx={{ width: "100%" }}
+        >
+          Not a match. Try again!
+        </Alert>
+      </Snackbar>
     </div>
   );
 }

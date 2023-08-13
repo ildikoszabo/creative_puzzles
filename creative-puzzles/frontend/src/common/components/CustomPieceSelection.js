@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { Paper, Grid } from "@mui/material";
 import { getRandomShapes } from "../PuzzleGenerator";
 import CustomBox from "./CustomBox";
@@ -24,7 +24,13 @@ export default function CustomPieceSelection(props) {
       >
         <Grid container spacing={0} columns={3}>
           {arr.map((el, index) => (
-            <Grid item xs={1} onClick={() => props.onPieceSelection(el)}>
+            <Grid
+              item
+              xs={1}
+              onClick={(event) => {
+                props.onPieceSelection(el, event);
+              }}
+            >
               <CustomBox
                 value={el}
                 opacity={1}

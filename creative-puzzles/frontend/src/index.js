@@ -9,6 +9,7 @@ import reportWebVitals from "./reportWebVitals";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { theme } from "./common/appTheme";
 import { createTheme, ThemeProvider, styled } from "@mui/material/styles";
+import ComingSoon from "./pages/ComingSoon";
 
 const router = createBrowserRouter([
   {
@@ -24,6 +25,11 @@ const router = createBrowserRouter([
   {
     path: "utils/pieceSearch",
     element: <PieceSearch />,
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: "comingSoon",
+    element: <ComingSoon />,
     errorElement: <ErrorPage />,
   },
 ]);

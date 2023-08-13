@@ -39,6 +39,12 @@ export function ImageUpload(props) {
     return imageSrc;
   }, [webcamRef]);
 
+  const setupNextStep = () => {
+    props.setStep(props.step + 1);
+    setIsUploadFromCamera(false);
+    setFile(null);
+  };
+
   return (
     <div>
       <div
@@ -135,7 +141,11 @@ export function ImageUpload(props) {
               <Button
                 variant="outlined"
                 startIcon={<CameraAltIcon />}
-                onClick={() => props.setQueryImage(getScreenShot())}
+                onClick={() => {
+                  var screenshotImage = getScreenShot();
+                  props.setQueryImage(screenshotImage);
+                  setFile(screenshotImage);
+                }}
               >
                 Save screenshot
               </Button>
@@ -149,12 +159,9 @@ export function ImageUpload(props) {
             <Button
               variant="contained"
               onClick={() =>
-                props.step == 1
-                  ? (props.setStep(props.step + 1),
-                    setIsUploadFromCamera(false),
-                    setFile(null))
-                  : props.postImage()
+                props.step == 1 ? setupNextStep() : props.postImage()
               }
+              disabled={file == undefined}
             >
               {props.step == 1 ? "Next" : "Search"}
             </Button>

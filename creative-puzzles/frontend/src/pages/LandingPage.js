@@ -38,7 +38,7 @@ export default function LandingPage() {
             </div>
 
             <div class="c-fx-row-start">
-              <Button href="#login" disableElevation>
+              <Button href="comingSoon" disableElevation>
                 Log in
               </Button>
               <Button variant="contained" href="#games" disableElevation>
@@ -126,9 +126,9 @@ export default function LandingPage() {
             <p class="subtext">Classic tetris with a puzzle twist</p>
             <hr />
             <h3>
-              <a class="project-link" href="">
+              <Link class="project-link" to={`comingSoon`}>
                 Play now
-              </a>
+              </Link>
             </h3>
           </div>
         </div>

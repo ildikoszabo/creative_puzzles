@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from "react";
+import CircularProgress from "@mui/material/CircularProgress";
+import PhotoSizeSelectActualIcon from "@mui/icons-material/PhotoSizeSelectActual";
 import Header from "../common/header";
 import Requests from "../common/helpers/requests";
 import { ImageUpload } from "../common/components/ImageUpload";
@@ -16,12 +18,14 @@ export default function PieceSearch() {
   const [puzzleImage, setPuzzleImage] = useState();
   const [pieceImage, setPieceImage] = useState();
   const [resultImage, setResultImage] = useState();
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
 
   const postImage = () => {
+    setIsLoading(true);
     let url = "http://localhost:7071/api/SubPieceSearch";
     let body = JSON.stringify({
       name: "images",
@@ -30,11 +34,16 @@ export default function PieceSearch() {
     });
     //let body = JSON.stringify(queryImage); works also
 
-    Requests.post(url, {}, body).then((res) => {
-      if (res.body != undefined) {
-        setResultImage(res.body);
-      }
-    });
+    Requests.post(url, {}, body)
+      .then((res) => {
+        if (res.body != undefined) {
+          setResultImage(res.body);
+        }
+        setIsLoading(false);
+      })
+      .catch((error) => {
+        setIsLoading(false);
+      });
   };
 
   return (
@@ -87,16 +96,20 @@ export default function PieceSearch() {
             border: "solid",
           }}
         >
-          <div class="aspect-ratio--16x9">
-            <div class="aspect-ratio__inner-wrapper">
-              {resultImage != undefined ? (
+          {resultImage != undefined ? (
+            <div class="aspect-ratio--16x9">
+              <div class="aspect-ratio__inner-wrapper">
                 <img
                   class="result-image"
                   src={`data:image/jpeg;base64,${resultImage}`}
                 />
-              ) : null}
+              </div>
             </div>
-          </div>
+          ) : isLoading ? (
+            <CircularProgress />
+          ) : (
+            <PhotoSizeSelectActualIcon />
+          )}
         </div>
       </div>
     </div>

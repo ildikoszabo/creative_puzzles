@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { Paper, Grid, Menu, MenuItem } from "@mui/material";
 import {
   getRandomShapes,
@@ -53,7 +53,7 @@ export default function PieceSelection(props) {
       {arr.map((el, index) => (
         <MenuItem
           style={index === 0 ? { marginBottom: "20px" } : { marginTop: "20px" }}
-          onClick={() => props.onPieceSelection(el)}
+          onClick={(event) => props.onPieceSelection(el, event)}
         >
           <CustomBox value={el} opacity={1} applyPieceMask={true} />
         </MenuItem>
