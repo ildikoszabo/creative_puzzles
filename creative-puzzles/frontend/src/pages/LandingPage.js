@@ -28,7 +28,7 @@ export default function LandingPage() {
     <div>
       <div>
         <section>
-          <Header headerTitle="jp space" headerNavLinks={headerNavLinks}>
+          <Header headerTitle="i puzzle too" headerNavLinks={headerNavLinks}>
             <div class="puzzle-piece">
               <img
                 class="rotate90 logo"
@@ -66,32 +66,24 @@ export default function LandingPage() {
           </div>
         </section>
         <section class="socials" style={complementaryLightBg}>
-          <div class="c-fx-column">
+          <div class="c-fx-column-center">
             <IconButton component="label">
               <YouTubeIcon fontSize="large" />
             </IconButton>
             <span class="socials-text">Watch more puzzle related content</span>
           </div>
-          <div class="c-fx-column">
+          <div class="c-fx-column-center">
             <IconButton component="label">
               <img src={patreon} alt="patreon" class="socials-icon-size" />
             </IconButton>
             <span class="socials-text">Join the Patreon community</span>
           </div>
-          <div class="c-fx-column">
+          <div class="c-fx-column-center">
             <IconButton component="label">
               <InstagramIcon fontSize="large" />
             </IconButton>
             <span class="socials-text">
               For daily and behind the scene content follow on Instagram
-            </span>
-          </div>
-          <div class="c-fx-column">
-            <IconButton component="label">
-              <GitHubIcon fontSize="large" />
-            </IconButton>
-            <span class="socials-text">
-              To find out more about how these games work check out GitHub
             </span>
           </div>
         </section>
