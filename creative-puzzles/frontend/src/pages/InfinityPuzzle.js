@@ -25,8 +25,7 @@ export default function InfinityPuzzle() {
   const [ancholElIndex, setAnchorElIndex] = useState(null);
   const [selectedGeneratedPiece, setSelectedGeneratedPiece] = useState(null);
   const [currentlyHoveredPiece, setCurrentlyHoveredPiece] = useState(null);
-  const [showAlert, setShowAlert] = useState(false);
-  const [mousePosition, setMousePosition] = useState(null);
+  const [alert, setAlert] = useState(false);
   const theme = useTheme();
 
   useEffect(() => {
@@ -37,22 +36,12 @@ export default function InfinityPuzzle() {
   const onPieceSelection = (pieceDetails, event) => {
     if (selectedGeneratedPiece.name === pieceDetails.name) {
       selectedGeneratedPiece.match = true;
+      showAlertSnackbar("It's a match. Yay!", "success");
     } else {
-      setShowAlert(true);
+      showAlertSnackbar("Not a match. Try again!", "warning");
     }
 
     setAnchorEl(null);
-    const { previousSibling, value } = event.target;
-
-    //console.log(event);
-    event.preventDefault();
-    //value.focus();
-    //const position = value.length;
-    if (mousePosition != null) {
-      console.log("setting to " + mousePosition);
-      event.clientX = mousePosition.x;
-      event.clientY = mousePosition.y;
-    }
   };
 
   const handleClick = (event, el, elIndex) => {
@@ -78,6 +67,7 @@ export default function InfinityPuzzle() {
     if (currentlyHoveredPiece != null) {
       let columnLength = 8;
       let surroundArray = [currentlyHoveredPiece + columnLength];
+      surroundArray.push(currentlyHoveredPiece);
 
       if ((currentlyHoveredPiece + 1) % columnLength !== 0) {
         surroundArray.push(currentlyHoveredPiece + 1);
@@ -100,9 +90,22 @@ export default function InfinityPuzzle() {
     return false;
   };
 
-  const setCurrentMousePosition = (event) => {
-    setMousePosition({ x: event.clientX, y: event.clientY });
-    console.log(mousePosition);
+  const showAlertSnackbar = (message, severity) => {
+    let newAlert = {
+      isOpen: true,
+      message: message,
+      severity: severity,
+    };
+    setAlert(newAlert);
+  };
+
+  const hideAlertSnackbar = () => {
+    let newAlert = {
+      isOpen: false,
+      message: alert.message,
+      severity: alert.severity,
+    };
+    setAlert(newAlert);
   };
   return (
     <div>
@@ -140,14 +143,13 @@ export default function InfinityPuzzle() {
                       aria-expanded={anchorEl ? "true" : undefined}
                       onClick={(event) => handleClick(event, el, index)}
                       id="basic-button"
-                      onMouseEnter={setCurrentMousePosition}
                     >
                       <CustomBox
                         value={arr[index]}
                         id={index}
                         opacity={0}
                         applyPieceMask={el.match}
-                        clicked={anchorEl != null && ancholElIndex === index}
+                        clicked={selectedGeneratedPiece === el}
                         currentlyHoveredPiece={currentlyHoveredPiece}
                         setCurrentlyHoveredPiece={setCurrentlyHoveredPiece}
                         needsHighlight={needHighlight(index)}
@@ -164,22 +166,22 @@ export default function InfinityPuzzle() {
         </InfinityScroll>
       </div>
       <Snackbar
-        open={showAlert}
+        open={alert.isOpen}
         autoHideDuration={6000}
         onClose={() => {
-          setShowAlert(false);
+          hideAlertSnackbar();
         }}
         anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
       >
         <Alert
           onClose={() => {
-            setShowAlert(false);
+            hideAlertSnackbar();
           }}
           variant="outlined"
-          severity="warning"
+          severity={alert.severity}
           sx={{ width: "100%" }}
         >
-          Not a match. Try again!
+          {alert.message}
         </Alert>
       </Snackbar>
     </div>

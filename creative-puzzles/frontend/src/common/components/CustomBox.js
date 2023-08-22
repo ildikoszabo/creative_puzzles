@@ -76,10 +76,7 @@ export default function CustomBox(props) {
       height: 54,
       border: props.needsHighlight ? 1 : 0,
       borderColor: "primary.main",
-      backgroundColor:
-        props.clicked || props.id === props.currentlyHoveredPiece
-          ? "primary.dark"
-          : "white",
+      backgroundColor: props.clicked ? "primary.dark" : "white",
       margin: 0,
       boxSizing: "border-box",
     };
