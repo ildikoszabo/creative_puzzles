@@ -160,7 +160,7 @@ export default function LandingPage() {
           <div className="c-fx-column c-fx-space-center c-padding-full">
             <p>Upload an image of the puzzle you need help with</p>
             <div>
-              <Button variant="contained" href="utils/pieceSearch">
+              <Button variant="contained" href="comingSoon">
                 Search
               </Button>
             </div>
@@ -183,25 +183,26 @@ export default function LandingPage() {
           <h2>Do you have some feedback? Let’s talk!</h2>
           <div class="c-pb-full">
             <Button variant="contained" href="#games">
-              Join a livestream
+              Coonect on Patreon
             </Button>
           </div>
         </div>
         <div className="c-fx-column-center contact-me-email">
-          <h2>hello@jpspace.com</h2>
+          <h2>ipuzzletoo@gmail.com</h2>
         </div>
       </section>
 
       <footer style={complementaryLightBg}>
         <div className="c-fx-column">
           <p>Enjoy free to play puzzle games online.</p>
-          <h2>jp space</h2>
+          <h2>i puzzle too</h2>
         </div>
         <div className="c-fx-column footer-item">
           <span>
-            Puzzle games is an online website which offers free to play games
+            <i>i puzzle too</i> is an online website which offers free to play
+            games
           </span>
-          <span style={{ fontWeight: "bold" }}>© jp space 2023</span>
+          <span style={{ fontWeight: "bold" }}>© i puzzle too 2023</span>
         </div>
         <div className="c-fx-column footer-item-bold">
           <span>
@@ -210,13 +211,9 @@ export default function LandingPage() {
           <span>
             <a href="#community">Community</a>
           </span>
-          <span>
-            <a href="#about-me">About me</a>
-          </span>
         </div>
         <div className="c-fx-column footer-item-bold">
-          <span>1 000 123 4566</span>
-          <span>hello@jpspace.com</span>
+          <span>ipuzzletoo@gmail.com</span>
         </div>
         <div className="c-fx-column footer-item">
           <span>
