@@ -26,7 +26,7 @@ export default function PieceSearch() {
 
   const postImage = () => {
     setIsLoading(true);
-    let url = "http://localhost:7071/api/SubPieceSearch";
+    let url = "";
     let body = JSON.stringify({
       name: "images",
       puzzleImage: puzzleImage,
