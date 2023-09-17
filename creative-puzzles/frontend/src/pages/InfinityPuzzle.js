@@ -63,33 +63,6 @@ export default function InfinityPuzzle() {
     setArr(newArr);
   };
 
-  const needHighlight = (gridIndex) => {
-    if (currentlyHoveredPiece != null) {
-      let columnLength = 8;
-      let surroundArray = [currentlyHoveredPiece + columnLength];
-      surroundArray.push(currentlyHoveredPiece);
-
-      if ((currentlyHoveredPiece + 1) % columnLength !== 0) {
-        surroundArray.push(currentlyHoveredPiece + 1);
-        surroundArray.push(currentlyHoveredPiece + columnLength + 1);
-        surroundArray.push(currentlyHoveredPiece - columnLength + 1);
-      }
-
-      if (currentlyHoveredPiece % columnLength !== 0) {
-        surroundArray.push(currentlyHoveredPiece - 1);
-        surroundArray.push(currentlyHoveredPiece + columnLength - 1);
-        surroundArray.push(currentlyHoveredPiece - columnLength - 1);
-      }
-
-      if (currentlyHoveredPiece > columnLength - 1) {
-        surroundArray.push(currentlyHoveredPiece - columnLength);
-      }
-
-      return surroundArray.includes(gridIndex);
-    }
-    return false;
-  };
-
   const showAlertSnackbar = (message, severity) => {
     let newAlert = {
       isOpen: true,
@@ -150,9 +123,12 @@ export default function InfinityPuzzle() {
                         opacity={0}
                         applyPieceMask={el.match}
                         clicked={selectedGeneratedPiece === el}
+                        isHovered={
+                          currentlyHoveredPiece != undefined &&
+                          index == currentlyHoveredPiece
+                        }
                         currentlyHoveredPiece={currentlyHoveredPiece}
                         setCurrentlyHoveredPiece={setCurrentlyHoveredPiece}
-                        needsHighlight={needHighlight(index)}
                         fromPieceSelection={false}
                       />
                     </Grid>

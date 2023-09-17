@@ -17,21 +17,7 @@ const nonHoverStyle = (theme) => ({
 
 export default function CustomBox(props) {
   const theme = useTheme();
-  const [isBoxHovered, setIsBoxHovered] = useState(false);
-
-  useEffect(() => {
-    if (props.fromPieceSelection != undefined) {
-      if (
-        props.currentlyHoveredPiece != undefined &&
-        props.id == props.currentlyHoveredPiece
-      ) {
-        setIsBoxHovered(true);
-      } else {
-        setIsBoxHovered(false);
-      }
-    }
-    console.log("custombox useffect 1");
-  }, []);
+  const [isBoxHovered, setIsBoxHovered] = useState(props.isHovered);
 
   const getEdgeStyle = (edge) => {
     if (edge === -1) {
@@ -53,13 +39,13 @@ export default function CustomBox(props) {
   const [boxEdgeStyle, setBoxEdgeStyle] = useState(tabStyle);
 
   useEffect(() => {
-    tabStyle.topTab = getEdgeStyle(props.value.topTab);
-    tabStyle.rightTab = getEdgeStyle(props.value.rightTab);
-    tabStyle.bottomTab = getEdgeStyle(props.value.bottomTab);
-    tabStyle.leftTab = getEdgeStyle(props.value.leftTab);
-    setBoxEdgeStyle(tabStyle);
-
-    console.log("tabstyle");
+    if (props.applyPieceMask) {
+      tabStyle.topTab = getEdgeStyle(props.value.topTab);
+      tabStyle.rightTab = getEdgeStyle(props.value.rightTab);
+      tabStyle.bottomTab = getEdgeStyle(props.value.bottomTab);
+      tabStyle.leftTab = getEdgeStyle(props.value.leftTab);
+      setBoxEdgeStyle(tabStyle);
+    }
   }, [isBoxHovered]);
 
   const setBoxHoverState = () => {
@@ -74,7 +60,7 @@ export default function CustomBox(props) {
     var style = {
       width: 54,
       height: 54,
-      border: props.needsHighlight ? 1 : 0,
+      border: needsHighlight() ? 1 : 0,
       borderColor: "primary.main",
       backgroundColor: props.clicked ? "primary.dark" : "white",
       margin: 0,
@@ -82,6 +68,34 @@ export default function CustomBox(props) {
     };
 
     return style;
+  };
+
+  const needsHighlight = () => {
+    let gridIndex = props.id;
+    if (props.currentlyHoveredPiece != null) {
+      let columnLength = 8;
+      let surroundArray = [props.currentlyHoveredPiece + columnLength];
+      surroundArray.push(props.currentlyHoveredPiece);
+
+      if ((props.currentlyHoveredPiece + 1) % columnLength !== 0) {
+        surroundArray.push(props.currentlyHoveredPiece + 1);
+        surroundArray.push(props.currentlyHoveredPiece + columnLength + 1);
+        surroundArray.push(props.currentlyHoveredPiece - columnLength + 1);
+      }
+
+      if (props.currentlyHoveredPiece % columnLength !== 0) {
+        surroundArray.push(props.currentlyHoveredPiece - 1);
+        surroundArray.push(props.currentlyHoveredPiece + columnLength - 1);
+        surroundArray.push(props.currentlyHoveredPiece - columnLength - 1);
+      }
+
+      if (props.currentlyHoveredPiece > columnLength - 1) {
+        surroundArray.push(props.currentlyHoveredPiece - columnLength);
+      }
+
+      return surroundArray.includes(gridIndex);
+    }
+    return false;
   };
 
   return (
