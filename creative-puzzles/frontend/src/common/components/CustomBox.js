@@ -7,12 +7,15 @@ const inStyle = (theme) => ({
   backgroundColor: `${theme.neutrals.neutral_6}`,
 });
 
-const hoverStyle = (theme) => ({
-  backgroundColor: `${theme.palette.primary.dark}`,
+const hoverStyle = (theme, selectedColor, setColor) => ({
+  backgroundColor: setColor ? setColor : `${theme.palette.primary.dark}`,
 });
 
-const nonHoverStyle = (theme) => ({
-  backgroundColor: `${theme.palette.primary.main}`,
+const nonHoverStyle = (theme, selectedColor, setColor) => ({
+  backgroundColor:
+    setColor != undefined && setColor != null
+      ? setColor
+      : `${theme.palette.primary.main}`,
 });
 
 export default function CustomBox(props) {
@@ -23,36 +26,18 @@ export default function CustomBox(props) {
     if (edge === -1) {
       return inStyle(theme);
     } else if (isBoxHovered) {
-      return hoverStyle(theme);
+      return hoverStyle(theme, props.currentColor, props.value.bgColor);
     } else {
-      return nonHoverStyle(theme);
+      return nonHoverStyle(theme, props.currentColor, props.value.bgColor);
     }
   };
-
-  let tabStyle = {
-    topTab: getEdgeStyle(props.value.topTab),
-    leftTab: getEdgeStyle(props.value.leftTab),
-    bottomTab: getEdgeStyle(props.value.bottomTab),
-    rightTab: getEdgeStyle(props.value.rightTab),
-  };
-
-  const [boxEdgeStyle, setBoxEdgeStyle] = useState(tabStyle);
-
-  useEffect(() => {
-    if (props.applyPieceMask) {
-      tabStyle.topTab = getEdgeStyle(props.value.topTab);
-      tabStyle.rightTab = getEdgeStyle(props.value.rightTab);
-      tabStyle.bottomTab = getEdgeStyle(props.value.bottomTab);
-      tabStyle.leftTab = getEdgeStyle(props.value.leftTab);
-      setBoxEdgeStyle(tabStyle);
-    }
-  }, [isBoxHovered]);
 
   const setBoxHoverState = () => {
     let newState = !isBoxHovered;
     setIsBoxHovered(newState);
     if (newState === true && props.fromPieceSelection === false) {
       props.setCurrentlyHoveredPiece(props.id);
+      console.log("color on hover" + props.currentColor);
     }
   };
 
@@ -106,9 +91,13 @@ export default function CustomBox(props) {
           onMouseLeave={() => setBoxHoverState()}
           sx={{
             fontSize: "9px", //controls the size and ration of the inner elements which have sizes in "em"
-            backgroundColor: "primary.main",
+            backgroundColor: props.value.bgColor
+              ? props.value.bgColor
+              : "primary.main",
             "&:hover": {
-              backgroundColor: "primary.dark",
+              backgroundColor: props.value.bgColor
+                ? props.value.bgColor
+                : "primary.dark",
             },
             mixBlendMode: "darken",
             margin: 0,
@@ -116,19 +105,19 @@ export default function CustomBox(props) {
         >
           <div className="pieceBase">
             <span
-              style={boxEdgeStyle.topTab}
+              style={getEdgeStyle(props.value.topTab)}
               className={`tab t${props.value.topTab}`}
             ></span>
             <span
-              style={boxEdgeStyle.rightTab}
+              style={getEdgeStyle(props.value.rightTab)}
               className={`tab r${props.value.rightTab}`}
             ></span>
             <span
-              style={boxEdgeStyle.bottomTab}
+              style={getEdgeStyle(props.value.bottomTab)}
               className={`tab b${props.value.bottomTab}`}
             ></span>
             <span
-              style={boxEdgeStyle.leftTab}
+              style={getEdgeStyle(props.value.leftTab)}
               className={`tab l${props.value.leftTab}`}
             ></span>
           </div>

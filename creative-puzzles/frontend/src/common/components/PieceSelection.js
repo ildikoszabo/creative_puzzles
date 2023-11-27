@@ -53,9 +53,16 @@ export default function PieceSelection(props) {
       {arr.map((el, index) => (
         <MenuItem
           style={index === 0 ? { marginBottom: "20px" } : { marginTop: "20px" }}
-          onClick={(event) => props.onPieceSelection(el, event)}
+          onClick={(event) =>
+            props.onPieceSelection(el, event, props.currentColor)
+          }
         >
-          <CustomBox value={el} opacity={1} applyPieceMask={true} />
+          <CustomBox
+            value={el}
+            opacity={1}
+            applyPieceMask={true}
+            currentColor={props.currentColor}
+          />
         </MenuItem>
       ))}
     </Menu>

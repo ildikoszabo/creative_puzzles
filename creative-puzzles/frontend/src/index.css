@@ -35,6 +35,10 @@ code {
   padding-bottom: 1rem !important;
 }
 
+.c-fx {
+  display: flex;
+}
+
 .c-fx-row {
   display: flex;
   flex-direction: row;

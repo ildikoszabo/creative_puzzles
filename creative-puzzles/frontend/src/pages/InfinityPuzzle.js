@@ -12,6 +12,7 @@ import { useTheme } from "@mui/material/styles";
 import Alert from "@mui/material/Alert";
 import AlertTitle from "@mui/material/AlertTitle";
 import Snackbar from "@mui/material/Snackbar";
+import PuzzleMenu from "./components/PuzzleMenu";
 
 const headerNavLinks = [
   { name: "Games", path: "/#games" },
@@ -26,6 +27,7 @@ export default function InfinityPuzzle() {
   const [selectedGeneratedPiece, setSelectedGeneratedPiece] = useState(null);
   const [currentlyHoveredPiece, setCurrentlyHoveredPiece] = useState(null);
   const [alert, setAlert] = useState(false);
+  const [currentColor, setCurrentColor] = useState(null);
   const theme = useTheme();
 
   useEffect(() => {
@@ -33,7 +35,10 @@ export default function InfinityPuzzle() {
     setCurrentlyHoveredPiece(9);
   }, []);
 
-  const onPieceSelection = (pieceDetails, event) => {
+  const onPieceSelection = (pieceDetails, event, color) => {
+    setCurrentColor(color);
+    pieceDetails = Object.assign(pieceDetails, { bgColor: color });
+    console.log("color after selection" + color);
     if (selectedGeneratedPiece.name === pieceDetails.name) {
       selectedGeneratedPiece.match = true;
       showAlertSnackbar("It's a match. Yay!", "success");
@@ -84,7 +89,7 @@ export default function InfinityPuzzle() {
     <div>
       <Header headerTitle="infinity puzzle" headerNavLinks={headerNavLinks} />
 
-      <div className="c-fx-column-center">
+      <div className="c-fx-row-center">
         <InfinityScroll threshold={60} loadNewValues={loadNewValues}>
           {anchorEl ? (
             <PieceSelection
@@ -93,11 +98,12 @@ export default function InfinityPuzzle() {
               handleClose={handleClose}
               anchorEl={anchorEl}
               selectedGeneratedPiece={selectedGeneratedPiece}
+              currentColor={currentColor}
             />
           ) : null}
 
           <Container
-            className="c-fx-row-center middle-box"
+            className="c-fx middle-box"
             fluid="false"
             disableGutters={true}
             maxWidth="xs"
@@ -130,6 +136,7 @@ export default function InfinityPuzzle() {
                         currentlyHoveredPiece={currentlyHoveredPiece}
                         setCurrentlyHoveredPiece={setCurrentlyHoveredPiece}
                         fromPieceSelection={false}
+                        currentColor={currentColor}
                       />
                     </Grid>
                   ))}
@@ -140,7 +147,15 @@ export default function InfinityPuzzle() {
             )}
           </Container>
         </InfinityScroll>
+        <div className="c-fx-row">
+          <PuzzleMenu
+            setCurrentColor={(value) => {
+              setCurrentColor(value);
+            }}
+          />
+        </div>
       </div>
+
       <Snackbar
         open={alert.isOpen}
         autoHideDuration={6000}
