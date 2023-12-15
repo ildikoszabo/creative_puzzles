@@ -18,9 +18,10 @@ const StyledPuzzleMenu = styled(SpeedDial, {
   shouldForwardProp: (prop) => prop !== "color",
 })(({ theme, color }) => ({
   position: "fixed",
-  "&.MuiSpeedDial-directionDown": {
-    top: theme.spacing(12),
-    left: theme.spacing(125),
+  padding: "1rem",
+  "& .MuiSpeedDial-directionDown": {
+    top: theme.spacing(14),
+    left: theme.spacing(2),
   },
   "& .MuiFab-primary": {
     backgroundColor: color,

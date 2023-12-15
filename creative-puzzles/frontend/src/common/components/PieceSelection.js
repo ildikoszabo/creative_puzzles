@@ -62,6 +62,7 @@ export default function PieceSelection(props) {
             opacity={1}
             applyPieceMask={true}
             currentColor={props.currentColor}
+            fromPieceSelection={true}
           />
         </MenuItem>
       ))}

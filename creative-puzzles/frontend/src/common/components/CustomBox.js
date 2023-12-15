@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useLayoutEffect, useState } from "react";
 import { Box, ThemeProvider } from "@mui/system";
 import { useTheme } from "@mui/material/styles";
 import "./CustomBox.css";
@@ -7,14 +7,14 @@ const inStyle = (theme) => ({
   backgroundColor: `${theme.neutrals.neutral_6}`,
 });
 
-const hoverStyle = (theme, selectedColor, setColor) => ({
-  backgroundColor: setColor ? setColor : `${theme.palette.primary.dark}`,
+const hoverStyle = (theme, pieceColor) => ({
+  backgroundColor: pieceColor ? pieceColor : `${theme.palette.primary.dark}`,
 });
 
-const nonHoverStyle = (theme, selectedColor, setColor) => ({
+const nonHoverStyle = (theme, pieceColor) => ({
   backgroundColor:
-    setColor != undefined && setColor != null
-      ? setColor
+    pieceColor != undefined && pieceColor != null
+      ? pieceColor
       : `${theme.palette.primary.main}`,
 });
 
@@ -22,13 +22,17 @@ export default function CustomBox(props) {
   const theme = useTheme();
   const [isBoxHovered, setIsBoxHovered] = useState(props.isHovered);
 
+  let pieceColor = props.fromPieceSelection
+    ? props.currentColor
+    : props.value.bgColor;
+
   const getEdgeStyle = (edge) => {
     if (edge === -1) {
       return inStyle(theme);
     } else if (isBoxHovered) {
-      return hoverStyle(theme, props.currentColor, props.value.bgColor);
+      return hoverStyle(theme, pieceColor);
     } else {
-      return nonHoverStyle(theme, props.currentColor, props.value.bgColor);
+      return nonHoverStyle(theme, pieceColor);
     }
   };
 
@@ -91,13 +95,9 @@ export default function CustomBox(props) {
           onMouseLeave={() => setBoxHoverState()}
           sx={{
             fontSize: "9px", //controls the size and ration of the inner elements which have sizes in "em"
-            backgroundColor: props.value.bgColor
-              ? props.value.bgColor
-              : "primary.main",
+            backgroundColor: pieceColor ? pieceColor : "primary.main",
             "&:hover": {
-              backgroundColor: props.value.bgColor
-                ? props.value.bgColor
-                : "primary.dark",
+              backgroundColor: pieceColor ? pieceColor : "primary.dark",
             },
             mixBlendMode: "darken",
             margin: 0,

@@ -36,12 +36,11 @@ export default function InfinityPuzzle() {
   }, []);
 
   const onPieceSelection = (pieceDetails, event, color) => {
-    setCurrentColor(color);
-    pieceDetails = Object.assign(pieceDetails, { bgColor: color });
-    console.log("color after selection" + color);
     if (selectedGeneratedPiece.name === pieceDetails.name) {
-      selectedGeneratedPiece.match = true;
       showAlertSnackbar("It's a match. Yay!", "success");
+      setCurrentColor(color);
+      pieceDetails = Object.assign(pieceDetails, { bgColor: color });
+      selectedGeneratedPiece.match = true;
     } else {
       showAlertSnackbar("Not a match. Try again!", "warning");
     }
