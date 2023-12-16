@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
+import Button from "@mui/material/Button";
 import { Container } from "@mui/system";
 import CustomBox from "../common/components/CustomBox";
 import { getRandomShapes } from "../common/PuzzleGenerator";
@@ -29,6 +30,7 @@ export default function InfinityPuzzle() {
   const [alert, setAlert] = useState(false);
   const [currentColor, setCurrentColor] = useState(null);
   const theme = useTheme();
+  const [score, setScore] = useState(0);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -37,10 +39,11 @@ export default function InfinityPuzzle() {
 
   const onPieceSelection = (pieceDetails, event, color) => {
     if (selectedGeneratedPiece.name === pieceDetails.name) {
-      showAlertSnackbar("It's a match. Yay!", "success");
+      showAlertSnackbar("It's a match. Yay! +1 pts", "success");
       setCurrentColor(color);
       pieceDetails = Object.assign(pieceDetails, { bgColor: color });
       selectedGeneratedPiece.match = true;
+      setScore(score + 1);
     } else {
       showAlertSnackbar("Not a match. Try again!", "warning");
     }
@@ -86,7 +89,20 @@ export default function InfinityPuzzle() {
   };
   return (
     <div>
-      <Header headerTitle="infinity puzzle" headerNavLinks={headerNavLinks} />
+      <Header headerTitle="infinity puzzle" headerNavLinks={headerNavLinks}>
+        <div
+          style={{
+            width: "100px",
+            backgroundColor: theme.palette.primary.main,
+            color: "white",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <span> {score} pts</span>
+        </div>
+      </Header>
 
       <div className="c-fx-row-center">
         <InfinityScroll threshold={60} loadNewValues={loadNewValues}>
@@ -119,7 +135,9 @@ export default function InfinityPuzzle() {
                       aria-controls={anchorEl ? "basic-menu" : undefined}
                       aria-haspopup="true"
                       aria-expanded={anchorEl ? "true" : undefined}
-                      onClick={(event) => handleClick(event, el, index)}
+                      onClick={(event) =>
+                        el.match == false ? handleClick(event, el, index) : null
+                      }
                       id="basic-button"
                     >
                       <CustomBox

@@ -82,7 +82,6 @@ export default function PuzzleMenu(props) {
         onClose={handleColorPickerMenuClose}
         value={"Dione"}
       />
-      ;
     </div>
   );
 }
