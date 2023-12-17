@@ -27,6 +27,7 @@ export function getRandomShapes(width, height, starterArray = null) {
         leftTab: leftTab,
         name: "",
         match: false,
+        challenge: [],
       });
     }
   }

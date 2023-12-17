@@ -91,13 +91,11 @@ export default function InfinityPuzzle() {
     <div>
       <Header headerTitle="infinity puzzle" headerNavLinks={headerNavLinks}>
         <div
+          className="c-fx-column-center c-fx-space-center"
           style={{
             width: "100px",
             backgroundColor: theme.palette.primary.main,
             color: "white",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
           }}
         >
           <span> {score} pts</span>

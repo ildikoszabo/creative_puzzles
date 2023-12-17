@@ -10,9 +10,12 @@ import {
   FileCopyOutlined as FileCopyIcon,
   Palette as PaletteIcon,
 } from "@mui/icons-material";
+
+import EmojiEventsIcon from "@mui/icons-material/EmojiEvents";
 import SpeedDialIcon from "@mui/material/SpeedDialIcon";
 import { styled } from "@mui/material/styles";
 import PuzzleColorPicker from "./PuzzleColorPicker";
+import PuzzleChallenges from "./PuzzleChallenges";
 
 const StyledPuzzleMenu = styled(SpeedDial, {
   shouldForwardProp: (prop) => prop !== "color",
@@ -31,27 +34,39 @@ const StyledPuzzleMenu = styled(SpeedDial, {
 
 const actions = [
   { icon: <PaletteIcon />, name: "Color picker", type: "colorPicker" },
+  { icon: <EmojiEventsIcon />, name: "Challenges", type: "challenges" },
 ];
 
 export default function PuzzleMenu(props) {
   const [open, setOpen] = React.useState(false);
   const [colorPickerMenuOpen, setColorPickerMenuOpen] = React.useState(false);
+  const [challengeMenuOpen, setChallengeMenuOpen] = React.useState(false);
   const [currentColor, setCurrentColor] = React.useState(null);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
-  const handleColorPickerMenuClose = (newValue) => {
-    setColorPickerMenuOpen(false);
+  const handleMenuClose = (newValue, type) => {
+    if (type == "colorPicker") {
+      setColorPickerMenuOpen(false);
 
-    if (newValue) {
-      setCurrentColor(newValue);
-      props.setCurrentColor(newValue);
+      if (newValue) {
+        setCurrentColor(newValue);
+        props.setCurrentColor(newValue);
+      }
+    }
+
+    if (type == "challenges") {
+      setChallengeMenuOpen(false);
     }
   };
 
   const handleAction = (action) => {
     if (action.type == "colorPicker") {
       setColorPickerMenuOpen(true);
+    }
+
+    if (action.type == "challenges") {
+      setChallengeMenuOpen(true);
     }
   };
 
@@ -79,7 +94,12 @@ export default function PuzzleMenu(props) {
       </Box>
       <PuzzleColorPicker
         open={colorPickerMenuOpen}
-        onClose={handleColorPickerMenuClose}
+        onClose={(val) => handleMenuClose(val, "colorPicker")}
+        value={"Dione"}
+      />
+      <PuzzleChallenges
+        open={challengeMenuOpen}
+        onClose={(val) => handleMenuClose(val, "challenges")}
         value={"Dione"}
       />
     </div>
