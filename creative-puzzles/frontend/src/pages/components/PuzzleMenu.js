@@ -95,12 +95,10 @@ export default function PuzzleMenu(props) {
       <PuzzleColorPicker
         open={colorPickerMenuOpen}
         onClose={(val) => handleMenuClose(val, "colorPicker")}
-        value={"Dione"}
       />
       <PuzzleChallenges
         open={challengeMenuOpen}
         onClose={(val) => handleMenuClose(val, "challenges")}
-        value={"Dione"}
       />
     </div>
   );

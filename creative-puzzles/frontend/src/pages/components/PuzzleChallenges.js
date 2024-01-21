@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useContext } from "react";
 import PropTypes from "prop-types";
 import Button from "@mui/material/Button";
 import DialogTitle from "@mui/material/DialogTitle";
@@ -8,12 +8,18 @@ import Dialog from "@mui/material/Dialog";
 import { useTheme } from "@mui/material/styles";
 import { generateChallenge } from "../../common/ChallengeGenerator";
 import Grid from "@mui/material/Grid";
+import {
+  InfinityPuzzleContext,
+  InfinityPuzzleGridWidth,
+} from "../../common/context/InfinityPuzzleContext";
 
 export default function PuzzleChallenges(props) {
+  const [onHoverChallenges, setOnHoverChallenges] = React.useState(null);
   const [solvedChallenges, setSolvedChallenges] = React.useState([]);
   const [newChallenges, setNewChallenges] = React.useState([]);
   const { onClose, open, ...other } = props;
   const theme = useTheme();
+  const { arr, setArr } = useContext(InfinityPuzzleContext);
 
   useEffect(() => {
     let newGeneratedChallenges = generateChallenge(
@@ -33,14 +39,69 @@ export default function PuzzleChallenges(props) {
     onClose();
   };
 
-  const handleOk = () => {
+  const handleClose = () => {
     onClose();
   };
 
-  const handleChange = () => {};
+  const onReedemChallenge = (challengeToRedeem) => {
+    let currentArrayLength = arr / InfinityPuzzleGridWidth;
+    let lastMatchedPieceIndex = arr.findLastIndex(
+      (piece) => piece.match == true
+    );
+    let currentRow = 0;
+    let currentColumn = 0;
+    let challengeFound = false;
 
-  const handleClose = () => {
-    onClose();
+    if (lastMatchedPieceIndex == -1) {
+      return false;
+    }
+
+    while (!challengeFound && currentRow <= lastMatchedPieceIndex) {
+      if (challengeMatch(currentColumn, currentRow, challengeToRedeem)) {
+        challengeFound = true;
+      }
+
+      currentRow += (challengeToRedeem.height - 1) * InfinityPuzzleGridWidth;
+    }
+
+    //let f = arr.filter((piece) => piece.match != null);
+    //console.log(f.length);
+  };
+
+  const challengeMatch = (currentColumn, currentRow, challengeToRedeem) => {
+    let pattern = "";
+    let patternArray = [];
+
+    //check if all have already a challenge completed, then skip
+    for (var y = currentRow; y < currentRow + challengeToRedeem.height; y++) {
+      for (
+        var x = currentColumn;
+        x < currentColumn + challengeToRedeem.width;
+        x++
+      ) {
+        var index = x + y * InfinityPuzzleGridWidth;
+        //if the subsection contains values where there are no matched pieces yet, return false
+        if (arr[index].match == false) {
+          return false;
+        }
+
+        //if the subsesction already has a completed challenge, return false
+        if (arr[index].challenge != "") {
+          return false;
+        }
+
+        if (arr[index].bgColor == undefined) {
+          return false;
+        }
+
+        patternArray.push(arr[index].bgColor);
+        pattern = pattern.concat("_", arr[index].bgColor);
+      }
+    }
+
+    //check if patternArray == challengeToRedeem.blocks
+    console.log(pattern);
+    return true;
   };
 
   return (
@@ -60,36 +121,69 @@ export default function PuzzleChallenges(props) {
           {newChallenges.map((el, index) => {
             return (
               <div>
-                {el.name}
-                <Grid
-                  container
-                  spacing={0}
-                  columns={el.width}
-                  style={{ width: "50%" }}
+                <div
+                  className="c-fx-column-center c-fx-space-center"
+                  style={{
+                    backgroundColor: theme.palette.primary.main,
+                    color: theme.palette.text.primary,
+                  }}
+                  onMouseEnter={() => {
+                    setOnHoverChallenges(null);
+                  }}
                 >
-                  {el.challengeBlocks != undefined
-                    ? el.challengeBlocks.map((block, index) => {
-                        return (
-                          <Grid
-                            className="c-fx-column-center c-fx-space-center"
-                            item
-                            xs={1}
-                            key={index}
-                            id="challenge-cell"
-                            style={{
-                              backgroundColor: block.value.includes("#")
-                                ? block.value
-                                : null,
-                              color: block.value.includes("#") ? "white" : null,
-                              border: `1px solid ${theme.palette.primary.main}`,
-                            }}
-                          >
-                            {block.name}
-                          </Grid>
-                        );
-                      })
-                    : null}
-                </Grid>
+                  {`${el.name} ${el.points} pts`}
+                </div>
+                {onHoverChallenges == index ? (
+                  <div
+                    className="c-fx-column-center c-fx-space-center"
+                    style={{
+                      color: theme.palette.text.primary,
+                      border: `1px solid ${theme.palette.primary.main}`,
+                    }}
+                  >
+                    <Button onClick={() => onReedemChallenge(el)}>
+                      Redeem challenge
+                    </Button>
+                  </div>
+                ) : (
+                  <Grid
+                    container
+                    spacing={0}
+                    columns={el.width}
+                    //style={{ width: "50%" }}
+                    onMouseEnter={() => {
+                      setOnHoverChallenges(index);
+                    }}
+                    onMouseLeave={() => {
+                      setOnHoverChallenges(null);
+                    }}
+                  >
+                    {el.challengeBlocks != undefined
+                      ? el.challengeBlocks.map((block, index) => {
+                          return (
+                            <Grid
+                              className="c-fx-column-center c-fx-space-center"
+                              item
+                              xs={1}
+                              key={index}
+                              id="challenge-cell"
+                              style={{
+                                backgroundColor: block.value.includes("#")
+                                  ? block.value
+                                  : null,
+                                color: block.value.includes("#")
+                                  ? "white"
+                                  : null,
+                                border: `1px solid ${theme.palette.primary.main}`,
+                              }}
+                            >
+                              {block.name.includes("#") ? "" : block.name}
+                            </Grid>
+                          );
+                        })
+                      : null}
+                  </Grid>
+                )}
                 <br />
               </div>
             );
@@ -99,9 +193,6 @@ export default function PuzzleChallenges(props) {
       <DialogActions>
         <Button autoFocus onClick={handleCancel}>
           Cancel
-        </Button>
-        <Button variant="contained" onClick={handleOk}>
-          Ok
         </Button>
       </DialogActions>
     </Dialog>

@@ -16,6 +16,7 @@ const fixedValues = ["A", "B", "C", "D", "E", "F", "G"];
 
 export function getNewChallenge(currentConfig, theme) {
   let newChallenge = Object.assign({}, currentConfig);
+  let challengePattern = "";
 
   let challengeBlocks = new Array();
   let fixedColorList = new Array();
@@ -49,10 +50,13 @@ export function getNewChallenge(currentConfig, theme) {
         value: pattern,
         name: pattern,
       });
+
+      challengePattern = challengePattern.concat("_", pattern);
     }
   }
 
   newChallenge.challengeBlocks = challengeBlocks;
+  newChallenge.challengePattern = challengePattern;
   newChallenge.name =
     "C" + newChallenge.complexity + randomNumberInRange(0, 100000);
 

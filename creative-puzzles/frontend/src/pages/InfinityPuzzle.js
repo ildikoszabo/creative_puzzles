@@ -14,6 +14,10 @@ import Alert from "@mui/material/Alert";
 import AlertTitle from "@mui/material/AlertTitle";
 import Snackbar from "@mui/material/Snackbar";
 import PuzzleMenu from "./components/PuzzleMenu";
+import {
+  InfinityPuzzleContext,
+  InfinityPuzzleGridWidth,
+} from "../common/context/InfinityPuzzleContext";
 
 const headerNavLinks = [
   { name: "Games", path: "/#games" },
@@ -22,7 +26,12 @@ const headerNavLinks = [
 ];
 
 export default function InfinityPuzzle() {
-  const [arr, setArr] = useState(getRandomShapes(8, 40).slice(0, -8));
+  const [arr, setArr] = useState(
+    getRandomShapes(InfinityPuzzleGridWidth, 40).slice(
+      0,
+      -InfinityPuzzleGridWidth
+    )
+  );
   const [anchorEl, setAnchorEl] = useState(null);
   const [ancholElIndex, setAnchorElIndex] = useState(null);
   const [selectedGeneratedPiece, setSelectedGeneratedPiece] = useState(null);
@@ -62,10 +71,13 @@ export default function InfinityPuzzle() {
   };
 
   const loadNewValues = () => {
-    var width = 8;
-    var lastRow = arr.slice(-width);
+    var lastRow = arr.slice(-InfinityPuzzleGridWidth);
 
-    const nextValues = getRandomShapes(8, 40, lastRow).slice(0, -8);
+    const nextValues = getRandomShapes(
+      InfinityPuzzleGridWidth,
+      40,
+      lastRow
+    ).slice(0, -InfinityPuzzleGridWidth);
     let newArr = arr.concat(nextValues);
     setArr(newArr);
   };
@@ -89,107 +101,116 @@ export default function InfinityPuzzle() {
   };
   return (
     <div>
-      <Header headerTitle="infinity puzzle" headerNavLinks={headerNavLinks}>
-        <div
-          className="c-fx-column-center c-fx-space-center"
-          style={{
-            width: "100px",
-            backgroundColor: theme.palette.primary.main,
-            color: "white",
-          }}
-        >
-          <span> {score} pts</span>
-        </div>
-      </Header>
-
-      <div className="c-fx-row-center">
-        <InfinityScroll threshold={60} loadNewValues={loadNewValues}>
-          {anchorEl ? (
-            <PieceSelection
-              onPieceSelection={onPieceSelection}
-              handleClick={handleClick}
-              handleClose={handleClose}
-              anchorEl={anchorEl}
-              selectedGeneratedPiece={selectedGeneratedPiece}
-              currentColor={currentColor}
-            />
-          ) : null}
-
-          <Container
-            className="c-fx middle-box"
-            fluid="false"
-            disableGutters={true}
-            maxWidth="xs"
-            style={{ color: theme.palette.primary.main }}
-          >
-            {arr !== undefined ? (
-              <Box>
-                <Grid container spacing={0} columns={8}>
-                  {arr.map((el, index) => (
-                    <Grid
-                      item
-                      xs={1}
-                      key={index}
-                      aria-controls={anchorEl ? "basic-menu" : undefined}
-                      aria-haspopup="true"
-                      aria-expanded={anchorEl ? "true" : undefined}
-                      onClick={(event) =>
-                        el.match == false ? handleClick(event, el, index) : null
-                      }
-                      id="basic-button"
-                    >
-                      <CustomBox
-                        value={arr[index]}
-                        id={index}
-                        opacity={0}
-                        applyPieceMask={el.match}
-                        clicked={selectedGeneratedPiece === el}
-                        isHovered={
-                          currentlyHoveredPiece != undefined &&
-                          index == currentlyHoveredPiece
-                        }
-                        currentlyHoveredPiece={currentlyHoveredPiece}
-                        setCurrentlyHoveredPiece={setCurrentlyHoveredPiece}
-                        fromPieceSelection={false}
-                        currentColor={currentColor}
-                      />
-                    </Grid>
-                  ))}
-                </Grid>
-              </Box>
-            ) : (
-              "Loading"
-            )}
-          </Container>
-        </InfinityScroll>
-        <div className="c-fx-row">
-          <PuzzleMenu
-            setCurrentColor={(value) => {
-              setCurrentColor(value);
-            }}
-          />
-        </div>
-      </div>
-
-      <Snackbar
-        open={alert.isOpen}
-        autoHideDuration={6000}
-        onClose={() => {
-          hideAlertSnackbar();
+      <InfinityPuzzleContext.Provider
+        value={{
+          arr,
+          setArr,
         }}
-        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
       >
-        <Alert
+        <Header headerTitle="infinity puzzle" headerNavLinks={headerNavLinks}>
+          <div
+            className="c-fx-column-center c-fx-space-center"
+            style={{
+              width: "100px",
+              backgroundColor: theme.palette.primary.main,
+              color: "white",
+            }}
+          >
+            <span> {score} pts</span>
+          </div>
+        </Header>
+
+        <div className="c-fx-row-center">
+          <InfinityScroll threshold={60} loadNewValues={loadNewValues}>
+            {anchorEl ? (
+              <PieceSelection
+                onPieceSelection={onPieceSelection}
+                handleClick={handleClick}
+                handleClose={handleClose}
+                anchorEl={anchorEl}
+                selectedGeneratedPiece={selectedGeneratedPiece}
+                currentColor={currentColor}
+              />
+            ) : null}
+
+            <Container
+              className="c-fx middle-box"
+              fluid="false"
+              disableGutters={true}
+              maxWidth="xs"
+              style={{ color: theme.palette.primary.main }}
+            >
+              {arr !== undefined ? (
+                <Box>
+                  <Grid container spacing={0} columns={InfinityPuzzleGridWidth}>
+                    {arr.map((el, index) => (
+                      <Grid
+                        item
+                        xs={1}
+                        key={index}
+                        aria-controls={anchorEl ? "basic-menu" : undefined}
+                        aria-haspopup="true"
+                        aria-expanded={anchorEl ? "true" : undefined}
+                        onClick={(event) =>
+                          el.match == false
+                            ? handleClick(event, el, index)
+                            : null
+                        }
+                        id="basic-button"
+                      >
+                        <CustomBox
+                          value={arr[index]}
+                          id={index}
+                          opacity={0}
+                          applyPieceMask={el.match}
+                          clicked={selectedGeneratedPiece === el}
+                          isHovered={
+                            currentlyHoveredPiece != undefined &&
+                            index == currentlyHoveredPiece
+                          }
+                          currentlyHoveredPiece={currentlyHoveredPiece}
+                          setCurrentlyHoveredPiece={setCurrentlyHoveredPiece}
+                          fromPieceSelection={false}
+                          currentColor={currentColor}
+                        />
+                      </Grid>
+                    ))}
+                  </Grid>
+                </Box>
+              ) : (
+                "Loading"
+              )}
+            </Container>
+          </InfinityScroll>
+          <div className="c-fx-row">
+            <PuzzleMenu
+              setCurrentColor={(value) => {
+                setCurrentColor(value);
+              }}
+            />
+          </div>
+        </div>
+
+        <Snackbar
+          open={alert.isOpen}
+          autoHideDuration={6000}
           onClose={() => {
             hideAlertSnackbar();
           }}
-          variant="outlined"
-          severity={alert.severity}
-          sx={{ width: "100%" }}
+          anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
         >
-          {alert.message}
-        </Alert>
-      </Snackbar>
+          <Alert
+            onClose={() => {
+              hideAlertSnackbar();
+            }}
+            variant="outlined"
+            severity={alert.severity}
+            sx={{ width: "100%" }}
+          >
+            {alert.message}
+          </Alert>
+        </Snackbar>
+      </InfinityPuzzleContext.Provider>
     </div>
   );
 }
