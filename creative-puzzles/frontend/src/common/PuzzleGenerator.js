@@ -1,5 +1,6 @@
 //source https://www.codeproject.com/Articles/395453/Html5-Jigsaw-Puzzle
 import { PIECES } from "./pieces";
+import { v4 as uuidv4 } from "uuid";
 
 export function getRandomShapes(width, height, starterArray = null) {
   var shapeArray = starterArray == null ? new Array() : starterArray.slice(0);
@@ -21,6 +22,7 @@ export function getRandomShapes(width, height, starterArray = null) {
       if (x == width - 1) rightTab = 0;
 
       shapeArray.push({
+        id: uuidv4(),
         topTab: topTab,
         rightTab: rightTab,
         bottomTab: bottomTab,
@@ -28,6 +30,7 @@ export function getRandomShapes(width, height, starterArray = null) {
         name: "",
         match: false,
         challenge: "",
+        bgColor: null,
       });
     }
   }

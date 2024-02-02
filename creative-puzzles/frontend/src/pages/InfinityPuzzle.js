@@ -46,13 +46,37 @@ export default function InfinityPuzzle() {
     setCurrentlyHoveredPiece(9);
   }, []);
 
+  const getColor = (pieceColor) => {
+    return pieceColor != undefined && pieceColor != null
+      ? pieceColor
+      : `${theme.palette.primary.main}`;
+  };
+
+  const updatePuzzlePieceInList = (newPiece) => {
+    let updatedPieces = arr.map((el) => {
+      if (el.id != newPiece.id) {
+        //no change
+        return el;
+      } else {
+        return {
+          ...newPiece,
+        };
+      }
+    });
+
+    return updatedPieces;
+  };
+
   const onPieceSelection = (pieceDetails, event, color) => {
     if (selectedGeneratedPiece.name === pieceDetails.name) {
-      showAlertSnackbar("It's a match. Yay! +1 pts", "success");
-      setCurrentColor(color);
-      pieceDetails = Object.assign(pieceDetails, { bgColor: color });
+      let newColor = getColor(color);
+      selectedGeneratedPiece.bgColor = newColor;
       selectedGeneratedPiece.match = true;
+
+      setCurrentColor(newColor);
+      setArr(updatePuzzlePieceInList(selectedGeneratedPiece));
       setScore(score + 1);
+      showAlertSnackbar("It's a match. Yay! +1 pts", "success");
     } else {
       showAlertSnackbar("Not a match. Try again!", "warning");
     }
@@ -79,7 +103,7 @@ export default function InfinityPuzzle() {
       lastRow
     ).slice(0, -InfinityPuzzleGridWidth);
     let newArr = arr.concat(nextValues);
-    setArr(newArr);
+    setArr([...newArr]);
   };
 
   const showAlertSnackbar = (message, severity) => {

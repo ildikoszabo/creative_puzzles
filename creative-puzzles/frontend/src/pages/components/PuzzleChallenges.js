@@ -71,6 +71,8 @@ export default function PuzzleChallenges(props) {
   const challengeMatch = (currentColumn, currentRow, challengeToRedeem) => {
     let pattern = "";
     let patternArray = [];
+    let checkPattern = [...challengeToRedeem.challengeBlocks];
+    let checkPatternIndex = 0;
 
     //check if all have already a challenge completed, then skip
     for (var y = currentRow; y < currentRow + challengeToRedeem.height; y++) {
@@ -100,6 +102,24 @@ export default function PuzzleChallenges(props) {
     }
 
     //check if patternArray == challengeToRedeem.blocks
+    for (var i = 0; i < patternArray.length; i++) {
+      let currentValue = patternArray[i];
+      let replaceValue = challengeToRedeem.challengeBlocks[i].value;
+      pattern = pattern.replaceAll(currentValue, replaceValue);
+    }
+
+    if (pattern == challengeToRedeem.challengePattern) {
+      console.log("it's a match");
+      //save challengeToRedeem.patternName to the main arr
+      //remove solved challenge from the list and add it to the solved ones
+      //show snackbar with success and add points
+      //return true
+    }
+    /*
+     show snackbar with not found
+     return false
+     */
+
     console.log(pattern);
     return true;
   };
