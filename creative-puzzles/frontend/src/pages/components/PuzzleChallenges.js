@@ -11,6 +11,7 @@ import Grid from "@mui/material/Grid";
 import {
   InfinityPuzzleContext,
   InfinityPuzzleGridWidth,
+  updatePuzzlePieceInList,
 } from "../../common/context/InfinityPuzzleContext";
 
 export default function PuzzleChallenges(props) {
@@ -61,7 +62,12 @@ export default function PuzzleChallenges(props) {
         challengeFound = true;
       }
 
-      currentRow += (challengeToRedeem.height - 1) * InfinityPuzzleGridWidth;
+      if (currentColumn + 1 < InfinityPuzzleGridWidth) {
+        currentColumn += 1;
+      } else {
+        currentColumn = 0;
+        currentRow += InfinityPuzzleGridWidth;
+      }
     }
 
     //let f = arr.filter((piece) => piece.match != null);
@@ -73,6 +79,7 @@ export default function PuzzleChallenges(props) {
     let patternArray = [];
     let checkPattern = [...challengeToRedeem.challengeBlocks];
     let checkPatternIndex = 0;
+    let challengeRow = 0;
 
     //check if all have already a challenge completed, then skip
     for (var y = currentRow; y < currentRow + challengeToRedeem.height; y++) {
@@ -81,7 +88,7 @@ export default function PuzzleChallenges(props) {
         x < currentColumn + challengeToRedeem.width;
         x++
       ) {
-        var index = x + y * InfinityPuzzleGridWidth;
+        var index = x + y + challengeRow * (InfinityPuzzleGridWidth - 1);
         //if the subsection contains values where there are no matched pieces yet, return false
         if (arr[index].match == false) {
           return false;
@@ -96,22 +103,34 @@ export default function PuzzleChallenges(props) {
           return false;
         }
 
-        patternArray.push(arr[index].bgColor);
+        patternArray.push(arr[index]);
         pattern = pattern.concat("_", arr[index].bgColor);
       }
+      challengeRow += 1;
     }
 
     //check if patternArray == challengeToRedeem.blocks
+    //TODO is specific color is required and it is used also as a pattern color, it gets overwritten
     for (var i = 0; i < patternArray.length; i++) {
-      let currentValue = patternArray[i];
+      let currentValue = patternArray[i].bgColor;
       let replaceValue = challengeToRedeem.challengeBlocks[i].value;
       pattern = pattern.replaceAll(currentValue, replaceValue);
     }
 
     if (pattern == challengeToRedeem.challengePattern) {
       console.log("it's a match");
-      //save challengeToRedeem.patternName to the main arr
-      //remove solved challenge from the list and add it to the solved ones
+      let newValues = arr;
+      patternArray.forEach((el) => {
+        el.challenge = challengeToRedeem.name;
+        newValues = updatePuzzlePieceInList(newValues, el);
+        return el;
+      });
+      setArr(newValues);
+      setNewChallenges(
+        newChallenges.filter(
+          (challenge) => challenge.name !== challengeToRedeem.name
+        )
+      );
       //show snackbar with success and add points
       //return true
     }

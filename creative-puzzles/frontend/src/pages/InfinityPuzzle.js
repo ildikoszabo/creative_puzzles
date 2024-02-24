@@ -17,6 +17,7 @@ import PuzzleMenu from "./components/PuzzleMenu";
 import {
   InfinityPuzzleContext,
   InfinityPuzzleGridWidth,
+  updatePuzzlePieceInList,
 } from "../common/context/InfinityPuzzleContext";
 
 const headerNavLinks = [
@@ -52,21 +53,6 @@ export default function InfinityPuzzle() {
       : `${theme.palette.primary.main}`;
   };
 
-  const updatePuzzlePieceInList = (newPiece) => {
-    let updatedPieces = arr.map((el) => {
-      if (el.id != newPiece.id) {
-        //no change
-        return el;
-      } else {
-        return {
-          ...newPiece,
-        };
-      }
-    });
-
-    return updatedPieces;
-  };
-
   const onPieceSelection = (pieceDetails, event, color) => {
     if (selectedGeneratedPiece.name === pieceDetails.name) {
       let newColor = getColor(color);
@@ -74,7 +60,7 @@ export default function InfinityPuzzle() {
       selectedGeneratedPiece.match = true;
 
       setCurrentColor(newColor);
-      setArr(updatePuzzlePieceInList(selectedGeneratedPiece));
+      setArr(updatePuzzlePieceInList(arr, selectedGeneratedPiece));
       setScore(score + 1);
       showAlertSnackbar("It's a match. Yay! +1 pts", "success");
     } else {

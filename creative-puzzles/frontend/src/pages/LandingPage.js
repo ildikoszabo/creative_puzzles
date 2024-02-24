@@ -48,7 +48,7 @@ export default function LandingPage() {
           </Header>
           <div class="c-fx-row-space-between main-area main">
             <div class="c-fx-column-start c-fx-space-between main-text">
-              <h1>Dear puzzler!</h1>
+              <h1>Hello Puzzler!</h1>
               <p class="c-pb-full ">
                 Welcome to an online platform designed to play and to engage
                 with the community — all in one place
