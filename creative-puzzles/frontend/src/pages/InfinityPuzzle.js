@@ -14,6 +14,7 @@ import Alert from "@mui/material/Alert";
 import AlertTitle from "@mui/material/AlertTitle";
 import Snackbar from "@mui/material/Snackbar";
 import PuzzleMenu from "./components/PuzzleMenu";
+import ShowScore from "../common/components/ShowScore";
 import {
   InfinityPuzzleContext,
   InfinityPuzzleGridWidth,
@@ -41,11 +42,16 @@ export default function InfinityPuzzle() {
   const [currentColor, setCurrentColor] = useState(null);
   const theme = useTheme();
   const [score, setScore] = useState(0);
+  const [showUpdateScore, setShowUpdateScore] = useState(null);
 
   useEffect(() => {
     window.scrollTo(0, 0);
     setCurrentlyHoveredPiece(9);
   }, []);
+
+  useEffect(() => {
+    setShowUpdateScore(null);
+  }, [score]);
 
   const getColor = (pieceColor) => {
     return pieceColor != undefined && pieceColor != null
@@ -61,8 +67,7 @@ export default function InfinityPuzzle() {
 
       setCurrentColor(newColor);
       setArr(updatePuzzlePieceInList(arr, selectedGeneratedPiece));
-      setScore(score + 1);
-      showAlertSnackbar("It's a match. Yay! +1 pts", "success");
+      addToScore(1);
     } else {
       showAlertSnackbar("Not a match. Try again!", "warning");
     }
@@ -92,6 +97,13 @@ export default function InfinityPuzzle() {
     setArr([...newArr]);
   };
 
+  const addToScore = (newValue) => {
+    setShowUpdateScore(`+ ${newValue}`);
+    const timeoutId = setTimeout(() => {
+      setScore(score + newValue);
+    }, 500);
+  };
+
   const showAlertSnackbar = (message, severity) => {
     let newAlert = {
       isOpen: true,
@@ -118,16 +130,7 @@ export default function InfinityPuzzle() {
         }}
       >
         <Header headerTitle="infinity puzzle" headerNavLinks={headerNavLinks}>
-          <div
-            className="c-fx-column-center c-fx-space-center"
-            style={{
-              width: "100px",
-              backgroundColor: theme.palette.primary.main,
-              color: "white",
-            }}
-          >
-            <span> {score} pts</span>
-          </div>
+          <ShowScore showUpdateScore={showUpdateScore} score={score} />
         </Header>
 
         <div className="c-fx-row-center">
@@ -194,6 +197,8 @@ export default function InfinityPuzzle() {
           </InfinityScroll>
           <div className="c-fx-row">
             <PuzzleMenu
+              addToScore={addToScore}
+              showAlertSnackbar={showAlertSnackbar}
               setCurrentColor={(value) => {
                 setCurrentColor(value);
               }}

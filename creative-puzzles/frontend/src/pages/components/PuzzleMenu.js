@@ -97,6 +97,8 @@ export default function PuzzleMenu(props) {
         onClose={(val) => handleMenuClose(val, "colorPicker")}
       />
       <PuzzleChallenges
+        addToScore={props.addToScore}
+        showAlertSnackbar={props.showAlertSnackbar}
         open={challengeMenuOpen}
         onClose={(val) => handleMenuClose(val, "challenges")}
       />

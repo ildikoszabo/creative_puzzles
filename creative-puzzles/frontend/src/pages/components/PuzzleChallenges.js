@@ -118,7 +118,6 @@ export default function PuzzleChallenges(props) {
     }
 
     if (pattern == challengeToRedeem.challengePattern) {
-      console.log("it's a match");
       let newValues = arr;
       patternArray.forEach((el) => {
         el.challenge = challengeToRedeem.name;
@@ -131,16 +130,13 @@ export default function PuzzleChallenges(props) {
           (challenge) => challenge.name !== challengeToRedeem.name
         )
       );
-      //show snackbar with success and add points
-      //return true
+      console.log(pattern);
+      props.addToScore(challengeToRedeem.points);
+      return true;
     }
-    /*
-     show snackbar with not found
-     return false
-     */
 
-    console.log(pattern);
-    return true;
+    props.showAlertSnackbar(`No match found.`, "error");
+    return false;
   };
 
   return (
