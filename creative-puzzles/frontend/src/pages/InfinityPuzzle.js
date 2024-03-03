@@ -43,6 +43,7 @@ export default function InfinityPuzzle() {
   const theme = useTheme();
   const [score, setScore] = useState(0);
   const [showUpdateScore, setShowUpdateScore] = useState(null);
+  const [difficulty, setDifficulty] = useState("easy");
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -63,11 +64,13 @@ export default function InfinityPuzzle() {
     if (selectedGeneratedPiece.name === pieceDetails.name) {
       let newColor = getColor(color);
       selectedGeneratedPiece.bgColor = newColor;
-      selectedGeneratedPiece.match = true;
+      if (selectedGeneratedPiece.match == false) {
+        addToScore(1);
+        selectedGeneratedPiece.match = true;
+      }
 
       setCurrentColor(newColor);
       setArr(updatePuzzlePieceInList(arr, selectedGeneratedPiece));
-      addToScore(1);
     } else {
       showAlertSnackbar("Not a match. Try again!", "warning");
     }
@@ -101,7 +104,7 @@ export default function InfinityPuzzle() {
     setShowUpdateScore(`+ ${newValue}`);
     const timeoutId = setTimeout(() => {
       setScore(score + newValue);
-    }, 500);
+    }, 1000);
   };
 
   const showAlertSnackbar = (message, severity) => {
@@ -165,7 +168,9 @@ export default function InfinityPuzzle() {
                         aria-haspopup="true"
                         aria-expanded={anchorEl ? "true" : undefined}
                         onClick={(event) =>
-                          el.match == false
+                          difficulty == "easy"
+                            ? handleClick(event, el, index)
+                            : difficulty != "easy" && el.match == false
                             ? handleClick(event, el, index)
                             : null
                         }
@@ -198,10 +203,11 @@ export default function InfinityPuzzle() {
           <div className="c-fx-row">
             <PuzzleMenu
               addToScore={addToScore}
-              showAlertSnackbar={showAlertSnackbar}
               setCurrentColor={(value) => {
                 setCurrentColor(value);
               }}
+              difficulty={difficulty}
+              setDifficulty={setDifficulty}
             />
           </div>
         </div>

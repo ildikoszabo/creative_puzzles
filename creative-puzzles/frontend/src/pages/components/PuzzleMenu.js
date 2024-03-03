@@ -9,6 +9,7 @@ import {
   Share as ShareIcon,
   FileCopyOutlined as FileCopyIcon,
   Palette as PaletteIcon,
+  Category as CategoryIcon,
 } from "@mui/icons-material";
 
 import EmojiEventsIcon from "@mui/icons-material/EmojiEvents";
@@ -16,6 +17,7 @@ import SpeedDialIcon from "@mui/material/SpeedDialIcon";
 import { styled } from "@mui/material/styles";
 import PuzzleColorPicker from "./PuzzleColorPicker";
 import PuzzleChallenges from "./PuzzleChallenges";
+import PuzzleDifficulty from "./PuzzleDifficulty";
 
 const StyledPuzzleMenu = styled(SpeedDial, {
   shouldForwardProp: (prop) => prop !== "color",
@@ -33,6 +35,7 @@ const StyledPuzzleMenu = styled(SpeedDial, {
 }));
 
 const actions = [
+  { icon: <CategoryIcon />, name: "Difficulty", type: "difficulty" },
   { icon: <PaletteIcon />, name: "Color picker", type: "colorPicker" },
   { icon: <EmojiEventsIcon />, name: "Challenges", type: "challenges" },
 ];
@@ -41,6 +44,7 @@ export default function PuzzleMenu(props) {
   const [open, setOpen] = React.useState(false);
   const [colorPickerMenuOpen, setColorPickerMenuOpen] = React.useState(false);
   const [challengeMenuOpen, setChallengeMenuOpen] = React.useState(false);
+  const [difficultyMenuOpen, setDifficultyMenuOpen] = React.useState(false);
   const [currentColor, setCurrentColor] = React.useState(null);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -58,6 +62,10 @@ export default function PuzzleMenu(props) {
     if (type == "challenges") {
       setChallengeMenuOpen(false);
     }
+
+    if (type == "difficulty") {
+      setDifficultyMenuOpen(false);
+    }
   };
 
   const handleAction = (action) => {
@@ -67,6 +75,10 @@ export default function PuzzleMenu(props) {
 
     if (action.type == "challenges") {
       setChallengeMenuOpen(true);
+    }
+
+    if (action.type == "difficulty") {
+      setDifficultyMenuOpen(true);
     }
   };
 
@@ -98,9 +110,14 @@ export default function PuzzleMenu(props) {
       />
       <PuzzleChallenges
         addToScore={props.addToScore}
-        showAlertSnackbar={props.showAlertSnackbar}
         open={challengeMenuOpen}
         onClose={(val) => handleMenuClose(val, "challenges")}
+      />
+      <PuzzleDifficulty
+        difficulty={props.difficulty}
+        setDifficulty={props.setDifficulty}
+        open={difficultyMenuOpen}
+        onClose={(val) => handleMenuClose(val, "difficulty")}
       />
     </div>
   );

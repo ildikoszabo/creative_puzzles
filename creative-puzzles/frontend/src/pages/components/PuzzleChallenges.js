@@ -8,16 +8,21 @@ import Dialog from "@mui/material/Dialog";
 import { useTheme } from "@mui/material/styles";
 import { generateChallenge } from "../../common/ChallengeGenerator";
 import Grid from "@mui/material/Grid";
+import Box from "@mui/material/Box";
 import {
   InfinityPuzzleContext,
   InfinityPuzzleGridWidth,
   updatePuzzlePieceInList,
 } from "../../common/context/InfinityPuzzleContext";
 
+const errorMessage =
+  "The selected challenge was not found.\nMake sure that each piece marked with a different letter has a different color.\nColored pieces need to be the same color as in the challenge.";
+
 export default function PuzzleChallenges(props) {
   const [onHoverChallenges, setOnHoverChallenges] = React.useState(null);
   const [solvedChallenges, setSolvedChallenges] = React.useState([]);
   const [newChallenges, setNewChallenges] = React.useState([]);
+  const [showErrorMessage, setShowErrorMessage] = React.useState(null);
   const { onClose, open, ...other } = props;
   const theme = useTheme();
   const { arr, setArr } = useContext(InfinityPuzzleContext);
@@ -32,9 +37,9 @@ export default function PuzzleChallenges(props) {
     if (newChallenges.length == 0) {
       setNewChallenges(newGeneratedChallenges);
     } else {
-      setNewChallenges([...newChallenges, newGeneratedChallenges]);
+      setNewChallenges([...newChallenges, ...newGeneratedChallenges]);
     }
-  }, []);
+  }, [solvedChallenges]);
 
   const handleCancel = () => {
     onClose();
@@ -45,7 +50,6 @@ export default function PuzzleChallenges(props) {
   };
 
   const onReedemChallenge = (challengeToRedeem) => {
-    let currentArrayLength = arr / InfinityPuzzleGridWidth;
     let lastMatchedPieceIndex = arr.findLastIndex(
       (piece) => piece.match == true
     );
@@ -54,6 +58,7 @@ export default function PuzzleChallenges(props) {
     let challengeFound = false;
 
     if (lastMatchedPieceIndex == -1) {
+      setShowErrorMessage(challengeToRedeem.name);
       return false;
     }
 
@@ -69,16 +74,11 @@ export default function PuzzleChallenges(props) {
         currentRow += InfinityPuzzleGridWidth;
       }
     }
-
-    //let f = arr.filter((piece) => piece.match != null);
-    //console.log(f.length);
   };
 
   const challengeMatch = (currentColumn, currentRow, challengeToRedeem) => {
     let pattern = "";
     let patternArray = [];
-    let checkPattern = [...challengeToRedeem.challengeBlocks];
-    let checkPatternIndex = 0;
     let challengeRow = 0;
 
     //check if all have already a challenge completed, then skip
@@ -90,16 +90,13 @@ export default function PuzzleChallenges(props) {
       ) {
         var index = x + y + challengeRow * (InfinityPuzzleGridWidth - 1);
         //if the subsection contains values where there are no matched pieces yet, return false
-        if (arr[index].match == false) {
-          return false;
-        }
-
         //if the subsesction already has a completed challenge, return false
-        if (arr[index].challenge != "") {
-          return false;
-        }
-
-        if (arr[index].bgColor == undefined) {
+        if (
+          arr[index].match == false ||
+          arr[index].challenge != "" ||
+          arr[index].bgColor == undefined
+        ) {
+          setShowErrorMessage(challengeToRedeem.name);
           return false;
         }
 
@@ -130,12 +127,14 @@ export default function PuzzleChallenges(props) {
           (challenge) => challenge.name !== challengeToRedeem.name
         )
       );
-      console.log(pattern);
+      setSolvedChallenges([...solvedChallenges, challengeToRedeem]);
+
       props.addToScore(challengeToRedeem.points);
+      handleCancel();
       return true;
     }
 
-    props.showAlertSnackbar(`No match found.`, "error");
+    setShowErrorMessage(challengeToRedeem.name);
     return false;
   };
 
@@ -164,6 +163,7 @@ export default function PuzzleChallenges(props) {
                   }}
                   onMouseEnter={() => {
                     setOnHoverChallenges(null);
+                    setShowErrorMessage(null);
                   }}
                 >
                   {`${el.name} ${el.points} pts`}
@@ -172,13 +172,17 @@ export default function PuzzleChallenges(props) {
                   <div
                     className="c-fx-column-center c-fx-space-center"
                     style={{
-                      color: theme.palette.text.primary,
+                      color: theme.palette.primary.main,
                       border: `1px solid ${theme.palette.primary.main}`,
                     }}
                   >
-                    <Button onClick={() => onReedemChallenge(el)}>
-                      Redeem challenge
-                    </Button>
+                    {showErrorMessage === el.name ? (
+                      <Box sx={{ whiteSpace: "pre-wrap" }}>{errorMessage}</Box>
+                    ) : (
+                      <Button onClick={() => onReedemChallenge(el)}>
+                        Redeem challenge
+                      </Button>
+                    )}
                   </div>
                 ) : (
                   <Grid
@@ -191,6 +195,7 @@ export default function PuzzleChallenges(props) {
                     }}
                     onMouseLeave={() => {
                       setOnHoverChallenges(null);
+                      setShowErrorMessage(null);
                     }}
                   >
                     {el.challengeBlocks != undefined
