@@ -107,11 +107,10 @@ export default function PuzzleChallenges(props) {
     }
 
     //check if patternArray == challengeToRedeem.blocks
-    //TODO is specific color is required and it is used also as a pattern color, it gets overwritten
     for (var i = 0; i < patternArray.length; i++) {
       let currentValue = patternArray[i].bgColor;
       let replaceValue = challengeToRedeem.challengeBlocks[i].value;
-      pattern = pattern.replaceAll(currentValue, replaceValue);
+      pattern = pattern.replace(currentValue, replaceValue);
     }
 
     if (pattern == challengeToRedeem.challengePattern) {
