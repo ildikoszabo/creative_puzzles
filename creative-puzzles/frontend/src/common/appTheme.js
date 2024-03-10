@@ -31,6 +31,12 @@ export const theme = createTheme({
     // Used by `getContrastText()` to maximize the contrast between
     // the background and the text.
     contrastThreshold: 3,
+    alert: {
+      success: "#8DC983",
+      info: "#83B0C9",
+      error: "#FF5733",
+      warning: "#FB9B00",
+    },
   },
   neutrals: {
     neutral_1: "#333349",

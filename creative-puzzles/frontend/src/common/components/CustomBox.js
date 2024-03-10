@@ -7,11 +7,11 @@ const inStyle = (theme) => ({
   backgroundColor: `${theme.neutrals.neutral_6}`,
 });
 
-const hoverStyle = (theme, pieceColor) => ({
+const hoverStyle = (theme, pieceColor, challenge) => ({
   backgroundColor: pieceColor ? pieceColor : `${theme.palette.primary.dark}`,
 });
 
-const nonHoverStyle = (theme, pieceColor) => ({
+const nonHoverStyle = (theme, pieceColor, challenge) => ({
   backgroundColor:
     pieceColor != undefined && pieceColor != null
       ? pieceColor
@@ -26,13 +26,13 @@ export default function CustomBox(props) {
     ? props.currentColor
     : props.value.bgColor;
 
-  const getEdgeStyle = (edge) => {
+  const getEdgeStyle = (edge, challenge) => {
     if (edge === -1) {
       return inStyle(theme);
     } else if (isBoxHovered) {
-      return hoverStyle(theme, pieceColor);
+      return hoverStyle(theme, pieceColor, challenge);
     } else {
-      return nonHoverStyle(theme, pieceColor);
+      return nonHoverStyle(theme, pieceColor, challenge);
     }
   };
 
@@ -101,25 +101,42 @@ export default function CustomBox(props) {
             },
             mixBlendMode: "darken",
             margin: 0,
+            //filter: `brightness(${props.opacity})`,
           }}
         >
           <div className="pieceBase">
-            <span
-              style={getEdgeStyle(props.value.topTab)}
-              className={`tab t${props.value.topTab}`}
-            ></span>
-            <span
-              style={getEdgeStyle(props.value.rightTab)}
-              className={`tab r${props.value.rightTab}`}
-            ></span>
-            <span
-              style={getEdgeStyle(props.value.bottomTab)}
-              className={`tab b${props.value.bottomTab}`}
-            ></span>
-            <span
-              style={getEdgeStyle(props.value.leftTab)}
-              className={`tab l${props.value.leftTab}`}
-            ></span>
+            <div
+              className="pieceBackgroundImage"
+              style={{
+                backgroundImage:
+                  props.value.challenge == ""
+                    ? null
+                    : `repeating-linear-gradient(-45deg, ${pieceColor},  ${pieceColor} 15px, white 15px, white 20px)`,
+              }}
+            >
+              <span
+                style={getEdgeStyle(props.value.topTab, props.value.challenge)}
+                className={`tab t${props.value.topTab}`}
+              ></span>
+              <span
+                style={getEdgeStyle(
+                  props.value.rightTab,
+                  props.value.challenge
+                )}
+                className={`tab r${props.value.rightTab}`}
+              ></span>
+              <span
+                style={getEdgeStyle(
+                  props.value.bottomTab,
+                  props.value.challenge
+                )}
+                className={`tab b${props.value.bottomTab}`}
+              ></span>
+              <span
+                style={getEdgeStyle(props.value.leftTab, props.value.challenge)}
+                className={`tab l${props.value.leftTab}`}
+              ></span>
+            </div>
           </div>
         </Box>
       ) : (

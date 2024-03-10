@@ -1,12 +1,37 @@
-import React from 'react';
-import '../index.css';
-import './header.css';
-import { navStyle } from './appTheme';
-import DrawerMenu from './components/DrawerMenu';
+import React, { useLayoutEffect, useState, useRef } from "react";
+import "../index.css";
+import "./header.css";
+import { navStyle } from "./appTheme";
+import DrawerMenu from "./components/DrawerMenu";
+import { useStickyHeader } from "./hooks";
+import { useTheme } from "@mui/material/styles";
+
+const lightOnColorStyle = (theme) => ({
+  backgroundColor: `${theme.palette.primary.main}`,
+  color: "white",
+  li: {
+    color: "white",
+  },
+});
+
+const colorOnLightStyle = (theme) => ({
+  backgroundColor: "white",
+  color: `${theme.palette.primary.main}`,
+});
 
 export default function Header(props) {
+  const theme = useTheme();
+  const ref = useRef();
+  const sticky = useStickyHeader();
+  const headerClasses = props.shouldScroll ? `${sticky ? "sticky" : ""}` : "";
+  const headerStyle = props.shouldScroll
+    ? sticky
+      ? lightOnColorStyle(theme)
+      : colorOnLightStyle(theme)
+    : colorOnLightStyle(theme);
+
   return (
-    <div>
+    <div ref={ref} className={headerClasses} style={headerStyle}>
       <nav className="c-fx-row-space-between listMenu" style={navStyle}>
         <ul className="c-fx-row-start" id="nav-list">
           <li>
@@ -14,17 +39,23 @@ export default function Header(props) {
           </li>
           {props.headerNavLinks.map((el) => (
             <li>
-              <a href={el.path}>{el.name}</a>
+              <a href={el.path} style={{ color: "inherit" }}>
+                {el.name}
+              </a>
             </li>
           ))}
         </ul>
         {props.children}
       </nav>
-      <nav className="c-fx-row-space-between drawerMenu" style={navStyle} id="drawer-menu">
-        <div className="c-fx-align-self-center" style={{ marginLeft: '80px' }}>
+      <nav
+        className="c-fx-row-space-between drawerMenu"
+        style={navStyle}
+        id="drawer-menu"
+      >
+        <div className="c-fx-align-self-center" style={{ marginLeft: "80px" }}>
           <headingtitle>{props.headerTitle}</headingtitle>
         </div>
-        <div className="c-fx-align-self-center" style={{ height: '100%' }}>
+        <div className="c-fx-align-self-center" style={{ height: "100%" }}>
           <DrawerMenu navLinks={props.headerNavLinks} />
         </div>
       </nav>

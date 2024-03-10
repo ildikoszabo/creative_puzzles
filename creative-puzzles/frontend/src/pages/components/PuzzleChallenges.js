@@ -18,6 +18,9 @@ import {
 const errorMessage =
   "The selected challenge was not found.\nMake sure that each piece marked with a different letter has a different color.\nColored pieces need to be the same color as in the challenge.";
 
+const instructions =
+  "Complete the pattern anywhere on the board.\nA-Z can be any color of your choosing.\nAfter completing the pattern on the board, select Redeem to get the points!";
+
 export default function PuzzleChallenges(props) {
   const [onHoverChallenges, setOnHoverChallenges] = React.useState(null);
   const [solvedChallenges, setSolvedChallenges] = React.useState([]);
@@ -101,19 +104,35 @@ export default function PuzzleChallenges(props) {
         }
 
         patternArray.push(arr[index]);
-        pattern = pattern.concat("_", arr[index].bgColor);
       }
       challengeRow += 1;
     }
 
     //check if patternArray == challengeToRedeem.blocks
-    for (var i = 0; i < patternArray.length; i++) {
+    for (var i = 0; i < challengeToRedeem.challengeBlocks.length; i++) {
       let currentValue = patternArray[i].bgColor;
       let replaceValue = challengeToRedeem.challengeBlocks[i].value;
-      pattern = pattern.replace(currentValue, replaceValue);
+      patternArray[i].chColor = currentValue;
+      if (currentValue.toLowerCase() != replaceValue.toLowerCase()) {
+        if (
+          !challengeToRedeem.challengePattern
+            .toLowerCase()
+            .includes(currentValue.toLowerCase())
+        ) {
+          //replaceAll;
+          patternArray
+            .filter((el) => el.bgColor == currentValue)
+            .map((el) => (el.chColor = replaceValue));
+        } else {
+          patternArray[i].chColor = replaceValue;
+        }
+      }
+      pattern = pattern.concat("_", patternArray[i].chColor);
     }
 
-    if (pattern == challengeToRedeem.challengePattern) {
+    if (
+      challengeToRedeem.challengePattern.toLowerCase() == pattern.toLowerCase()
+    ) {
       let newValues = arr;
       patternArray.forEach((el) => {
         el.challenge = challengeToRedeem.name;
@@ -128,7 +147,7 @@ export default function PuzzleChallenges(props) {
       );
       setSolvedChallenges([...solvedChallenges, challengeToRedeem]);
 
-      props.addToScore(challengeToRedeem.points);
+      props.addToScore(challengeToRedeem.points, "Challenge completed!");
       handleCancel();
       return true;
     }
@@ -151,6 +170,15 @@ export default function PuzzleChallenges(props) {
       </DialogTitle>
       <DialogContent dividers style={{ color: theme.palette.primary.main }}>
         <div>
+          <div
+            className="c-fx-column-center c-fx-space-center"
+            style={{
+              color: theme.palette.primary.main,
+              marginBottom: "20px",
+            }}
+          >
+            <Box sx={{ whiteSpace: "pre-wrap" }}>{instructions}</Box>
+          </div>
           {newChallenges.map((el, index) => {
             return (
               <div>
@@ -167,6 +195,7 @@ export default function PuzzleChallenges(props) {
                 >
                   {`${el.name} ${el.points} pts`}
                 </div>
+
                 {onHoverChallenges == index ? (
                   <div
                     className="c-fx-column-center c-fx-space-center"

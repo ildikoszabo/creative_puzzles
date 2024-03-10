@@ -5,6 +5,13 @@
   cursor: pointer;
 }
 
+.pieceBackgroundImage {
+  width: 6em;
+  height: 6em;
+  padding: 0.8em;
+  background-clip: content-box;
+}
+
 .tab {
   -webkit-border-radius: 4em;
   -moz-border-radius: 4em;

@@ -20,6 +20,7 @@ import {
   InfinityPuzzleGridWidth,
   updatePuzzlePieceInList,
 } from "../common/context/InfinityPuzzleContext";
+import { getAlertColor } from "../common/components/StyledAlert";
 
 const headerNavLinks = [
   { name: "Games", path: "/#games" },
@@ -38,7 +39,7 @@ export default function InfinityPuzzle() {
   const [ancholElIndex, setAnchorElIndex] = useState(null);
   const [selectedGeneratedPiece, setSelectedGeneratedPiece] = useState(null);
   const [currentlyHoveredPiece, setCurrentlyHoveredPiece] = useState(null);
-  const [alert, setAlert] = useState(false);
+  const [alert, setAlert] = useState({ isOpen: false });
   const [currentColor, setCurrentColor] = useState(null);
   const theme = useTheme();
   const [score, setScore] = useState(0);
@@ -100,8 +101,9 @@ export default function InfinityPuzzle() {
     setArr([...newArr]);
   };
 
-  const addToScore = (newValue) => {
+  const addToScore = (newValue, message = "") => {
     setShowUpdateScore(`+ ${newValue}`);
+    showAlertSnackbar(`${message}  + ${newValue} pts `, "success");
     const timeoutId = setTimeout(() => {
       setScore(score + newValue);
     }, 1000);
@@ -125,15 +127,27 @@ export default function InfinityPuzzle() {
     setAlert(newAlert);
   };
   return (
-    <div>
+    <div
+      onClick={() => {
+        return alert.isOpen ? hideAlertSnackbar() : () => {};
+      }}
+    >
       <InfinityPuzzleContext.Provider
         value={{
           arr,
           setArr,
         }}
       >
-        <Header headerTitle="infinity puzzle" headerNavLinks={headerNavLinks}>
-          <ShowScore showUpdateScore={showUpdateScore} score={score} />
+        <Header
+          headerTitle="infinity puzzle"
+          headerNavLinks={headerNavLinks}
+          shouldScroll={true}
+        >
+          <ShowScore
+            showUpdateScore={showUpdateScore}
+            score={score}
+            shouldScroll={true}
+          />
         </Header>
 
         <div className="c-fx-row-center">
@@ -168,9 +182,11 @@ export default function InfinityPuzzle() {
                         aria-haspopup="true"
                         aria-expanded={anchorEl ? "true" : undefined}
                         onClick={(event) =>
-                          difficulty == "easy"
+                          difficulty == "easy" && el.challenge == ""
                             ? handleClick(event, el, index)
-                            : difficulty != "easy" && el.match == false
+                            : difficulty != "easy" &&
+                              el.match == false &&
+                              el.challenge == ""
                             ? handleClick(event, el, index)
                             : null
                         }
@@ -179,7 +195,6 @@ export default function InfinityPuzzle() {
                         <CustomBox
                           value={arr[index]}
                           id={index}
-                          opacity={0}
                           applyPieceMask={el.match}
                           clicked={selectedGeneratedPiece === el}
                           isHovered={
@@ -214,19 +229,23 @@ export default function InfinityPuzzle() {
 
         <Snackbar
           open={alert.isOpen}
-          autoHideDuration={6000}
+          autoHideDuration={4000}
           onClose={() => {
             hideAlertSnackbar();
           }}
-          anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+          sx={{ marginTop: "20%" }}
+          anchorOrigin={{
+            vertical: "top",
+            horizontal: "center",
+          }}
         >
           <Alert
             onClose={() => {
               hideAlertSnackbar();
             }}
-            variant="outlined"
+            variant="filled"
             severity={alert.severity}
-            sx={{ width: "100%" }}
+            sx={{ width: "100%", background: getAlertColor(theme, alert) }}
           >
             {alert.message}
           </Alert>

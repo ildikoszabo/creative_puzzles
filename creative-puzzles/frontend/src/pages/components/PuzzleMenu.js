@@ -24,6 +24,7 @@ const StyledPuzzleMenu = styled(SpeedDial, {
 })(({ theme, color }) => ({
   position: "fixed",
   padding: "1rem",
+  top: "10%",
   "& .MuiSpeedDial-directionDown": {
     top: theme.spacing(14),
     left: theme.spacing(2),
@@ -48,6 +49,7 @@ export default function PuzzleMenu(props) {
   const [currentColor, setCurrentColor] = React.useState(null);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+  const handleClick = () => setOpen(!open);
 
   const handleMenuClose = (newValue, type) => {
     if (type == "colorPicker") {
@@ -88,11 +90,12 @@ export default function PuzzleMenu(props) {
         <StyledPuzzleMenu
           ariaLabel="Puzzle menu"
           icon={<SpeedDialIcon openIcon={<EditIcon />} />}
-          onClose={handleClose}
-          onOpen={handleOpen}
+          //onClose={handleClose}
+          //onOpen={handleOpen}
           open={open}
           direction={"down"}
           color={currentColor}
+          onClick={handleClick}
         >
           {actions.map((action) => (
             <SpeedDialAction

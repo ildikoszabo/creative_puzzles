@@ -109,3 +109,41 @@ code {
 .c-padding-full {
   padding: 80px;
 }
+
+.overlay {
+  position: fixed;
+  display: block;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(210, 157, 245, 0.5);
+  cursor: pointer;
+}
+
+.sticky {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  animation: slide 0.3s;
+  background-color: white;  
+  label {
+    font-weight: bold;
+    text-transform: uppercase;
+  }
+}
+
+
+@keyframes slide {
+  0% {
+    opacity: 0;
+    transform: translateY(-50px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0%);
+  }
+}
