@@ -24,7 +24,7 @@ import { getAlertColor } from "../common/components/StyledAlert";
 
 const headerNavLinks = [
   { name: "Games", path: "/#games" },
-  { name: "Community", path: "/#community" },
+  { name: "Community", path: "/community" },
   { name: "Sorting helper", path: "/#sorting-helper" },
 ];
 

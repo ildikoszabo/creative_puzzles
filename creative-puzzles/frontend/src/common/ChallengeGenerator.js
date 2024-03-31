@@ -10,13 +10,13 @@
 import { levels } from "./constants/infinityPuzzle/levels";
 import { colors } from "./constants/infinityPuzzle/colors";
 
-//when checking if challenge was completed, filter out all the pieces that have the challenge property completed
-
 const fixedValues = ["A", "B", "C", "D", "E", "F", "G"];
 
 export function getNewChallenge(currentConfig, theme) {
   let newChallenge = Object.assign({}, currentConfig);
+  let fixedValuesClone = fixedValues.slice();
   let challengePattern = "";
+  let charsNeeded = newChallenge.height * newChallenge.width;
 
   let challengeBlocks = new Array();
   let fixedColorList = new Array();
@@ -42,8 +42,11 @@ export function getNewChallenge(currentConfig, theme) {
       }
 
       if (pattern == "") {
-        let randomIndex = randomNumberInRange(0, newChallenge.width);
-        pattern = fixedValues[randomIndex];
+        let randomNumber = randomNumberInRange(0, 1);
+        pattern = fixedValuesClone[0];
+        if (randomNumber == 0 && fixedValuesClone.length > 0) {
+          fixedValuesClone.shift();
+        }
       }
 
       challengeBlocks.push({

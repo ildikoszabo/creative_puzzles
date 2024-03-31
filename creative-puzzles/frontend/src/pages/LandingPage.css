@@ -131,7 +131,6 @@ p {
   height: 500px;
   box-shadow: 5px 5px 20px rgb(197, 195, 195);
   margin: 10px;
-  background-color: black;
 }
 
 .project-container {
@@ -142,6 +141,7 @@ p {
   margin-top: 25px;
   width: 250px;
   border-radius: 125px;
+  background-color: white;
 }
 
 hr {

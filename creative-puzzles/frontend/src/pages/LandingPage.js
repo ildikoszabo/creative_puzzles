@@ -19,7 +19,7 @@ import {
 
 const headerNavLinks = [
   { name: "Games", path: "#games" },
-  { name: "Community", path: "#community" },
+  { name: "Community", path: "community" },
   { name: "Sorting helper", path: "#sorting-helper" },
 ];
 
@@ -97,7 +97,7 @@ export default function LandingPage() {
           <h2>Try one of these games now</h2>
         </div>
         <div class="c-fx-space-around c-fx-row project-container">
-          <div class="project-card">
+          <div class="project-card" style={{ backgroundColor: "black" }}>
             <img
               class="project-image"
               src={game_picture}
@@ -112,7 +112,7 @@ export default function LandingPage() {
               </Link>
             </h3>
           </div>
-          <div class="project-card">
+          <div class="project-card" style={{ backgroundColor: "black" }}>
             <img class="project-image" src={game_picture} alt="Puzzle tetris" />
             <h3>Puzzle tetris</h3>
             <p class="subtext">Classic tetris with a puzzle twist</p>
@@ -136,15 +136,16 @@ export default function LandingPage() {
           </div>
           <div className="community-main-text">
             <p>
-              Join the Patreon community to unlock access to more advanced
-              features, like saving progress, changing color on individual
-              pieces and many more!
+              Join the puzzle community on Patreon to be up to date with new
+              version announcements and playtest opportunities of new features.
+              Be part of the community by offering feedback, voting and having
+              your name displayed on the Community Page.
             </p>
           </div>
         </div>
         <div className="community-main-button">
-          <Button variant="outlined" href="#games">
-            Join Patreon
+          <Button variant="outlined" href="community">
+            Find out more
           </Button>
         </div>
       </section>
@@ -202,7 +203,9 @@ export default function LandingPage() {
             <i>i puzzle too</i> is an online website which offers free to play
             games
           </span>
-          <span style={{ fontWeight: "bold" }}>© i puzzle too 2023</span>
+          <span style={{ fontWeight: "bold" }}>
+            © i puzzle too 2024 | v1.0.1
+          </span>
         </div>
         <div className="c-fx-column footer-item-bold">
           <span>

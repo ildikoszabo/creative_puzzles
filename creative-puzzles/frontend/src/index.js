@@ -10,6 +10,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { theme } from "./common/appTheme";
 import { createTheme, ThemeProvider, styled } from "@mui/material/styles";
 import ComingSoon from "./pages/ComingSoon";
+import CommunityPage from "./pages/CommunityPage";
 
 const router = createBrowserRouter([
   {
@@ -30,6 +31,11 @@ const router = createBrowserRouter([
   {
     path: "comingSoon",
     element: <ComingSoon />,
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: "community",
+    element: <CommunityPage />,
     errorElement: <ErrorPage />,
   },
 ]);

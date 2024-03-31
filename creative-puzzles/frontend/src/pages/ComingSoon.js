@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from "react";
-
+import React from "react";
 import "../index.css";
 import Skeleton from "@mui/material/Skeleton";
 import Stack from "@mui/material/Stack";
@@ -14,12 +13,12 @@ import {
 export default function ComingSoon() {
   const headerNavLinks = [
     { name: "Games", path: "/#games" },
-    { name: "Community", path: "/#community" },
+    { name: "Community", path: "/community" },
     { name: "Sorting helper", path: "/#sorting-helper" },
   ];
 
   return (
-    <div id="error-page">
+    <div id="comming-soon-page">
       <Header headerTitle="coming soon" headerNavLinks={headerNavLinks} />
 
       <div className="c-fx-column-center c-padding-full">
