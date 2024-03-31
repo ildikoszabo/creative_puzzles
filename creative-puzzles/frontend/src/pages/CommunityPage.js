@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./LandingPage.css";
 import "../index.css";
 import Skeleton from "@mui/material/Skeleton";
@@ -36,6 +36,10 @@ export default function CommunityPage() {
   const maxSteps = playtesters.length;
   const carouselStep = 3;
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + carouselStep);
   };
@@ -66,7 +70,7 @@ export default function CommunityPage() {
             </p>
             <p class="c-pb-full ">
               Also, you can unlock access to more advanced features, like
-              <b>saving progress</b>, changing piece shapes and many more!
+              <b> saving progress</b>, changing piece shapes and many more!
             </p>
 
             <div class="c-pb-full">

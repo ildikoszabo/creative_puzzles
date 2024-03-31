@@ -144,9 +144,9 @@ export default function LandingPage() {
           </div>
         </div>
         <div className="community-main-button">
-          <Button variant="outlined" href="community">
-            Find out more
-          </Button>
+          <Link class="project-link" to={`community`}>
+            <Button variant="outlined">Find out more</Button>
+          </Link>
         </div>
       </section>
       <section className="games-again-section">
