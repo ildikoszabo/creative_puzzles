@@ -150,7 +150,7 @@ export default function InfinityPuzzle() {
           />
         </Header>
 
-        <div className="c-fx-row-center">
+        <div className="c-fx-row-center" style={{ backgroundColor: "white" }}>
           <InfinityScroll threshold={60} loadNewValues={loadNewValues}>
             {anchorEl ? (
               <PieceSelection

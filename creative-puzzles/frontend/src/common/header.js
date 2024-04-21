@@ -5,6 +5,7 @@ import { navStyle } from "./appTheme";
 import DrawerMenu from "./components/DrawerMenu";
 import { useStickyHeader } from "./hooks";
 import { useTheme } from "@mui/material/styles";
+import { Link } from "react-router-dom";
 
 const lightOnColorStyle = (theme) => ({
   backgroundColor: `${theme.palette.primary.main}`,
@@ -39,14 +40,19 @@ export default function Header(props) {
           </li>
           {props.headerNavLinks.map((el) => (
             <li>
-              <a href={el.path} style={{ color: "inherit" }}>
+              <Link
+                class="project-link"
+                to={el.path}
+                style={{ color: "inherit" }}
+              >
                 {el.name}
-              </a>
+              </Link>
             </li>
           ))}
         </ul>
         {props.children}
       </nav>
+
       <nav
         className="c-fx-row-space-between drawerMenu"
         style={navStyle}
@@ -55,9 +61,13 @@ export default function Header(props) {
         <div className="c-fx-align-self-center" style={{ marginLeft: "80px" }}>
           <headingtitle>{props.headerTitle}</headingtitle>
         </div>
-        <div className="c-fx-align-self-center" style={{ height: "100%" }}>
-          <DrawerMenu navLinks={props.headerNavLinks} />
-        </div>
+        {props.children}
+        {props.headerNavLinks != undefined &&
+        props.headerNavLinks.length != 0 ? (
+          <div className="c-fx-align-self-center" style={{ height: "100%" }}>
+            <DrawerMenu navLinks={props.headerNavLinks} />
+          </div>
+        ) : null}
       </nav>
     </div>
   );

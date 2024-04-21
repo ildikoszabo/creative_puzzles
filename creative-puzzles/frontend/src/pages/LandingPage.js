@@ -38,12 +38,20 @@ export default function LandingPage() {
             </div>
 
             <div class="c-fx-row-start">
-              <Button href="comingSoon" disableElevation>
-                Log in
-              </Button>
-              <Button variant="contained" href="#games" disableElevation>
-                Play
-              </Button>
+              <Link to={`comingSoon`} style={{ height: "100%" }}>
+                <Button disableElevation style={{ height: "100%" }}>
+                  Log in
+                </Button>
+              </Link>
+              <Link to={"#games"} hash="#" style={{ height: "100%" }}>
+                <Button
+                  variant="contained"
+                  disableElevation
+                  style={{ height: "100%" }}
+                >
+                  Play
+                </Button>
+              </Link>
             </div>
           </Header>
           <div class="c-fx-row-space-between main-area main">
