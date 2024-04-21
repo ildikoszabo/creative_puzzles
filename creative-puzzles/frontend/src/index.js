@@ -6,16 +6,20 @@ import LandingPage from "./pages/LandingPage";
 import ErrorPage from "./pages/ErrorPage";
 import PieceSearch from "./pages/PieceSearch";
 import reportWebVitals from "./reportWebVitals";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import {
+  createBrowserRouter,
+  RouterProvider,
+  createHashRouter,
+} from "react-router-dom";
 import { theme } from "./common/appTheme";
 import { createTheme, ThemeProvider, styled } from "@mui/material/styles";
 import ComingSoon from "./pages/ComingSoon";
 import CommunityPage from "./pages/CommunityPage";
 
-const router = createBrowserRouter([
+const router = createHashRouter([
   {
     path: "/",
-    element: <LandingPage />,
+    element: <InfinityPuzzle />,
     errorElement: <ErrorPage />,
   },
   {

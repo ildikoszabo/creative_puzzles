@@ -140,7 +140,7 @@ export default function InfinityPuzzle() {
       >
         <Header
           headerTitle="infinity puzzle"
-          headerNavLinks={headerNavLinks}
+          headerNavLinks={[]}
           shouldScroll={true}
         >
           <ShowScore
