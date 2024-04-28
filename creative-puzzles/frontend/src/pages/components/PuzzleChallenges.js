@@ -82,7 +82,11 @@ export default function PuzzleChallenges(props) {
   const challengeMatch = (currentColumn, currentRow, challengeToRedeem) => {
     let pattern = "";
     let patternArray = [];
+    let patternFilteredArray = [];
+    let challengeFilteredArray = [];
+    let challengeFiltered = "";
     let challengeRow = 0;
+    let challengeIndex = 0;
 
     //check if all have already a challenge completed, then skip
     for (var y = currentRow; y < currentRow + challengeToRedeem.height; y++) {
@@ -92,49 +96,45 @@ export default function PuzzleChallenges(props) {
         x++
       ) {
         var index = x + y + challengeRow * (InfinityPuzzleGridWidth - 1);
+        let currentValue = arr[index];
+        let replaceValue =
+          challengeToRedeem.challengeBlocks[challengeIndex].value;
         //if the subsection contains values where there are no matched pieces yet, return false
         //if the subsesction already has a completed challenge, return false
+        //if challenge needs specific color check if it is at the expected position
         if (
-          arr[index].match == false ||
-          arr[index].challenge != "" ||
-          arr[index].bgColor == undefined
+          currentValue.match == false ||
+          currentValue.challenge != "" ||
+          currentValue.bgColor == undefined ||
+          (replaceValue.includes("#") &&
+            currentValue.bgColor.toLowerCase() != replaceValue.toLowerCase())
         ) {
           setShowErrorMessage(challengeToRedeem.name);
           return false;
         }
 
-        patternArray.push(arr[index]);
+        if (!replaceValue.includes("#")) {
+          patternArray.push(currentValue);
+          pattern = pattern.concat("_", currentValue.bgColor);
+          challengeFiltered = challengeFiltered.concat("_", replaceValue);
+          challengeFilteredArray.push(replaceValue);
+        }
+
+        patternFilteredArray.push(currentValue);
+        challengeIndex++;
       }
       challengeRow += 1;
     }
 
-    //check if patternArray == challengeToRedeem.blocks
-    for (var i = 0; i < challengeToRedeem.challengeBlocks.length; i++) {
+    for (var i = 0; i < patternArray.length; i++) {
       let currentValue = patternArray[i].bgColor;
-      let replaceValue = challengeToRedeem.challengeBlocks[i].value;
-      patternArray[i].chColor = currentValue;
-      if (currentValue.toLowerCase() != replaceValue.toLowerCase()) {
-        if (
-          !challengeToRedeem.challengePattern
-            .toLowerCase()
-            .includes(currentValue.toLowerCase())
-        ) {
-          //replaceAll;
-          patternArray
-            .filter((el) => el.bgColor == currentValue)
-            .map((el) => (el.chColor = replaceValue));
-        } else {
-          patternArray[i].chColor = replaceValue;
-        }
-      }
-      pattern = pattern.concat("_", patternArray[i].chColor);
+      let replaceValue = challengeFilteredArray[i];
+      pattern = pattern.replaceAll(currentValue, replaceValue);
     }
 
-    if (
-      challengeToRedeem.challengePattern.toLowerCase() == pattern.toLowerCase()
-    ) {
+    if (pattern.toLowerCase() == challengeFiltered.toLowerCase()) {
       let newValues = arr;
-      patternArray.forEach((el) => {
+      patternFilteredArray.forEach((el) => {
         el.challenge = challengeToRedeem.name;
         newValues = updatePuzzlePieceInList(newValues, el);
         return el;
