@@ -41,7 +41,6 @@ export default function CustomBox(props) {
     setIsBoxHovered(newState);
     if (newState === true && props.fromPieceSelection === false) {
       props.setCurrentlyHoveredPiece(props.id);
-      console.log("color on hover" + props.currentColor);
     }
   };
 
